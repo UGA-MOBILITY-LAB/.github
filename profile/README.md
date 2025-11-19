@@ -36,8 +36,8 @@ We are a research group dedicated to advancing safer and smarter transportation 
 
 | **Haohua Que** |
 | **Ph.D. Student**<br> School of ECAM  |
-| [🌐 Profile]() | 
-| *Focus: * |
+| [🌐 Profile](https://scholar.google.com/citations?user=EWgqpTgAAAAJ&hl) | 
+| *Focus: Autonoumous Vehicle, Robotics, Computer Vision * |
 
 | **Qianyi Wu** |
 | **Ph.D. Student**<br> School of ECAM  |
