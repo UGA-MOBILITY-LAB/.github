@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/logo.png?raw=true" width="200" height="200" alt="CAMIs Logo" />
+  <img src="./logo.png" width="200" height="200" alt="CAMIs Logo" />
 
   # CAMIs Mobility Lab
   ### Connected and Automated Mobility Infrastructure Systems
