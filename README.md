@@ -24,7 +24,7 @@ We are a research group dedicated to advancing the fields of **Connected and Aut
 
 | **Dr. Handong Yao** | **Dr. Qianwen Li** |
 | :---: | :---: |
-| **Assistant Professor**<br>School of Electrical and Computer Engineering | **Assistant Professor**<br>School of Electrical and Computer Engineering |
+| **Assistant Professor**<br> School of Environmental, Civil, Agricultural and Mechanical Engineering (ECAM)  | **Assistant Professor**<br> School of Environmental, Civil, Agricultural and Mechanical Engineering (ECAM)  |
 | [🌐 Faculty Profile](https://engineering.uga.edu/team_member/handong-yao/) | [🌐 Faculty Profile](https://engineering.uga.edu/team_member/qianwen-li/) |
 | *Focus: CAVs, CPS, Machine Learning* | *Focus: Computer Vision, AI, Electronics* |
 
