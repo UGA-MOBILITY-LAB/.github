@@ -2,8 +2,8 @@
 
   <img src="../logo.png" width="200" height="200" alt="CAMIs Logo" />
 
-  # CAMIs Mobility Lab
-  ### Connected and Automated Mobility Infrastructure Systems
+  # Mobility Lab
+  ### Connected and Automated Mobility & Infrastructure Systems
   
   **University of Georgia | College of Engineering**
 
@@ -16,26 +16,63 @@
 
 ## 🔬 About Us
 
-Welcome to the official GitHub organization of the **CAMIs Mobility Lab** at the University of Georgia. 
+Welcome to the official GitHub organization of the **Mobility Lab** at the University of Georgia. 
 
-We are a research group dedicated to advancing the fields of **Connected and Automated Vehicles (CAVs)**, **Robotics**, and **Cyber-Physical Systems**. Our research bridges the gap between theoretical algorithms and real-world applications, focusing on perception, planning, and control in complex environments.
+We are a research group dedicated to advancing safer and smarter transportation systems through research in **Connected and Automated Vehicles (CAVs)**, **Robotics**, and **Cyber-Physical Systems**. Our research bridges the gap between theoretical algorithms and real-world applications, focusing on perception, planning, and control in complex environments.
 
-## 👨‍🏫 Principal Investigators
+## 👨‍🏫 Principal Investigator
 
-| **Dr. Handong Yao** | **Dr. Qianwen Li** |
-| :---: | :---: |
-| **Assistant Professor**<br> School of Environmental, Civil, Agricultural and Mechanical Engineering (ECAM)  | **Assistant Professor**<br> School of Environmental, Civil, Agricultural and Mechanical Engineering (ECAM)  |
-| [🌐 Faculty Profile](https://engineering.uga.edu/team_member/handong-yao/) | [🌐 Faculty Profile](https://engineering.uga.edu/team_member/qianwen-li/) |
-| *Focus: CAVs, CPS, Machine Learning* | *Focus: Computer Vision, AI, Electronics* |
+| **Dr. Handong Yao** |
+| **Assistant Professor**<br> School of Environmental, Civil, Agricultural and Mechanical Engineering (ECAM)  |
+| **Faculty Fellow**<br> Institute of Artificial Intelligence  |
+| [🌐 Faculty Profile](https://engineering.uga.edu/team_member/handong-yao/) | 
+| *Focus: CAV, CPS, AI, Safety* |
+
+## 👨‍🏫 Research Assistants
+| **Tianle Zhu** | 
+| **Ph.D. Student**<br> School of ECAM  |
+| [🌐 Profile]() | 
+| *Focus: * |
+
+| **Haohua Que** |
+| **Ph.D. Student**<br> School of ECAM  |
+| [🌐 Profile]() | 
+| *Focus: * |
+
+| **Qianyi Wu** |
+| **Ph.D. Student**<br> School of ECAM  |
+| [🌐 Profile]() | 
+| *Focus: * |
+
+| **Luke Greenfield** |
+| **Undergraduate Student**<br> School of ECAM  |
+| *Focus: Data Annotation, Object Detection* |
 
 ## 🚀 Research Areas
 
-Our team works on cutting-edge technologies including but not limited to:
+Our team works on cutting-edge technologies, including but not limited to:
 
-* **Autonomous Driving Perception:** Bird's-Eye-View (BEV) mapping, Object Detection (YOLO), and Sensor Fusion (LiDAR/Camera).
-* **Cooperative Driving:** Vehicle-to-Everything (V2X) communication and cooperative perception.
-* **Robotics & Control:** Reinforcement Learning for robotic manipulation and path planning.
+* **Autonomous Driving Perception:** Bird's-Eye-View (BEV) mapping, Object Detection, and Sensor Fusion (LiDAR/Camera).
 * **Smart Infrastructure:** AI-driven traffic management and roadside perception.
+* **Robotics & Control:** Reinforcement Learning for robotic manipulation and path planning.
+* **Vehicle-Infrastructure Coordination:** Vehicle-to-Everything (V2X) communication and collaborative operations.
+
+## 🚀 Projects
+
+* **Tribal & Rural Autonomous Vehicles for Efficiency, Livability and Safety (TRAVELS)**, USDOT, 2026-2031
+* **Creating a Ten-Year Traffic Safety Infrastructure Plan for the University of Georgia**, USDOT, 2026-2027
+* **Rural Road Infrastructure Assessment and Enhancement for Autonomous Vehicle Deployment**, USDOT CR2C2, 2025-2025
+* **Realistic Autonomous Vehicle Behavior Investigation for Stakeholder Empowerment (RAISE)**, FHWA, 2024-2027
+* **Safe and Futuristic Ecosystem for Vulnerable Road Users (SAFER)**, UGA, 2024-2025
+
+## 🚀 Recent Publications
+
+* **Investigating the Car Following Behavior of Electric Vehicles with One-Pedal Driving Through Field Experiments.** T. Zhu, H. Yao (2026). The 105th TRB Annual Meeting, Washington, DC.
+* **Modeling Autonomous Driving Systems-Equipped Vehicle Interactions with Traffic Signs.** X. Wang, Q. Li, H. Yao, J. Hourdos, G. McHale (2026). The 105th TRB Annual Meeting, Washington, DC.
+* **MACE: Mixture-of-Experts Accelerated Coordinate Encoding for Large-Scale Scene Localization and Rendering.** Mingkai Liu, Dikai Fan, Haohua Que, Haojia Gao, Wanli Qiu, Ruicong Ye, Handong Yao, Xianliang Huang, Fei Qiao (2025). The Edge AI for Robotics workshop at the IROS 2025, Hangzhou, China, October 2025 (Best Paper Award).
+* **Interaction dataset of autonomous vehicles with traffic lights and signs.**	Li, Z., Bao, Z., Meng, H., Shi, H., Li, Q., Yao, H., & Li, X. (2025). Communications in Transportation Research, 5, 100217.
+* **Edge-computing-based operations for automated vehicles with different cooperation classes at stop-controlled intersections.**	Soleimaniamiri, S., Yao, H., Ghiasi, A., Li, X., Bujanović, P., Vadakpat, G., Lochrane, T.W.P. (2025). IET Intell. Transp. Syst. 19, e12577. https://doi.org/10.1049/itr2.12577
+
 
 ## 🛠️ Tech Stack & Tools
 
