@@ -44,7 +44,7 @@ Our team works on cutting-edge technologies, including but not limited to:
 * **Robotics & Control:** Reinforcement Learning for robotic manipulation and path planning.
 * **Vehicle-Infrastructure Coordination:** Vehicle-to-Everything (V2X) communication and collaborative operations.
 
-## 🚀 Projects
+## 📚 Projects
 
 * **Tribal & Rural Autonomous Vehicles for Efficiency, Livability and Safety (TRAVELS)**, USDOT, 2026-2031
 * **Creating a Ten-Year Traffic Safety Infrastructure Plan for the University of Georgia**, USDOT, 2026-2027
@@ -52,7 +52,7 @@ Our team works on cutting-edge technologies, including but not limited to:
 * **Realistic Autonomous Vehicle Behavior Investigation for Stakeholder Empowerment (RAISE)**, FHWA, 2024-2027
 * **Safe and Futuristic Ecosystem for Vulnerable Road Users (SAFER)**, UGA, 2024-2025
 
-## 🚀 Recent Publications
+## 📝 Recent Publications
 
 * **Investigating the Car Following Behavior of Electric Vehicles with One-Pedal Driving Through Field Experiments.** T. Zhu, H. Yao (2026). The 105th TRB Annual Meeting, Washington, DC.
 * **Modeling Autonomous Driving Systems-Equipped Vehicle Interactions with Traffic Signs.** X. Wang, Q. Li, H. Yao, J. Hourdos, G. McHale (2026). The 105th TRB Annual Meeting, Washington, DC.
