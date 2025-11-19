@@ -22,31 +22,18 @@ We are a research group dedicated to advancing safer and smarter transportation 
 
 ## 👨‍🏫 Principal Investigator
 
-| **Dr. Handong Yao** |
-| **Assistant Professor**<br> School of Environmental, Civil, Agricultural and Mechanical Engineering (ECAM)  |
-| **Faculty Fellow**<br> Institute of Artificial Intelligence  |
-| [🌐 Faculty Profile](https://engineering.uga.edu/team_member/handong-yao/) | 
-| *Focus: CAV, CPS, AI, Safety* |
+| Portrait | Investigator Details |
+| :---: | :--- |
+| <img src="./yao.jpg?raw=true" width="120"> | **Dr. Handong Yao**<br>_Assistant Professor_<br>School of Environmental, Civil, Agricultural and Mechanical Engineering (ECAM)<br><br>Startups & Institutes:<br>• **Faculty Fellow**, Institute of Artificial Intelligence<br><br>🔬 **Focus:** CAV, CPS, AI, Safety<br>🌐 [Faculty Profile](https://engineering.uga.edu/team_member/handong-yao/) |
 
-## 👨‍🏫 Research Assistants
-| **Tianle Zhu** | 
-| **Ph.D. Student**<br> School of ECAM  |
-| [🌐 Profile]() | 
-| *Focus: * |
+## 🎓 Research Assistants
 
-| **Haohua Que** |
-| **Ph.D. Student**<br> School of ECAM  |
-| [🌐 Profile](https://scholar.google.com/citations?user=EWgqpTgAAAAJ&hl) | 
-| *Focus: Autonoumous Vehicle, Robotics, Computer Vision * |
-
-| **Qianyi Wu** |
-| **Ph.D. Student**<br> School of ECAM  |
-| [🌐 Profile]() | 
-| *Focus: * |
-
-| **Luke Greenfield** |
-| **Undergraduate Student**<br> School of ECAM  |
-| *Focus: Data Annotation, Object Detection* |
+| Team Member | Role & Research Focus |
+| :---: | :--- |
+| <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/tianle.png?raw=true" width="100"> | **Tianle Zhu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** [TBD]<br>🌐 [Profile Link]() |
+| <img src="./hua.png?raw=true" width="100"> | **Haohua Que**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** Autonomous Vehicle, Robotics, Computer Vision<br>🌐 [Google Scholar](https://scholar.google.com/citations?user=EWgqpTgAAAAJ&hl) |
+| <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/qianyi.png?raw=true" width="100"> | **Qianyi Wu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** [TBD]<br>🌐 [Profile Link]() |
+| <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/luke.png?raw=true" width="100"> | **Luke Greenfield**<br>_Undergraduate Student_<br><br>🔬 **Focus:** Data Annotation, Object Detection<br>🌐 [Profile Link]() |
 
 ## 🚀 Research Areas
 
