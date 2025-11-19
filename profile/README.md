@@ -24,17 +24,16 @@ We are a research group dedicated to advancing safer and smarter transportation 
 
 | Portrait | Investigator Details |
 | :---: | :--- |
-| <img src="./yao.jpg?raw=true" width="120"> | **Dr. Handong Yao**<br>_Assistant Professor_<br>School of Environmental, Civil, Agricultural and Mechanical Engineering (ECAM)<br><br>Startups & Institutes:<br>• **Faculty Fellow**, Institute of Artificial Intelligence<br><br>🔬 **Focus:** CAV, CPS, AI, Safety<br>🌐 [Faculty Profile](https://engineering.uga.edu/team_member/handong-yao/) |
+| <img src="./yao.jpg?raw=true" width="120"> | **Dr. Handong Yao**<br>_Assistant Professor_<br>School of Environmental, Civil, Agricultural and Mechanical Engineering (ECAM)<br><br>Startups & Institutes:<br>• **Faculty Fellow**, Institute of Artificial Intelligence<br><br>🔬 **Focus:** CAV, CPS, AI, Safety<br>🌐 [Faculty Profile](https://engineering.uga.edu/team_member/handong-yao/)<br>✉️ [Email](mailto:handong.yao@uga.edu) |
 
 ## 🎓 Research Assistants
 
 | Team Member | Role & Research Focus |
 | :---: | :--- |
-| <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/tianle.png?raw=true" width="100"> | **Tianle Zhu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** [TBD]<br>🌐 [Profile Link]() |
-| <img src="./hua.png?raw=true" width="100"> | **Haohua Que**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** Autonomous Vehicle, Robotics, Computer Vision<br>🌐 [Google Scholar](https://scholar.google.com/citations?user=EWgqpTgAAAAJ&hl) |
-| <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/qianyi.png?raw=true" width="100"> | **Qianyi Wu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** [TBD]<br>🌐 [Profile Link]() |
-| <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/luke.png?raw=true" width="100"> | **Luke Greenfield**<br>_Undergraduate Student_<br><br>🔬 **Focus:** Data Annotation, Object Detection<br>🌐 [Profile Link]() |
-
+| <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/tianle.png?raw=true" width="100"> | **Tianle Zhu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** [TBD]<br>🌐 [Profile Link]()<br>✉️ [Email](mailto:tianle.zhu@uga.edu) |
+| <img src="./hua.png?raw=true" width="100"> | **Haohua Que**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** Autonomous Vehicle, Robotics, Computer Vision<br>🌐 [Google Scholar](https://scholar.google.com/citations?user=EWgqpTgAAAAJ&hl)<br>✉️ [Email](mailto:hq10606@uga.edu) |
+| <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/qianyi.png?raw=true" width="100"> | **Qianyi Wu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** [TBD]<br>🌐 [Profile Link]()<br>✉️ [Email](mailto:qianyi.wu@uga.edu) |
+| <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/luke.png?raw=true" width="100"> | **Luke Greenfield**<br>_Undergraduate Student_<br><br>🔬 **Focus:** Data Annotation, Object Detection<br>🌐 [Profile Link]()<br>✉️ [Email](mailto:luke.greenfield@uga.edu) |
 ## 🚀 Research Areas
 
 Our team works on cutting-edge technologies, including but not limited to:
