@@ -24,7 +24,7 @@ We are a research group dedicated to advancing safer and smarter transportation 
 
 | Portrait | Investigator Details |
 | :---: | :--- |
-| <img src="./yao.jpg?raw=true" width="120"> | **Dr. Handong Yao**<br>_Assistant Professor_<br>School of Environmental, Civil, Agricultural and Mechanical Engineering (ECAM)<br><br>Startups & Institutes:<br>• **Faculty Fellow**, Institute of Artificial Intelligence<br><br>🔬 **Focus:** CAV, CPS, AI, Safety<br>🌐 [Faculty Profile](https://engineering.uga.edu/team_member/handong-yao/)<br>✉️ [Email](mailto:handong.yao@uga.edu) |
+| <img src="./yao.jpg?raw=true" width="120"> | **Dr. Handong Yao**<br>_Assistant Professor_<br>School of Environmental, Civil, Agricultural and Mechanical Engineering (ECAM)<br><br>Institutes:<br>• **Faculty Fellow**, Institute of Artificial Intelligence<br><br>🔬 **Focus:** CAV, CPS, AI, Safety<br>🌐 [Faculty Profile](https://engineering.uga.edu/team_member/handong-yao/)<br>✉️ [Email](mailto:handong.yao@uga.edu) |
 
 ## 🎓 Research Assistants
 
