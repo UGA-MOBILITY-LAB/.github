@@ -30,10 +30,10 @@ We are a research group dedicated to advancing safer and smarter transportation 
 
 | Team Member | Role & Research Focus |
 | :---: | :--- |
-| <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/tianle.png?raw=true" width="100"> | **Tianle Zhu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** [TBD]<br>🌐 [Profile Link]()<br>✉️ [Email](mailto:tianle.zhu@uga.edu) |
+| <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/tianle.png?raw=true" width="100"> | **Tianle Zhu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** Cooperative Perception, AI, Safety <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:tianle.zhu@uga.edu) |
 | <img src="./hua.png?raw=true" width="100"> | **Haohua Que**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** Autonomous Vehicle, Robotics, Computer Vision, AI Application<br>🌐 [Google Scholar](https://scholar.google.com/citations?user=EWgqpTgAAAAJ&hl)<br>✉️ [Email](mailto:hq10606@uga.edu) |
-| <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/qianyi.png?raw=true" width="100"> | **Qianyi Wu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** [TBD]<br>🌐 [Profile Link]()<br>✉️ [Email](mailto:qianyi.wu@uga.edu) |
-| <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/luke.png?raw=true" width="100"> | **Luke Greenfield**<br>_Undergraduate Student_<br><br>🔬 **Focus:** Data Annotation, Object Detection<br>🌐 [Profile Link]()<br>✉️ [Email](mailto:luke.greenfield@uga.edu) |
+| <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/qianyi.png?raw=true" width="100"> | **Qianyi Wu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** CAV Modeling and Simulation, AI, CPS <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:qianyi.wu@uga.edu) |
+| <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/luke.png?raw=true" width="100"> | **Luke Greenfield**<br>_Undergraduate Student (ECAM)_<br><br>🔬 **Focus:** Data Annotation, Object Detection<br>🌐 [Profile Link]()<br>✉️ [Email](mailto:luke.greenfield@uga.edu) |
 ## 🚀 Research Areas
 
 Our team works on cutting-edge technologies, including but not limited to:
