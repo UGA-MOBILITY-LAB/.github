@@ -33,7 +33,11 @@ We are a research group dedicated to advancing safer and smarter transportation 
 | <img src="./Tianle.jpg?raw=true" width="100"> | **Tianle Zhu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** Cooperative Perception, AI, Safety <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:tianle.zhu@uga.edu) |
 | <img src="./hua.png?raw=true" width="100"> | **Haohua Que**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** Autonomous Vehicle, Robotics, Computer Vision, AI Application<br>🌐 [Google Scholar](https://scholar.google.com/citations?user=EWgqpTgAAAAJ&hl)<br>✉️ [Email](mailto:hq10606@uga.edu) |
 | <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/qianyi.png?raw=true" width="100"> | **Qianyi Wu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** CAV Modeling and Simulation, AI, CPS <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:qianyi.wu@uga.edu) |
-| <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/luke.png?raw=true" width="100"> | **Luke Greenfield**<br>_Undergraduate Student (ECAM)_<br><br>🔬 **Focus:** Data Annotation, Object Detection<br>🌐 [Profile Link]()<br>✉️ [Email](mailto:luke.greenfield@uga.edu) |
+
+| Former Team Member |
+| **Luke Greenfield**<br>_Undergraduate Student (ECAM)_<br><br>🔬 **2025 Fall**|
+| **James Volfson**<br>_Young Dawgs Intern (North Oconee High Scholl)_<br><br>🔬 **2025 Spring**|
+
 ## 🚀 Research Areas
 
 Our team works on cutting-edge technologies, including but not limited to:
@@ -47,7 +51,7 @@ Our team works on cutting-edge technologies, including but not limited to:
 
 * **Tribal & Rural Autonomous Vehicles for Efficiency, Livability and Safety (TRAVELS)**, USDOT, 2026-2031
 * **Creating a Ten-Year Traffic Safety Infrastructure Plan for the University of Georgia**, USDOT, 2026-2027
-* **Rural Road Infrastructure Assessment and Enhancement for Autonomous Vehicle Deployment**, USDOT CR2C2, 2025-2025
+* **Rural Road Infrastructure Assessment and Enhancement for Autonomous Vehicle Deployment**, USDOT CR2C2, 2025-2026
 * **Realistic Autonomous Vehicle Behavior Investigation for Stakeholder Empowerment (RAISE)**, FHWA, 2024-2027
 * **Safe and Futuristic Ecosystem for Vulnerable Road Users (SAFER)**, UGA, 2024-2025
 
