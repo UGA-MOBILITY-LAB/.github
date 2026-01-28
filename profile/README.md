@@ -35,9 +35,9 @@ We are a research group dedicated to advancing safer and smarter transportation 
 | <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/qianyi.png?raw=true" width="100"> | **Qianyi Wu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** CAV Modeling and Simulation, AI, CPS <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:qianyi.wu@uga.edu) |
 | <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/qianyi.png?raw=true" width="100"> | **Richard Alexander Booth Fritz**<br>_Master Student (IAI)_<br><br>🔬 **Focus:** CAV Network Optimization and Simulation, AI <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:Richard.Fritz@uga.edu) |
 
-| Former Team Member |
-| **Luke Greenfield**<br>_Undergraduate Student (ECAM)_<br><br>🔬 **2025 Fall**|
-| **James Volfson**<br>_Young Dawgs Intern (North Oconee High Scholl)_<br><br>🔬 **2025 Spring**|
+| **Former Team Member** |
+| **2025 Fall** **Luke Greenfield**<br>_Undergraduate Student (ECAM)_<br><br>🔬 |
+| **2025 Spring** **James Volfson**<br>_Young Dawgs Intern (North Oconee High Scholl)_<br><br>🔬 |
 
 ## 🚀 Research Areas
 
