@@ -37,8 +37,8 @@ We are a research group dedicated to advancing safer and smarter transportation 
 
 | Former Team Member | Period |
 | :---: | :--- |
-| **Luke Greenfield**<br>_Undergraduate Student (ECAM)_<br><br> |🔬 2025 Fall |
-| **James Volfson**<br>_Young Dawgs Intern (North Oconee High Scholl)_<br><br> |🔬 2025 Spring |
+| **Luke Greenfield**<br>_Undergraduate Student (ECAM)_<br><br> | 2025 Fall |
+| **James Volfson**<br>_Young Dawgs Intern (North Oconee High Scholl)_<br><br> | 2025 Spring |
 
 
 ## 🚀 Research Areas
