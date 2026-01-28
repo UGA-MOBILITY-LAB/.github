@@ -33,7 +33,7 @@ We are a research group dedicated to advancing safer and smarter transportation 
 | <img src="./Tianle.jpg?raw=true" width="100"> | **Tianle Zhu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** Cooperative Perception, AI, Safety <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:tianle.zhu@uga.edu) |
 | <img src="./hua.png?raw=true" width="100"> | **Haohua Que**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** Autonomous Vehicle, Robotics, Computer Vision, AI Application<br>🌐 [Google Scholar](https://scholar.google.com/citations?user=EWgqpTgAAAAJ&hl)<br>✉️ [Email](mailto:hq10606@uga.edu) |
 | <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/qianyi.png?raw=true" width="100"> | **Qianyi Wu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** CAV Modeling and Simulation, AI, CPS <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:qianyi.wu@uga.edu) |
-| <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/qianyi.png?raw=true" width="100"> | **Richard Alexander Booth Fritz **<br>_Master Student (IAI)_<br><br>🔬 **Focus:** CAV Network Optimization and Simulation, AI <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:Richard.Fritz@uga.edu) |
+| <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/qianyi.png?raw=true" width="100"> | **Richard Alexander Booth Fritz**<br>_Master Student (IAI)_<br><br>🔬 **Focus:** CAV Network Optimization and Simulation, AI <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:Richard.Fritz@uga.edu) |
 
 | Former Team Member |
 | **Luke Greenfield**<br>_Undergraduate Student (ECAM)_<br><br>🔬 **2025 Fall**|
