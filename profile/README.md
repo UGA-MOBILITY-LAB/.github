@@ -68,7 +68,7 @@ Our team works on cutting-edge technologies, including but not limited to:
 
 * **MACE: Mixture-of-Experts Accelerated Coordinate Encoding for Large-Scale Scene Localization and Rendering.**  
   Mingkai Liu, Dikai Fan, Haohua Que, Haojia Gao, Xiao Liu, Shuxue Peng, Meixia Lin, Shengyu Gu, Ruicong Ye, Wanli Qiu, Handong Yao, Ruopeng Zhang, Xianliang Huang.  
-  **ICRA 2026 (Accepted).**
+  **IEEE International Conference on Robotics and Automation (ICRA), 2026 (Accepted).**
 
 * **Investigating the Car Following Behavior of Electric Vehicles with One-Pedal Driving Through Field Experiments.**  
   T. Zhu, H. Yao (2026). The 105th TRB Annual Meeting, Washington, DC.
