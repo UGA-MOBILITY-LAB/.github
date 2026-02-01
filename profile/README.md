@@ -20,6 +20,10 @@ Welcome to the official GitHub organization of the **Mobility Lab** at the Unive
 
 We are a research group dedicated to advancing safer and smarter transportation systems through research in **Connected and Automated Vehicles (CAVs)**, **Robotics**, and **Cyber-Physical Systems**. Our research bridges the gap between theoretical algorithms and real-world applications, focusing on perception, planning, and control in complex environments.
 
+## 📰 News
+
+* **[2026]** 🎉 Our paper **"MACE: Mixture-of-Experts Accelerated Coordinate Encoding for Large-Scale Scene Localization and Rendering"** has been **accepted** by **ICRA 2026**.
+
 ## 👨‍🏫 Principal Investigator
 
 | Portrait | Investigator Details |
@@ -32,14 +36,15 @@ We are a research group dedicated to advancing safer and smarter transportation 
 | :---: | :--- |
 | <img src="./Tianle.jpg?raw=true" width="100"> | **Tianle Zhu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** Cooperative Perception, AI, Safety <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:tianle.zhu@uga.edu) |
 | <img src="./hua.png?raw=true" width="100"> | **Haohua Que**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** Autonomous Vehicle, Robotics, Computer Vision, AI Application<br>🌐 [Google Scholar](https://scholar.google.com/citations?user=EWgqpTgAAAAJ&hl)<br>✉️ [Email](mailto:hq10606@uga.edu) |
-| <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/qianyi.png?raw=true" width="100"> | **Qianyi Wu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** CAV Modeling and Simulation, AI, CPS <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:qianyi.wu@uga.edu) |
+| <img src="./qianyi.jpg?raw=true" width="100"> | **Qianyi Wu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** CAV Modeling and Simulation, AI, CPS <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:qianyi.wu@uga.edu) |
 | <img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/qianyi.png?raw=true" width="100"> | **Richard Alexander Booth Fritz**<br>_Master Student (IAI)_<br><br>🔬 **Focus:** CAV Network Optimization and Simulation, AI <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:Richard.Fritz@uga.edu) |
 
 | Former Team Member | Period |
 | :---: | :--- |
 | **Luke Greenfield**<br>_Undergraduate Student (ECAM)_<br><br> | 2025 Fall |
-| **James Volfson**<br>_Young Dawgs Intern (North Oconee High Scholl)_<br><br> | 2025 Spring |
+| **James Volfson**<br>_Young Dawgs Intern (North Oconee High School)_<br><br> | 2025 Spring |
 
+---
 
 ## 🚀 Research Areas
 
@@ -61,12 +66,28 @@ Our team works on cutting-edge technologies, including but not limited to:
 
 ## 📝 Recent Publications
 
-* **Investigating the Car Following Behavior of Electric Vehicles with One-Pedal Driving Through Field Experiments.** T. Zhu, H. Yao (2026). The 105th TRB Annual Meeting, Washington, DC.
-* **Modeling Autonomous Driving Systems-Equipped Vehicle Interactions with Traffic Signs.** X. Wang, Q. Li, H. Yao, J. Hourdos, G. McHale (2026). The 105th TRB Annual Meeting, Washington, DC.
-* **MACE: Mixture-of-Experts Accelerated Coordinate Encoding for Large-Scale Scene Localization and Rendering.** Mingkai Liu, Dikai Fan, Haohua Que, Haojia Gao, Wanli Qiu, Ruicong Ye, Handong Yao, Xianliang Huang, Fei Qiao (2025). The Edge AI for Robotics workshop at the IROS 2025, Hangzhou, China, October 2025 (Best Paper Award).
-* **Interaction dataset of autonomous vehicles with traffic lights and signs.**	Li, Z., Bao, Z., Meng, H., Shi, H., Li, Q., Yao, H., & Li, X. (2025). Communications in Transportation Research, 5, 100217.
-* **Edge-computing-based operations for automated vehicles with different cooperation classes at stop-controlled intersections.**	Soleimaniamiri, S., Yao, H., Ghiasi, A., Li, X., Bujanović, P., Vadakpat, G., Lochrane, T.W.P. (2025). IET Intell. Transp. Syst. 19, e12577. https://doi.org/10.1049/itr2.12577
+* **MACE: Mixture-of-Experts Accelerated Coordinate Encoding for Large-Scale Scene Localization and Rendering.**  
+  Mingkai Liu, Dikai Fan, Haohua Que, Haojia Gao, Xiao Liu, Shuxue Peng, Meixia Lin, Shengyu Gu, Ruicong Ye, Wanli Qiu, Handong Yao, Ruopeng Zhang, Xianliang Huang.  
+  **ICRA 2026 (Accepted).**
 
+* **Investigating the Car Following Behavior of Electric Vehicles with One-Pedal Driving Through Field Experiments.**  
+  T. Zhu, H. Yao (2026). The 105th TRB Annual Meeting, Washington, DC.
+
+* **Modeling Autonomous Driving Systems-Equipped Vehicle Interactions with Traffic Signs.**  
+  X. Wang, Q. Li, H. Yao, J. Hourdos, G. McHale (2026). The 105th TRB Annual Meeting, Washington, DC.
+
+* **MACE: Mixture-of-Experts Accelerated Coordinate Encoding for Large-Scale Scene Localization and Rendering.**  
+  Mingkai Liu, Dikai Fan, Haohua Que, Haojia Gao, Wanli Qiu, Ruicong Ye, Handong Yao, Xianliang Huang, Fei Qiao (2025).  
+  The Edge AI for Robotics workshop at IROS 2025, Hangzhou, China, October 2025 (**Best Paper Award**).
+
+* **Interaction dataset of autonomous vehicles with traffic lights and signs.**  
+  Li, Z., Bao, Z., Meng, H., Shi, H., Li, Q., Yao, H., & Li, X. (2025). Communications in Transportation Research, 5, 100217.
+
+* **Edge-computing-based operations for automated vehicles with different cooperation classes at stop-controlled intersections.**  
+  Soleimaniamiri, S., Yao, H., Ghiasi, A., Li, X., Bujanović, P., Vadakpat, G., Lochrane, T.W.P. (2025).  
+  IET Intell. Transp. Syst. 19, e12577. https://doi.org/10.1049/itr2.12577
+
+---
 
 ## 🛠️ Tech Stack & Tools
 
