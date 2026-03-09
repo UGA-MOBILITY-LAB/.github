@@ -18,7 +18,7 @@
 
 Welcome to the official GitHub organization of the **Mobility Lab** at the University of Georgia. 
 
-We are a research group dedicated to advancing safer and smarter transportation systems through research in **Connected and Automated Vehicles (CAVs)**, **Robotics**, and **Cyber-Physical Systems**. Our research bridges the gap between theoretical algorithms and real-world applications, focusing on perception, planning, and control in complex environments.
+We are a research group dedicated to advancing safer and smarter transportation systems through research in **Connected and Automated Vehicles (CAVs)**, **Robotics**, **Smart Infrastructure**, and **Cyber-Physical Systems**. Our research bridges the gap between theoretical algorithms and real-world applications, focusing on perception, planning, and control in complex environments.
 
 ## 📰 News
 
@@ -28,7 +28,7 @@ We are a research group dedicated to advancing safer and smarter transportation 
 
 | Portrait | Investigator Details |
 | :---: | :--- |
-| <img src="./HYao.jpg?raw=true" width="120"> | **Dr. Handong Yao**<br>_Assistant Professor_<br>School of Environmental, Civil, Agricultural and Mechanical Engineering (ECAM)<br><br>Institutes:<br>• **Faculty Fellow**, Institute of Artificial Intelligence<br><br>🔬 **Focus:** CAV, CPS, AI, Safety<br>🌐 [Faculty Profile](https://engineering.uga.edu/team_member/handong-yao/)<br>✉️ [Email](mailto:handong.yao@uga.edu) |
+| <img src="./HYao.jpg?raw=true" width="120"> | **Dr. Handong Yao**<br>_Assistant Professor_<br>School of Environmental, Civil, Agricultural and Mechanical Engineering (ECAM)<br><br>Institutes:<br>• **Faculty Fellow**, Institute of Artificial Intelligence<br><br>🔬 **Focus:** CAV, CPS, Smart Transportation, Smart Infrastructure, AI, Safety<br>🌐 [Faculty Profile](https://engineering.uga.edu/team_member/handong-yao/)<br>✉️ [Email](mailto:handong.yao@uga.edu) |
 
 ## 🎓 Research Assistants
 
@@ -51,14 +51,14 @@ We are a research group dedicated to advancing safer and smarter transportation 
 Our team works on cutting-edge technologies, including but not limited to:
 
 * **Autonomous Driving Perception:** Bird's-Eye-View (BEV) mapping, Object Detection, and Sensor Fusion (LiDAR/Camera).
-* **Smart Infrastructure:** AI-driven traffic management and roadside perception.
+* **Smart Transportation and Infrastructure:** AI-driven traffic management and roadside perception.
 * **Robotics & Control:** Reinforcement Learning for robotic manipulation and path planning.
 * **Vehicle-Infrastructure Coordination:** Vehicle-to-Everything (V2X) communication and collaborative operations.
 
 ## 📚 Projects
 
-* **Tribal & Rural Autonomous Vehicles for Efficiency, Livability and Safety (TRAVELS)**, USDOT, 2026-2031
-* **Creating a Ten-Year Traffic Safety Infrastructure Plan for the University of Georgia**, USDOT, 2026-2027
+* **Tribal & Rural Autonomous Vehicles for Efficiency, Livability and Safety (TRAVELS)**, USDOT, 2026-2032
+* **Creating a Ten-Year Traffic Safety Infrastructure Plan for the University of Georgia**, USDOT, 2026-2028
 * **Rural Road Infrastructure Assessment and Enhancement for Autonomous Vehicle Deployment**, USDOT CR2C2, 2025-2026
 * **Realistic Autonomous Vehicle Behavior Investigation for Stakeholder Empowerment (RAISE)**, FHWA, 2024-2027
 * **Infrastructure & Movement Pressure Analysis for Campus Travel (IMPACT)**, UGA Data Dawg, 2026-2026
