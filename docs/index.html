@@ -19,6 +19,7 @@
             background-color: var(--uga-gray);
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
         }
 
         .container {
@@ -27,7 +28,12 @@
             background: #ffffff;
             padding: 40px 50px;
             border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
         }
 
         /* Header Styles */
@@ -36,17 +42,29 @@
             margin-bottom: 40px;
         }
 
+        /* Logo 呼吸悬浮动画 */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
         .header img.logo {
             width: 200px;
             height: 200px;
             object-fit: contain;
             margin-bottom: 20px;
+            animation: float 4s ease-in-out infinite;
+            transition: transform 0.3s ease;
         }
 
         .header h1 {
             color: var(--uga-black);
             margin: 0 0 10px 0;
             font-size: 2.5em;
+            background: linear-gradient(45deg, var(--uga-black), var(--uga-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .header h3 {
@@ -62,12 +80,19 @@
 
         .badges img {
             margin: 0 5px;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .badges img:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.1);
         }
 
         /* Typography & Headings */
         h2 {
             color: var(--uga-black);
-            border-bottom: 3px solid var(--uga-red);
+            border-bottom: 3px solid transparent;
+            position: relative;
             padding-bottom: 8px;
             margin-top: 40px;
             display: flex;
@@ -75,24 +100,50 @@
             gap: 10px;
         }
 
+        /* 标题下划线动画 */
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--uga-red);
+            transition: width 0.4s ease;
+        }
+
+        h2:hover::after {
+            width: 100%;
+        }
+
         a {
             color: var(--uga-red);
             text-decoration: none;
             font-weight: 500;
+            position: relative;
         }
 
-        a:hover {
-            text-decoration: underline;
+        /* 链接下划线动效 */
+        a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--uga-red);
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
         }
 
-        /* Lists */
-        ul {
-            padding-left: 20px;
+        a:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
         }
 
-        li {
-            margin-bottom: 10px;
-        }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 10px; }
 
         /* Tables for Profiles */
         table {
@@ -113,17 +164,36 @@
             font-weight: bold;
         }
 
+        /* 成员列表行悬浮特效 */
+        tbody tr {
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background-color: #fafafa;
+            transform: translateX(8px);
+            border-radius: 8px;
+            box-shadow: -4px 0 0 var(--uga-red);
+        }
+
         td.avatar-cell {
             width: 140px;
             text-align: center;
         }
 
+        /* 头像悬浮特效 */
         td.avatar-cell img {
             width: 120px;
             height: 120px;
             border-radius: 10px;
             object-fit: cover;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        tbody tr:hover td.avatar-cell img {
+            transform: scale(1.08) rotate(3deg);
+            box-shadow: 0 10px 20px rgba(186, 12, 47, 0.2);
         }
 
         /* Tech Stack */
@@ -132,6 +202,16 @@
             flex-wrap: wrap;
             gap: 10px;
             margin-top: 20px;
+        }
+
+        /* 科技栈图标Q弹特效 */
+        .tech-stack img {
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .tech-stack img:hover {
+            transform: scale(1.15) translateY(-5px);
         }
 
         /* Footer */
@@ -144,20 +224,26 @@
             color: #777;
         }
 
+        /* --- 滚动加载动画类 --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .container {
                 margin: 20px;
                 padding: 20px;
             }
-            td {
-                display: block;
-                width: 100%;
-                box-sizing: border-box;
-            }
-            td.avatar-cell {
-                text-align: center;
-            }
+            td { display: block; width: 100%; box-sizing: border-box; }
+            td.avatar-cell { text-align: center; }
             tr {
                 display: flex;
                 flex-direction: column;
@@ -166,13 +252,14 @@
                 padding-bottom: 20px;
                 margin-bottom: 20px;
             }
+            tbody tr:hover { transform: none; box-shadow: none; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
+<div class="container reveal">
+    <div class="header reveal">
         <img src="./image.png" alt="Mobility Lab Logo" class="logo" onerror="this.src='https://via.placeholder.com/200?text=Logo'">
         <h1>Mobility Lab</h1>
         <h3>Connected and Automated Mobility & Infrastructure Systems</h3>
@@ -188,17 +275,17 @@
         </div>
     </div>
 
-    <h2>🔬 About Us</h2>
-    <p>Welcome to the official GitHub organization of the **Mobility Lab** at the University of Georgia.</p>
-    <p>We are a research group dedicated to advancing safer and smarter transportation systems through research in <strong>Connected and Automated Vehicles (CAVs)</strong>, <strong>Robotics</strong>, <strong>Smart Infrastructure</strong>, and <strong>Cyber-Physical Systems</strong>. Our research bridges the gap between theoretical algorithms and real-world applications, focusing on perception, planning, and control in complex environments.</p>
+    <h2 class="reveal">🔬 About Us</h2>
+    <p class="reveal">Welcome to the official GitHub organization of the **Mobility Lab** at the University of Georgia.</p>
+    <p class="reveal">We are a research group dedicated to advancing safer and smarter transportation systems through research in <strong>Connected and Automated Vehicles (CAVs)</strong>, <strong>Robotics</strong>, <strong>Smart Infrastructure</strong>, and <strong>Cyber-Physical Systems</strong>. Our research bridges the gap between theoretical algorithms and real-world applications, focusing on perception, planning, and control in complex environments.</p>
 
-    <h2>📰 News</h2>
-    <ul>
+    <h2 class="reveal">📰 News</h2>
+    <ul class="reveal">
         <li><strong>[2026]</strong> 🎉 Our paper <strong>"MACE: Mixture-of-Experts Accelerated Coordinate Encoding for Large-Scale Scene Localization and Rendering"</strong> has been <strong>accepted</strong> by <strong>ICRA 2026</strong>.</li>
     </ul>
 
-    <h2>👨‍🏫 Principal Investigator</h2>
-    <table>
+    <h2 class="reveal">👨‍🏫 Principal Investigator</h2>
+    <table class="reveal">
         <tbody>
             <tr>
                 <td class="avatar-cell">
@@ -218,8 +305,8 @@
         </tbody>
     </table>
 
-    <h2>🎓 Research Assistants</h2>
-    <table>
+    <h2 class="reveal">🎓 Research Assistants</h2>
+    <table class="reveal">
         <tbody>
             <tr>
                 <td class="avatar-cell"><img src="./Tianle.jpg" onerror="this.src='https://via.placeholder.com/100?text=Tianle'" alt="Tianle Zhu"></td>
@@ -264,7 +351,7 @@
         </tbody>
     </table>
 
-    <table>
+    <table class="reveal">
         <thead>
             <tr>
                 <th>Former Team Member</th>
@@ -289,17 +376,17 @@
         </tbody>
     </table>
 
-    <h2>🚀 Research Areas</h2>
-    <p>Our team works on cutting-edge technologies, including but not limited to:</p>
-    <ul>
+    <h2 class="reveal">🚀 Research Areas</h2>
+    <p class="reveal">Our team works on cutting-edge technologies, including but not limited to:</p>
+    <ul class="reveal">
         <li><strong>Autonomous Driving Perception:</strong> Bird's-Eye-View (BEV) mapping, Object Detection, and Sensor Fusion (LiDAR/Camera).</li>
         <li><strong>Smart Transportation and Infrastructure:</strong> AI-driven traffic management and roadside perception.</li>
         <li><strong>Robotics & Control:</strong> Reinforcement Learning for robotic manipulation and path planning.</li>
         <li><strong>Vehicle-Infrastructure Coordination:</strong> Vehicle-to-Everything (V2X) communication and collaborative operations.</li>
     </ul>
 
-    <h2>📚 Projects</h2>
-    <ul>
+    <h2 class="reveal">📚 Projects</h2>
+    <ul class="reveal">
         <li><strong>Tribal & Rural Autonomous Vehicles for Efficiency, Livability and Safety (TRAVELS)</strong>, USDOT, 2026-2032</li>
         <li><strong>Creating a Ten-Year Traffic Safety Infrastructure Plan for the University of Georgia</strong>, USDOT, 2026-2028</li>
         <li><strong>Rural Road Infrastructure Assessment and Enhancement for Autonomous Vehicle Deployment</strong>, USDOT CR2C2, 2025-2026</li>
@@ -308,8 +395,13 @@
         <li><strong>Safe and Futuristic Ecosystem for Vulnerable Road Users (SAFER)</strong>, UGA, 2024-2025</li>
     </ul>
 
-    <h2>📝 Recent Publications</h2>
-    <ul>
+    <h2 class="reveal">📝 Recent Publications</h2>
+    <ul class="reveal">
+        <li>
+            <strong>MotiMem: Motion-Aware Approximate Memory for Energy-Efficient Neural Perception in Autonomous Vehicles.</strong><br>
+            Haohua Que, Mingkai Liu, Jiayue Xie, Haojia Gao, Jiajun Sun, Hongyi Xu, Handong Yao, Fei Qiao.<br>
+            <em>arXiv preprint arXiv:2603.27108 (2026). <a href="https://doi.org/10.48550/arXiv.2603.27108" target="_blank">[Link]</a></em>
+        </li>
         <li>
             <strong>MACE: Mixture-of-Experts Accelerated Coordinate Encoding for Large-Scale Scene Localization and Rendering.</strong><br>
             Mingkai Liu, Dikai Fan, Haohua Que, Haojia Gao, Xiao Liu, Shuxue Peng, Meixia Lin, Shengyu Gu, Ruicong Ye, Wanli Qiu, Handong Yao, Ruopeng Zhang, Xianliang Huang.<br>
@@ -339,8 +431,8 @@
         </li>
     </ul>
 
-    <h2>🛠️ Tech Stack & Tools</h2>
-    <div class="tech-stack">
+    <h2 class="reveal">🛠️ Tech Stack & Tools</h2>
+    <div class="tech-stack reveal">
         <img src="https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python">
         <img src="https://img.shields.io/badge/-C++-00599C?style=flat-square&logo=c%2B%2B&logoColor=white" alt="C++">
         <img src="https://img.shields.io/badge/-ROS2-22314E?style=flat-square&logo=ros&logoColor=white" alt="ROS2">
@@ -349,11 +441,29 @@
         <img src="https://img.shields.io/badge/-Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker">
     </div>
 
-    <div class="footer">
-        © 2025 UGA Mobility Lab. University of Georgia.
+    <div class="footer reveal">
+        © 2026 UGA Mobility Lab. University of Georgia.
     </div>
 
 </div>
+
+<script>
+    function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+        for (var i = 0; i < reveals.length; i++) {
+            var windowHeight = window.innerHeight;
+            var elementTop = reveals[i].getBoundingClientRect().top;
+            var elementVisible = 50; // 元素距离视口底部多少像素时触发动画
+
+            if (elementTop < windowHeight - elementVisible) {
+                reveals[i].classList.add("active");
+            }
+        }
+    }
+    window.addEventListener("scroll", reveal);
+    // 初始加载时触发一次
+    reveal();
+</script>
 
 </body>
 </html>
