@@ -22,22 +22,23 @@ We are a research group dedicated to advancing safer and smarter transportation 
 
 ## 📰 News
 
+* **[2026]** 🎉 Our paper **"MotiMem"** has been **accepted** by **IEEE WCCI / IJCNN 2026**.
 * **[2026]** 🎉 Our paper **"MACE: Mixture-of-Experts Accelerated Coordinate Encoding for Large-Scale Scene Localization and Rendering"** has been **accepted** by **ICRA 2026**.
 
 ## 👨‍🏫 Principal Investigator
 
 | Portrait | Investigator Details |
 | :---: | :--- |
-| <img src="./HYao.jpg?raw=true" width="120"> | **Dr. Handong Yao**<br>_Assistant Professor_<br>School of Environmental, Civil, Agricultural and Mechanical Engineering (ECAM)<br><br>Institutes:<br>• **Faculty Fellow**, Institute of Artificial Intelligence<br><br>🔬 **Focus:** CAV, CPS, Smart Transportation, Smart Infrastructure, AI, Safety<br>🌐 [Faculty Profile](https://engineering.uga.edu/team_member/handong-yao/)<br>✉️ [Email](mailto:handong.yao@uga.edu) |
+| <img src="./HYao.jpg?raw=true" width="160"> | **Dr. Handong Yao**<br>_Assistant Professor_<br>School of Environmental, Civil, Agricultural and Mechanical Engineering (ECAM)<br><br>Institutes:<br>• **Faculty Fellow**, Institute of Artificial Intelligence<br><br>🔬 **Focus:** CAV, CPS, Smart Transportation, Smart Infrastructure, AI, Safety<br>🌐 [Faculty Profile](https://engineering.uga.edu/team_member/handong-yao/)<br>✉️ [Email](mailto:handong.yao@uga.edu) |
 
 ## 🎓 Research Assistants
 
 | Team Member | Role & Research Focus |
 | :---: | :--- |
-| <img src="./Tianle.jpg?raw=true" width="100"> | **Tianle Zhu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** Cooperative Perception, AI, Safety <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:tianle.zhu@uga.edu) |
-| <img src="./hua.png?raw=true" width="100"> | **Haohua Que**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** Autonomous Vehicle, Robotics, Computer Vision, AI Application<br>🌐 [Google Scholar](https://scholar.google.com/citations?user=EWgqpTgAAAAJ&hl)<br>✉️ [Email](mailto:hq10606@uga.edu) |
-| <img src="./qianyi.jpg?raw=true" width="100"> | **Qianyi Wu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** CAV Modeling and Simulation, AI, CPS <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:qianyi.wu@uga.edu) |
-| <img src="https://via.placeholder.com/100?text=Richard" width="100"> | **Richard Alexander Booth Fritz**<br>_Master Student (IAI)_<br><br>🔬 **Focus:** CAV Network Optimization and Simulation, AI <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:Richard.Fritz@uga.edu) |
+| <img src="./Tianle.jpg?raw=true" width="140"> | **Tianle Zhu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** Cooperative Perception, AI, Safety <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:tianle.zhu@uga.edu) |
+| <img src="./hua.png?raw=true" width="140"> | **Haohua Que**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** Autonomous Vehicle, Robotics, Computer Vision, AI Application<br>🌐 [Google Scholar](https://scholar.google.com/citations?user=EWgqpTgAAAAJ&hl)<br>✉️ [Email](mailto:hq10606@uga.edu) |
+| <img src="./qianyi.jpg?raw=true" width="140"> | **Qianyi Wu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** CAV Modeling and Simulation, AI, CPS <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:qianyi.wu@uga.edu) |
+| <img src="https://via.placeholder.com/140?text=Richard" width="140"> | **Richard Alexander Booth Fritz**<br>_Master Student (IAI)_<br><br>🔬 **Focus:** CAV Network Optimization and Simulation, AI <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:Richard.Fritz@uga.edu) |
 
 | Former Team Member | Period |
 | :---: | :--- |
