@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobility Lab | University of Georgia</title>
+    <style>
+        :root {
+            --uga-red: #BA0C2F;
+            --uga-black: #000000;
+            --uga-gray: #f4f4f4;
+            --text-color: #333333;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--uga-gray);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 40px 50px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Header Styles */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header img.logo {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: var(--uga-black);
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+        }
+
+        .header h3 {
+            color: var(--uga-red);
+            font-weight: 400;
+            margin: 0 0 15px 0;
+        }
+
+        .header p {
+            font-weight: bold;
+            color: var(--uga-black);
+        }
+
+        .badges img {
+            margin: 0 5px;
+        }
+
+        /* Typography & Headings */
+        h2 {
+            color: var(--uga-black);
+            border-bottom: 3px solid var(--uga-red);
+            padding-bottom: 8px;
+            margin-top: 40px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        a {
+            color: var(--uga-red);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Lists */
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* Tables for Profiles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 20px;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        th {
+            background-color: var(--uga-gray);
+            color: var(--uga-black);
+            font-weight: bold;
+        }
+
+        td.avatar-cell {
+            width: 140px;
+            text-align: center;
+        }
+
+        td.avatar-cell img {
+            width: 120px;
+            height: 120px;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #eeeeee;
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+            td {
+                display: block;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            td.avatar-cell {
+                text-align: center;
+            }
+            tr {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                border-bottom: 2px solid #eee;
+                padding-bottom: 20px;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <img src="https://via.placeholder.com/200?text=CAMIs+Logo" alt="CAMIs Logo" class="logo">
+        <h1>Mobility Lab</h1>
+        <h3>Connected and Automated Mobility & Infrastructure Systems</h3>
+        <p>University of Georgia | College of Engineering</p>
+        
+        <div class="badges">
+            <a href="https://engineering.uga.edu/" target="_blank">
+                <img src="https://img.shields.io/badge/Website-UGA_Engineering-BA0C2F?style=flat-square&logo=google-chrome" alt="Website">
+            </a>
+            <a href="https://www.google.com/maps/place/University+of+Georgia" target="_blank">
+                <img src="https://img.shields.io/badge/Location-Athens,_GA-000000?style=flat-square&logo=google-maps" alt="Location">
+            </a>
+        </div>
+    </div>
+
+    <h2>🔬 About Us</h2>
+    <p>Welcome to the official GitHub organization of the **Mobility Lab** at the University of Georgia.</p>
+    <p>We are a research group dedicated to advancing safer and smarter transportation systems through research in <strong>Connected and Automated Vehicles (CAVs)</strong>, <strong>Robotics</strong>, <strong>Smart Infrastructure</strong>, and <strong>Cyber-Physical Systems</strong>. Our research bridges the gap between theoretical algorithms and real-world applications, focusing on perception, planning, and control in complex environments.</p>
+
+    <h2>📰 News</h2>
+    <ul>
+        <li><strong>[2026]</strong> 🎉 Our paper <strong>"MACE: Mixture-of-Experts Accelerated Coordinate Encoding for Large-Scale Scene Localization and Rendering"</strong> has been <strong>accepted</strong> by <strong>ICRA 2026</strong>.</li>
+    </ul>
+
+    <h2>👨‍🏫 Principal Investigator</h2>
+    <table>
+        <tbody>
+            <tr>
+                <td class="avatar-cell">
+                    <img src="./HYao.jpg" onerror="this.src='https://via.placeholder.com/120?text=Dr.+Yao'" alt="Dr. Handong Yao">
+                </td>
+                <td>
+                    <strong>Dr. Handong Yao</strong><br>
+                    <em>Assistant Professor</em><br>
+                    School of Environmental, Civil, Agricultural and Mechanical Engineering (ECAM)<br><br>
+                    Institutes:<br>
+                    • <strong>Faculty Fellow</strong>, Institute of Artificial Intelligence<br><br>
+                    🔬 <strong>Focus:</strong> CAV, CPS, Smart Transportation, Smart Infrastructure, AI, Safety<br>
+                    🌐 <a href="https://engineering.uga.edu/team_member/handong-yao/" target="_blank">Faculty Profile</a><br>
+                    ✉️ <a href="mailto:handong.yao@uga.edu">handong.yao@uga.edu</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>🎓 Research Assistants</h2>
+    <table>
+        <tbody>
+            <tr>
+                <td class="avatar-cell"><img src="./Tianle.jpg" onerror="this.src='https://via.placeholder.com/100?text=Tianle'" alt="Tianle Zhu"></td>
+                <td>
+                    <strong>Tianle Zhu</strong><br>
+                    <em>Ph.D. Student (ECAM)</em><br><br>
+                    🔬 <strong>Focus:</strong> Cooperative Perception, AI, Safety <br>
+                    🌐 <a href="#">Profile Link</a><br>
+                    ✉️ <a href="mailto:tianle.zhu@uga.edu">tianle.zhu@uga.edu</a>
+                </td>
+            </tr>
+            <tr>
+                <td class="avatar-cell"><img src="./hua.png" onerror="this.src='https://via.placeholder.com/100?text=Haohua'" alt="Haohua Que"></td>
+                <td>
+                    <strong>Haohua Que</strong><br>
+                    <em>Ph.D. Student (ECAM)</em><br><br>
+                    🔬 <strong>Focus:</strong> Autonomous Vehicle, Robotics, Computer Vision, AI Application<br>
+                    🌐 <a href="https://scholar.google.com/citations?user=EWgqpTgAAAAJ&hl" target="_blank">Google Scholar</a><br>
+                    ✉️ <a href="mailto:hq10606@uga.edu">hq10606@uga.edu</a>
+                </td>
+            </tr>
+            <tr>
+                <td class="avatar-cell"><img src="./qianyi.jpg" onerror="this.src='https://via.placeholder.com/100?text=Qianyi'" alt="Qianyi Wu"></td>
+                <td>
+                    <strong>Qianyi Wu</strong><br>
+                    <em>Ph.D. Student (ECAM)</em><br><br>
+                    🔬 <strong>Focus:</strong> CAV Modeling and Simulation, AI, CPS <br>
+                    🌐 <a href="#">Profile Link</a><br>
+                    ✉️ <a href="mailto:qianyi.wu@uga.edu">qianyi.wu@uga.edu</a>
+                </td>
+            </tr>
+            <tr>
+                <td class="avatar-cell"><img src="https://github.com/CAMIs-Mobility-Lab/.github/blob/main/profile/img/qianyi.png?raw=true" onerror="this.src='https://via.placeholder.com/100?text=Richard'" alt="Richard Alexander Booth Fritz"></td>
+                <td>
+                    <strong>Richard Alexander Booth Fritz</strong><br>
+                    <em>Master Student (IAI)</em><br><br>
+                    🔬 <strong>Focus:</strong> CAV Network Optimization and Simulation, AI <br>
+                    🌐 <a href="#">Profile Link</a><br>
+                    ✉️ <a href="mailto:Richard.Fritz@uga.edu">Richard.Fritz@uga.edu</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Former Team Member</th>
+                <th style="width: 150px; text-align: right;">Period</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <strong>Luke Greenfield</strong><br>
+                    <em>Undergraduate Student (ECAM)</em>
+                </td>
+                <td style="text-align: right;">2025 Fall</td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>James Volfson</strong><br>
+                    <em>Young Dawgs Intern (North Oconee High School)</em>
+                </td>
+                <td style="text-align: right;">2025 Spring</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>🚀 Research Areas</h2>
+    <p>Our team works on cutting-edge technologies, including but not limited to:</p>
+    <ul>
+        <li><strong>Autonomous Driving Perception:</strong> Bird's-Eye-View (BEV) mapping, Object Detection, and Sensor Fusion (LiDAR/Camera).</li>
+        <li><strong>Smart Transportation and Infrastructure:</strong> AI-driven traffic management and roadside perception.</li>
+        <li><strong>Robotics & Control:</strong> Reinforcement Learning for robotic manipulation and path planning.</li>
+        <li><strong>Vehicle-Infrastructure Coordination:</strong> Vehicle-to-Everything (V2X) communication and collaborative operations.</li>
+    </ul>
+
+    <h2>📚 Projects</h2>
+    <ul>
+        <li><strong>Tribal & Rural Autonomous Vehicles for Efficiency, Livability and Safety (TRAVELS)</strong>, USDOT, 2026-2032</li>
+        <li><strong>Creating a Ten-Year Traffic Safety Infrastructure Plan for the University of Georgia</strong>, USDOT, 2026-2028</li>
+        <li><strong>Rural Road Infrastructure Assessment and Enhancement for Autonomous Vehicle Deployment</strong>, USDOT CR2C2, 2025-2026</li>
+        <li><strong>Realistic Autonomous Vehicle Behavior Investigation for Stakeholder Empowerment (RAISE)</strong>, FHWA, 2024-2027</li>
+        <li><strong>Infrastructure & Movement Pressure Analysis for Campus Travel (IMPACT)</strong>, UGA Data Dawg, 2026-2026</li>
+        <li><strong>Safe and Futuristic Ecosystem for Vulnerable Road Users (SAFER)</strong>, UGA, 2024-2025</li>
+    </ul>
+
+    <h2>📝 Recent Publications</h2>
+    <ul>
+        <li>
+            <strong>MACE: Mixture-of-Experts Accelerated Coordinate Encoding for Large-Scale Scene Localization and Rendering.</strong><br>
+            Mingkai Liu, Dikai Fan, Haohua Que, Haojia Gao, Xiao Liu, Shuxue Peng, Meixia Lin, Shengyu Gu, Ruicong Ye, Wanli Qiu, Handong Yao, Ruopeng Zhang, Xianliang Huang.<br>
+            <strong>IEEE International Conference on Robotics and Automation (ICRA), 2026 (Accepted).</strong>
+        </li>
+        <li>
+            <strong>Investigating the Car Following Behavior of Electric Vehicles with One-Pedal Driving Through Field Experiments.</strong><br>
+            T. Zhu, H. Yao (2026). The 105th TRB Annual Meeting, Washington, DC.
+        </li>
+        <li>
+            <strong>Modeling Autonomous Driving Systems-Equipped Vehicle Interactions with Traffic Signs.</strong><br>
+            X. Wang, Q. Li, H. Yao, J. Hourdos, G. McHale (2026). The 105th TRB Annual Meeting, Washington, DC.
+        </li>
+        <li>
+            <strong>MACE: Mixture-of-Experts Accelerated Coordinate Encoding for Large-Scale Scene Localization and Rendering.</strong><br>
+            Mingkai Liu, Dikai Fan, Haohua Que, Haojia Gao, Wanli Qiu, Ruicong Ye, Handong Yao, Xianliang Huang, Fei Qiao (2025).<br>
+            The Edge AI for Robotics workshop at IROS 2025, Hangzhou, China, October 2025 (<strong>Best Paper Award</strong>).
+        </li>
+        <li>
+            <strong>Interaction dataset of autonomous vehicles with traffic lights and signs.</strong><br>
+            Li, Z., Bao, Z., Meng, H., Shi, H., Li, Q., Yao, H., & Li, X. (2025). Communications in Transportation Research, 5, 100217.
+        </li>
+        <li>
+            <strong>Edge-computing-based operations for automated vehicles with different cooperation classes at stop-controlled intersections.</strong><br>
+            Soleimaniamiri, S., Yao, H., Ghiasi, A., Li, X., Bujanović, P., Vadakpat, G., Lochrane, T.W.P. (2025).<br>
+            IET Intell. Transp. Syst. 19, e12577. https://doi.org/10.1049/itr2.12577
+        </li>
+    </ul>
+
+    <h2>🛠️ Tech Stack & Tools</h2>
+    <div class="tech-stack">
+        <img src="https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python">
+        <img src="https://img.shields.io/badge/-C++-00599C?style=flat-square&logo=c%2B%2B&logoColor=white" alt="C++">
+        <img src="https://img.shields.io/badge/-ROS2-22314E?style=flat-square&logo=ros&logoColor=white" alt="ROS2">
+        <img src="https://img.shields.io/badge/-PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white" alt="PyTorch">
+        <img src="https://img.shields.io/badge/-OpenCV-5C3EE8?style=flat-square&logo=opencv&logoColor=white" alt="OpenCV">
+        <img src="https://img.shields.io/badge/-Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker">
+    </div>
+
+    <div class="footer">
+        © 2025 UGA Mobility Lab. University of Georgia.
+    </div>
+
+</div>
+
+</body>
+</html>
