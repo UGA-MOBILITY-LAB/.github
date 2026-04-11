@@ -225,6 +225,29 @@
             color: #777;
         }
 
+        /* Mobility Lab 渐变光泽流动 */
+        @keyframes shine {
+            0%   { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .lab-highlight {
+            font-weight: 700;
+            background: linear-gradient(
+                90deg,
+                var(--uga-black) 0%,
+                var(--uga-red) 30%,
+                #ffb347 50%,
+                var(--uga-red) 70%,
+                var(--uga-black) 100%
+            );
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+        }
+
         /* --- 滚动加载动画类 --- */
         .reveal {
             opacity: 0;
@@ -277,7 +300,7 @@
     </div>
 
     <h2 class="reveal">🔬 About Us</h2>
-    <p class="reveal">Welcome to the official GitHub organization of the **Mobility Lab** at the University of Georgia.</p>
+    <p class="reveal">Welcome to the official GitHub organization of the <span class="lab-highlight">Mobility Lab</span> at the University of Georgia.</p>
     <p class="reveal">We are a research group dedicated to advancing safer and smarter transportation systems through research in <strong>Connected and Automated Vehicles (CAVs)</strong>, <strong>Robotics</strong>, <strong>Smart Infrastructure</strong>, and <strong>Cyber-Physical Systems</strong>. Our research bridges the gap between theoretical algorithms and real-world applications, focusing on perception, planning, and control in complex environments.</p>
 
     <h2 class="reveal">📰 News</h2>
