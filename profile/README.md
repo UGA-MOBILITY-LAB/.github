@@ -22,6 +22,8 @@ We are a research group dedicated to advancing safer and smarter transportation 
 
 ## 📰 News
 
+* **[2026]** 🎉 Our paper **"Investigating the Car Following Behavior of Electric Vehicles with One-Pedal Driving Through Field Experiments"** has been **accepted** by **Communications in Transportation Research**.
+* **[2026]** 🎉 Our supported Capstone team **"Infrastructure Evaluation Tool for Production Autonomous Vehicles with Cameras and GPS Devices"** received **2026 Manufactured System or Process Design Award** (https://engineering.uga.edu/capstone/capstone-design-showcase/award-recipients-2026/).
 * **[2026]** 🎉 Our paper **"MotiMem"** has been **accepted** by **IEEE WCCI / IJCNN 2026**.
 * **[2026]** 🎉 Our paper **"MACE: Mixture-of-Experts Accelerated Coordinate Encoding for Large-Scale Scene Localization and Rendering"** has been **accepted** by **ICRA 2026**.
 
@@ -42,6 +44,7 @@ We are a research group dedicated to advancing safer and smarter transportation 
 
 | Former Team Member | Period |
 | :---: | :--- |
+| **Abhinav Yedla**<br>_Undergraduate Student (CS)_<br><br> | 2026 Summer |
 | **Luke Greenfield**<br>_Undergraduate Student (ECAM)_<br><br> | 2025 Fall |
 | **James Volfson**<br>_Young Dawgs Intern (North Oconee High School)_<br><br> | 2025 Spring |
 
