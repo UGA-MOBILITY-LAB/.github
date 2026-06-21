@@ -22,12 +22,12 @@ We are a research group dedicated to advancing safer and smarter transportation 
 
 ## 📰 News
 
-* **[2026]** 🎉 Our paper **"CABLE: Cloud-Assisted Bandwidth-efficient LMM-based Encoding for V2X Systems"** has been **accepted** by **IEEE SMC 2026**.
+* **[2026]** 🎉 Our paper **"CABLE"** has been **accepted** by **IEEE SMC 2026**.
 * **[2026]** 🎉 Three papers (**SenseExpo**, **ACESplat**, **DinoLink**) have been **accepted** by **IEEE/RSJ IROS 2026**.
 * **[2026]** 🎉 Our paper **"Investigating the Car Following Behavior of Electric Vehicles with One-Pedal Driving Through Field Experiments"** has been **accepted** by **Communications in Transportation Research**.
 * **[2026]** 🎉 Our supported Capstone team **"Infrastructure Evaluation Tool for Production Autonomous Vehicles with Cameras and GPS Devices"** received **2026 Manufactured System or Process Design Award** (https://engineering.uga.edu/capstone/capstone-design-showcase/award-recipients-2026/).
 * **[2026]** 🎉 Our paper **"MotiMem"** has been **accepted** by **IEEE WCCI / IJCNN 2026**.
-* **[2026]** 🎉 Our paper **"MACE: Mixture-of-Experts Accelerated Coordinate Encoding for Large-Scale Scene Localization and Rendering"** has been **accepted** by **ICRA 2026**.
+* **[2026]** 🎉 Our paper **"MACE"** has been **accepted** by **ICRA 2026**.
 
 ## 👨‍🏫 Principal Investigator
 
