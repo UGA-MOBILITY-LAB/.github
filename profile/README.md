@@ -72,35 +72,33 @@ Our team works on cutting-edge technologies, including but not limited to:
 
 ## 📝 Recent Publications
 
+<sub><sup>*</sup> Equal contribution &nbsp; <sup>&dagger;</sup> Corresponding author</sub>
+
 * **CABLE: Cloud-Assisted Bandwidth-efficient LMM-based Encoding for V2X Systems.**  
-  Haohua Que, Zhipeng Bao, Qianyi Wu, Handong Yao.  
+  Haohua Que, Zhipeng Bao, Qianyi Wu, Handong Yao<sup>&dagger;</sup>.  
   **IEEE International Conference on Systems, Man, and Cybernetics (SMC), 2026 (Accepted).**
 
 * **SenseExpo: Spatial Exploration and Navigation Via Scene Estimation from Expeditious Predictive Operators.**  
-  Haojia Gao, Haohua Que\*, Mingkai Liu, Jiayue Xie, Hoiian Au, Yusen Qin, Qian Zhang, Jiajun Sun, Weihao Shan, Tianle Zhu, Fei Qiao, Handong Yao.  
+  Haojia Gao<sup>*</sup>, Haohua Que<sup>*</sup>, Mingkai Liu, Jiayue Xie, Hoiian Au, Yusen Qin, Qian Zhang, Jiajun Sun, Weihao Shan, Tianle Zhu, Fei Qiao<sup>&dagger;</sup>, Handong Yao<sup>&dagger;</sup>.  
   **IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2026 (Accepted).**
 
 * **ACESplat: Accelerated 3D Gaussian Scene Regression Via RGB and Poses Only.**  
-  Mingkai Liu, Haohua Que\*, Dikai Fan, Haojia Gao, Tianle Zhu, Handong Yao, Qian Zhang, Ruopeng Zhang, Xianliang Huang, Fei Qiao.  
+  Mingkai Liu<sup>*</sup>, Haohua Que<sup>*</sup>, Dikai Fan, Haojia Gao, Tianle Zhu, Handong Yao, Qian Zhang, Ruopeng Zhang, Xianliang Huang, Fei Qiao<sup>&dagger;</sup>.  
   **IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2026 (Accepted).**
 
 * **DinoLink: A Token-Centric Representation Compression Framework for Bandwidth-Constrained Collaborative V2X Perception.**  
-  Tianle Zhu, Haohua Que\*, Hongyi Xu, Handong Yao, Zhipeng Bao.  
+  Tianle Zhu<sup>*</sup>, Haohua Que<sup>*</sup>, Hongyi Xu, Handong Yao<sup>&dagger;</sup>, Zhipeng Bao.  
   **IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2026 (Accepted).**
 
 * **MACE: Mixture-of-Experts Accelerated Coordinate Encoding for Large-Scale Scene Localization and Rendering.**  
   Mingkai Liu, Dikai Fan, Haohua Que, Haojia Gao, Xiao Liu, Shuxue Peng, Meixia Lin, Shengyu Gu, Ruicong Ye, Wanli Qiu, Handong Yao, Ruopeng Zhang, Xianliang Huang.  
-  **IEEE International Conference on Robotics and Automation (ICRA), 2026 (Accepted).**
+  **IEEE International Conference on Robotics and Automation (ICRA), 2026 (Accepted).** A preliminary version received the **Best Paper Award** at the Edge AI for Robotics Workshop, IROS 2025.
 
 * **Investigating the Car Following Behavior of Electric Vehicles with One-Pedal Driving Through Field Experiments.**  
   T. Zhu, H. Yao (2026). The 105th TRB Annual Meeting, Washington, DC.
 
 * **Modeling Autonomous Driving Systems-Equipped Vehicle Interactions with Traffic Signs.**  
   X. Wang, Q. Li, H. Yao, J. Hourdos, G. McHale (2026). The 105th TRB Annual Meeting, Washington, DC.
-
-* **MACE: Mixture-of-Experts Accelerated Coordinate Encoding for Large-Scale Scene Localization and Rendering.**  
-  Mingkai Liu, Dikai Fan, Haohua Que, Haojia Gao, Wanli Qiu, Ruicong Ye, Handong Yao, Xianliang Huang, Fei Qiao (2025).  
-  The Edge AI for Robotics workshop at IROS 2025, Hangzhou, China, October 2025 (**Best Paper Award**).
 
 * **Interaction dataset of autonomous vehicles with traffic lights and signs.**  
   Li, Z., Bao, Z., Meng, H., Shi, H., Li, Q., Yao, H., & Li, X. (2025). Communications in Transportation Research, 5, 100217.
