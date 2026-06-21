@@ -72,22 +72,22 @@ Our team works on cutting-edge technologies, including but not limited to:
 
 ## 📝 Recent Publications
 
-<sub><sup>*</sup> Equal contribution &nbsp; <sup>&dagger;</sup> Corresponding author</sub>
+<sub><sup>*</sup> Corresponding author &nbsp; <sup>&dagger;</sup> Equal contribution</sub>
 
 * **CABLE: Cloud-Assisted Bandwidth-efficient LMM-based Encoding for V2X Systems.**  
-  Haohua Que, Zhipeng Bao, Qianyi Wu, Handong Yao<sup>&dagger;</sup>.  
+  Haohua Que, Zhipeng Bao, Qianyi Wu, Handong Yao<sup>*</sup>.  
   **IEEE International Conference on Systems, Man, and Cybernetics (SMC), 2026 (Accepted).**
 
 * **SenseExpo: Spatial Exploration and Navigation Via Scene Estimation from Expeditious Predictive Operators.**  
-  Haojia Gao<sup>*</sup>, Haohua Que<sup>*</sup>, Mingkai Liu, Jiayue Xie, Hoiian Au, Yusen Qin, Qian Zhang, Jiajun Sun, Weihao Shan, Tianle Zhu, Fei Qiao<sup>&dagger;</sup>, Handong Yao<sup>&dagger;</sup>.  
+  Haojia Gao<sup>&dagger;</sup>, Haohua Que<sup>&dagger;</sup>, Mingkai Liu, Jiayue Xie, Hoiian Au, Yusen Qin, Qian Zhang, Jiajun Sun, Weihao Shan, Tianle Zhu, Fei Qiao<sup>*</sup>, Handong Yao<sup>*</sup>.  
   **IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2026 (Accepted).**
 
 * **ACESplat: Accelerated 3D Gaussian Scene Regression Via RGB and Poses Only.**  
-  Mingkai Liu<sup>*</sup>, Haohua Que<sup>*</sup>, Dikai Fan, Haojia Gao, Tianle Zhu, Handong Yao, Qian Zhang, Ruopeng Zhang, Xianliang Huang, Fei Qiao<sup>&dagger;</sup>.  
+  Mingkai Liu<sup>&dagger;</sup>, Haohua Que<sup>&dagger;</sup>, Dikai Fan, Haojia Gao, Tianle Zhu, Handong Yao, Qian Zhang, Ruopeng Zhang, Xianliang Huang, Fei Qiao<sup>*</sup>.  
   **IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2026 (Accepted).**
 
 * **DinoLink: A Token-Centric Representation Compression Framework for Bandwidth-Constrained Collaborative V2X Perception.**  
-  Tianle Zhu<sup>*</sup>, Haohua Que<sup>*</sup>, Hongyi Xu, Handong Yao<sup>&dagger;</sup>, Zhipeng Bao.  
+  Tianle Zhu<sup>&dagger;</sup>, Haohua Que<sup>&dagger;</sup>, Hongyi Xu, Handong Yao<sup>*</sup>, Zhipeng Bao.  
   **IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2026 (Accepted).**
 
 * **MACE: Mixture-of-Experts Accelerated Coordinate Encoding for Large-Scale Scene Localization and Rendering.**  
