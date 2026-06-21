@@ -22,6 +22,8 @@ We are a research group dedicated to advancing safer and smarter transportation 
 
 ## 📰 News
 
+* **[2026]** 🎉 Our paper **"CABLE: Cloud-Assisted Bandwidth-efficient LMM-based Encoding for V2X Systems"** has been **accepted** by **IEEE SMC 2026**.
+* **[2026]** 🎉 Three papers (**SenseExpo**, **ACESplat**, **DinoLink**) have been **accepted** by **IEEE/RSJ IROS 2026**.
 * **[2026]** 🎉 Our paper **"Investigating the Car Following Behavior of Electric Vehicles with One-Pedal Driving Through Field Experiments"** has been **accepted** by **Communications in Transportation Research**.
 * **[2026]** 🎉 Our supported Capstone team **"Infrastructure Evaluation Tool for Production Autonomous Vehicles with Cameras and GPS Devices"** received **2026 Manufactured System or Process Design Award** (https://engineering.uga.edu/capstone/capstone-design-showcase/award-recipients-2026/).
 * **[2026]** 🎉 Our paper **"MotiMem"** has been **accepted** by **IEEE WCCI / IJCNN 2026**.
@@ -69,6 +71,22 @@ Our team works on cutting-edge technologies, including but not limited to:
 * **Safe and Futuristic Ecosystem for Vulnerable Road Users (SAFER)**, UGA, 2024-2025
 
 ## 📝 Recent Publications
+
+* **CABLE: Cloud-Assisted Bandwidth-efficient LMM-based Encoding for V2X Systems.**  
+  Haohua Que, Zhipeng Bao, Qianyi Wu, Handong Yao.  
+  **IEEE International Conference on Systems, Man, and Cybernetics (SMC), 2026 (Accepted).**
+
+* **SenseExpo: Spatial Exploration and Navigation Via Scene Estimation from Expeditious Predictive Operators.**  
+  Haojia Gao, Haohua Que\*, Mingkai Liu, Jiayue Xie, Hoiian Au, Yusen Qin, Qian Zhang, Jiajun Sun, Weihao Shan, Tianle Zhu, Fei Qiao, Handong Yao.  
+  **IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2026 (Accepted).**
+
+* **ACESplat: Accelerated 3D Gaussian Scene Regression Via RGB and Poses Only.**  
+  Mingkai Liu, Haohua Que\*, Dikai Fan, Haojia Gao, Tianle Zhu, Handong Yao, Qian Zhang, Ruopeng Zhang, Xianliang Huang, Fei Qiao.  
+  **IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2026 (Accepted).**
+
+* **DinoLink: A Token-Centric Representation Compression Framework for Bandwidth-Constrained Collaborative V2X Perception.**  
+  Tianle Zhu, Haohua Que\*, Hongyi Xu, Handong Yao, Zhipeng Bao.  
+  **IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2026 (Accepted).**
 
 * **MACE: Mixture-of-Experts Accelerated Coordinate Encoding for Large-Scale Scene Localization and Rendering.**  
   Mingkai Liu, Dikai Fan, Haohua Que, Haojia Gao, Xiao Liu, Shuxue Peng, Meixia Lin, Shengyu Gu, Ruicong Ye, Wanli Qiu, Handong Yao, Ruopeng Zhang, Xianliang Huang.  
