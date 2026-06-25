@@ -90,6 +90,10 @@ Our team works on cutting-edge technologies, including but not limited to:
   Tianle Zhu<sup>&dagger;</sup>, Haohua Que<sup>&dagger;</sup>, Hongyi Xu, Handong Yao<sup>*</sup>, Zhipeng Bao.  
   **IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2026 (Accepted).**
 
+* **MotiMem: Motion-Aware Approximate Memory for Energy-Efficient Neural Perception in Autonomous Vehicles.**  
+  Haohua Que, Mingkai Liu, Jiayue Xie, Haojia Gao, Jiajun Sun, Hongyi Xu, Handong Yao, Fei Qiao.  
+  _arXiv preprint arXiv:2603.27108 (2026)._ [[Link]](https://doi.org/10.48550/arXiv.2603.27108)
+
 * **MACE: Mixture-of-Experts Accelerated Coordinate Encoding for Large-Scale Scene Localization and Rendering.**  
   Mingkai Liu, Dikai Fan, Haohua Que, Haojia Gao, Xiao Liu, Shuxue Peng, Meixia Lin, Shengyu Gu, Ruicong Ye, Wanli Qiu, Handong Yao, Ruopeng Zhang, Xianliang Huang.  
   **IEEE International Conference on Robotics and Automation (ICRA), 2026 (Accepted).** A preliminary version received the **Best Paper Award** at the Edge AI for Robotics Workshop, IROS 2025.
@@ -121,5 +125,5 @@ Our team works on cutting-edge technologies, including but not limited to:
 ---
 
 <div align="center">
-  <sub>&copy; 2025 UGA Mobility Lab. University of Georgia.</sub>
+  <sub>&copy; 2026 UGA Mobility Lab. University of Georgia.</sub>
 </div>
