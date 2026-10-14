@@ -22,6 +22,8 @@ We are a research group dedicated to advancing safer and smarter transportation 
 
 ## 📰 News
 
+* **[2027]** 🎉 Our paper **"Behavioral Analysis and Impact Assessment of Advanced Driver Assistance Systems' Interaction with Traffic Signs"** has been **recommended for presentation** at the **TRB 2027 Annual Meeting**.
+* **[2027]** 🎉 Our paper **"End-to-End Automated Driving Under Camera Degradation: Planning Tolerance Thresholds and Closed-Loop Evidence"** has been **recommended for presentation** at the **TRB 2027 Annual Meeting**.
 * **[2026]** 🎉 Our paper **"CABLE"** has been **accepted** by **IEEE SMC 2026**.
 * **[2026]** 🎉 Three papers (**SenseExpo**, **ACESplat**, **DinoLink**) have been **accepted** by **IEEE/RSJ IROS 2026**.
 * **[2026]** 🎉 Our paper **"Investigating the Car Following Behavior of Electric Vehicles with One-Pedal Driving Through Field Experiments"** has been **accepted** by **Communications in Transportation Research**.
