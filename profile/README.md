@@ -76,6 +76,12 @@ Our team works on cutting-edge technologies, including but not limited to:
 
 <sub><sup>*</sup> Corresponding author &nbsp; <sup>&dagger;</sup> Equal contribution</sub>
 
+* **Behavioral Analysis and Impact Assessment of Advanced Driver Assistance Systems' Interaction with Traffic Signs.**  
+  Q. Wu, H. Yao (2027). The 106th TRB Annual Meeting, Washington, DC (Recommended for presentation).
+
+* **End-to-End Automated Driving Under Camera Degradation: Planning Tolerance Thresholds and Closed-Loop Evidence.**  
+  H. Que, H. Yao (2027). The 106th TRB Annual Meeting, Washington, DC (Recommended for presentation).
+
 * **CABLE: Cloud-Assisted Bandwidth-efficient LMM-based Encoding for V2X Systems.**  
   Haohua Que, Zhipeng Bao, Qianyi Wu, Handong Yao<sup>*</sup>.  
   **IEEE International Conference on Systems, Man, and Cybernetics (SMC), 2026 (Accepted).**
