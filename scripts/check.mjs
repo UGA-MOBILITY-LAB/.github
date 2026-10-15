@@ -74,6 +74,18 @@ for (const name of ['Handong Yao', 'Tianle Zhu', 'Haohua Que', 'Qianyi Wu', 'Ric
 }
 check(![...pages.values()].some(p => /via\.placeholder\.com|TODO|Lorem ipsum/.test(p.html)), 'Placeholder content detected');
 
+const home = pages.get('index.html')?.html || '';
+for (const scene of ['athens', 'rural', 'atlanta']) {
+  check(home.includes(`data-scene="${scene}"`), `Homepage scene missing: ${scene}`);
+  check(home.includes(`data-show-scene="${scene}"`), `Homepage scene control missing: ${scene}`);
+}
+check(home.includes('contact.html#phd-opportunities'), 'Homepage recruitment link missing');
+check(pages.get('contact.html')?.ids.has('phd-opportunities'), 'Ph.D. opportunities section missing');
+check(team.includes('src="assets/haohua-iros-2026.png"'), 'Updated Haohua portrait missing');
+const imageCredits = pages.get('credits.html')?.html || '';
+check(imageCredits.includes('alans1948') && imageCredits.includes('https://creativecommons.org/licenses/by/2.0/'), 'Athens image attribution missing');
+check(imageCredits.includes('United States Department of Agriculture') && imageCredits.includes('Country_road_in_mitchell_co_ga.jpg'), 'Rural Georgia image attribution missing');
+
 if (failures.length) {
   console.error(failures.join('\n'));
   process.exitCode = 1;

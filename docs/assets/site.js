@@ -14,6 +14,25 @@ document.addEventListener('keydown', event => {
     toggle.focus();
   }
 });
+// Manual scene selection keeps the photographs still while people read.
+const sceneControls = document.querySelector('.scene-controls');
+if (sceneControls) {
+  const images = [...document.querySelectorAll('[data-scene]')];
+  const buttons = [...sceneControls.querySelectorAll('[data-show-scene]')];
+  const caption = document.querySelector('.scene-caption');
+  const credit = document.querySelector('.scene-credit');
+  sceneControls.hidden = false;
+  buttons.forEach(button => button.addEventListener('click', () => {
+    images.forEach(image => {
+      const active = image.dataset.scene === button.dataset.showScene;
+      image.classList.toggle('is-active', active);
+      image.setAttribute('aria-hidden', String(!active));
+    });
+    buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+    caption.textContent = button.dataset.caption;
+    credit.href = `credits.html#${button.dataset.credit}`;
+  }));
+}
 const controls = document.querySelector('.publication-controls');
 if (controls) {
   controls.hidden = false;
