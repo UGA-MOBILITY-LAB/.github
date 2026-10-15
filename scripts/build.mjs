@@ -1,8 +1,13 @@
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { publications, news, projects, alumni } from './content.mjs';
 
 // A dependency-free static build. GitHub Pages serves the committed docs/ output.
 const base = new URL('../docs/', import.meta.url);
+const assetVersions = {};
+for (const extension of ['css', 'js']) {
+  assetVersions[extension] = createHash('sha256').update(await readFile(new URL(`assets/site.${extension}`, base))).digest('hex').slice(0, 10);
+}
 const e = (s = '') => String(s).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 const arrow = '<span aria-hidden="true">↗</span>';
 const links = (items = []) => items.map(l => `<a class="text-link" href="${e(l.url)}">${e(l.label)} ${arrow}</a>`).join('');
@@ -15,7 +20,7 @@ const header = page => `<a class="skip-link" href="#main">Skip to content</a>
 </div></header>`;
 const footer = `<footer class="site-footer"><div class="wrap footer-main"><div><a class="footer-wordmark" href="index.html">Mobility<span>Lab.</span></a><p>Connected and Automated Mobility<br>&amp; Infrastructure Systems</p></div><div><span class="eyebrow">Find us</span><p>University of Georgia<br>College of Engineering<br>Athens, Georgia, USA</p></div><div><span class="eyebrow">Connect</span><a href="mailto:handong.yao@uga.edu">handong.yao@uga.edu ${arrow}</a><a href="https://github.com/UGA-MOBILITY-LAB">GitHub ${arrow}</a><a href="https://engineering.uga.edu/">UGA Engineering ${arrow}</a></div></div><div class="wrap footer-bottom"><span>© 2026 Mobility Lab · University of Georgia</span><a href="credits.html">Image credits</a><a href="#top">Back to top ↑</a></div></footer>`;
 function page(name, title, description, body) {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#ba0c2f"><title>${e(title)} | Mobility Lab · UGA</title><meta name="description" content="${e(description)}"><link rel="canonical" href="https://uga-mobility-lab.github.io/.github/${name === 'index' ? '' : name + '.html'}"><meta property="og:title" content="${e(title)} | UGA Mobility Lab"><meta property="og:description" content="${e(description)}"><meta property="og:type" content="website"><meta property="og:image" content="https://uga-mobility-lab.github.io/.github/assets/atlanta-mobility.jpg"><link rel="icon" href="image.png" type="image/png"><link rel="stylesheet" href="assets/site.css"><script defer src="assets/site.js"></script></head><body id="top">${header(name)}<main id="main">${body}</main>${footer}</body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#ba0c2f"><title>${e(title)} | Mobility Lab · UGA</title><meta name="description" content="${e(description)}"><link rel="canonical" href="https://uga-mobility-lab.github.io/.github/${name === 'index' ? '' : name + '.html'}"><meta property="og:title" content="${e(title)} | UGA Mobility Lab"><meta property="og:description" content="${e(description)}"><meta property="og:type" content="website"><meta property="og:image" content="https://uga-mobility-lab.github.io/.github/assets/atlanta-mobility.jpg"><link rel="icon" href="image.png" type="image/png"><link rel="stylesheet" href="assets/site.css?v=${assetVersions.css}"><script defer src="assets/site.js?v=${assetVersions.js}"></script></head><body id="top">${header(name)}<main id="main">${body}</main>${footer}</body></html>`;
 }
 const intro = (kicker, title, text) => `<section class="page-intro wrap"><p class="eyebrow">${kicker}</p><h1>${title}</h1><p class="intro-copy">${text}</p></section>`;
 const directions = [
