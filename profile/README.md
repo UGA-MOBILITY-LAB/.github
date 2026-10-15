@@ -22,6 +22,7 @@ We are a research group dedicated to advancing safer and smarter transportation 
 
 ## 📰 News
 
+* **[2027]** 🎉 Two papers, **DriveDegrade** and **FALCON**, have been **accepted** at the **IEEE/CVF Winter Conference on Applications of Computer Vision (WACV 2027)**.
 * **[2027]** 🎉 Our paper **"Behavioral Analysis and Impact Assessment of Advanced Driver Assistance Systems' Interaction with Traffic Signs"** has been **recommended for presentation** at the **TRB 2027 Annual Meeting**.
 * **[2027]** 🎉 Our paper **"End-to-End Automated Driving Under Camera Degradation: Planning Tolerance Thresholds and Closed-Loop Evidence"** has been **recommended for presentation** at the **TRB 2027 Annual Meeting**.
 * **[2026]** 🎉 Our paper **"CABLE"** has been **accepted** by **IEEE SMC 2026**.
@@ -75,6 +76,14 @@ Our team works on cutting-edge technologies, including but not limited to:
 ## 📝 Recent Publications
 
 <sub><sup>*</sup> Corresponding author &nbsp; <sup>&dagger;</sup> Equal contribution</sub>
+
+* **When Does Corruption Break the Plan? A Degradation-Tolerance Benchmark for Camera-Only End-to-End Driving.**  
+  Haohua Que, Handong Yao.  
+  **IEEE/CVF Winter Conference on Applications of Computer Vision (WACV), 2027 (Accepted).** [[Paper]](https://arxiv.org/abs/2608.29005)
+
+* **FALCON: FPGA-Accelerated Latency-Certifiable Occupancy Networks for Camera-Based Autonomous Driving.**  
+  Haohua Que<sup>&dagger;</sup>, Mingkai Liu<sup>&dagger;</sup>, Handong Yao.  
+  **IEEE/CVF Winter Conference on Applications of Computer Vision (WACV), 2027 (Accepted, Applications track).**
 
 * **Behavioral Analysis and Impact Assessment of Advanced Driver Assistance Systems' Interaction with Traffic Signs.**  
   Q. Wu, H. Yao (2027). The 106th TRB Annual Meeting, Washington, DC.
