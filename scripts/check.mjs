@@ -81,7 +81,7 @@ for (const scene of ['athens', 'rural', 'atlanta']) {
 }
 check(home.includes('contact.html#phd-opportunities'), 'Homepage recruitment link missing');
 check(pages.get('contact.html')?.ids.has('phd-opportunities'), 'Ph.D. opportunities section missing');
-check(team.includes('src="assets/haohua-iros-2026.png"'), 'Updated Haohua portrait missing');
+check(team.includes('src="assets/haohua-iros-2026-wide.jpg"'), 'Updated wide Haohua portrait missing');
 const imageCredits = pages.get('credits.html')?.html || '';
 check(imageCredits.includes('alans1948') && imageCredits.includes('https://creativecommons.org/licenses/by/2.0/'), 'Athens image attribution missing');
 check(imageCredits.includes('United States Department of Agriculture') && imageCredits.includes('Country_road_in_mitchell_co_ga.jpg'), 'Rural Georgia image attribution missing');

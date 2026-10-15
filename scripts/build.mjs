@@ -51,7 +51,7 @@ const home = `<aside class="recruitment-banner" aria-label="Ph.D. student opport
 
 const people = [
  {name:'Tianle Zhu', role:'Ph.D. Student · ECAM', img:'Tianle.jpg', focus:'Cooperative perception, artificial intelligence, and safety.', email:'tianle.zhu@uga.edu'},
- {name:'Haohua Que', role:'Ph.D. Student · Mechanical Engineering', img:'assets/haohua-iros-2026.png', focus:'End-to-end autonomous driving, robotics, and computer vision.', email:'hq10606@uga.edu', scholar:'https://scholar.google.com/citations?user=EWgqpTgAAAAJ&hl=en'},
+ {name:'Haohua Que', role:'Ph.D. Student · Mechanical Engineering', img:'assets/haohua-iros-2026-wide.jpg', focus:'End-to-end autonomous driving, robotics, and computer vision.', email:'hq10606@uga.edu', scholar:'https://scholar.google.com/citations?user=EWgqpTgAAAAJ&hl=en'},
  {name:'Qianyi Wu', role:'Ph.D. Student · ECAM', img:'qianyi.jpg', focus:'Connected and automated vehicle modeling and simulation, AI, and cyber-physical systems.', email:'qianyi.wu@uga.edu'},
  {name:'Richard Alexander Booth Fritz', role:"Master's Student · IAI", focus:'Connected and automated vehicle network optimization and simulation, and AI.', email:'Richard.Fritz@uga.edu'},
 ];
