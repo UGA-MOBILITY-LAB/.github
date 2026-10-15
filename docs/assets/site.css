@@ -65,10 +65,26 @@
 @media(max-width:650px){.brand-foil{gap:4px}.foil-wordmark{font-size:27px}.foil-subtitle{font-size:6.6px;letter-spacing:.06em}}
 @media(max-width:360px){.foil-wordmark{font-size:24px}.foil-subtitle{font-size:6px}}
 @media(forced-colors:active){.foil-wordmark{background:none;-webkit-text-fill-color:currentColor;filter:none}}
-/* Real lab activity lives below the research spotlight, leaving the hero untouched. */
-.lab-life{background:var(--cream);scroll-margin-top:100px}
+/* The original vehicle cutout crosses the panel edge without altering its pixels. */
+.vehicle-showcase{padding-top:100px;overflow:clip;scroll-margin-top:100px}
+.vehicle-canvas{background:#eef0e9}
+.vehicle-showcase-inner{position:relative;min-height:445px;padding-block:65px}
+.vehicle-scene-copy{position:relative;width:39%;z-index:2}
+.vehicle-scene-copy h2{font-size:52px}
+.vehicle-scene-copy>p:not(.eyebrow){font-size:14px;color:var(--muted);max-width:350px}
+.vehicle-cutout{position:absolute;width:102%;right:-20%;top:0;margin:0;transform:translateY(-37%);pointer-events:none}
+.vehicle-cutout::before{content:"";position:absolute;left:24%;right:21%;height:9%;bottom:15%;background:#27332d2b;border-radius:50%;filter:blur(19px);transform:rotate(-8deg)}
+.vehicle-cutout img{position:relative;width:100%;height:auto;filter:drop-shadow(0 18px 13px #20362b24)}
+.vehicle-cutout figcaption{position:absolute;right:24%;bottom:7%;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+@media(min-width:1450px){.vehicle-showcase-inner{min-height:510px;padding-block:80px}}
+@media(max-width:1000px) and (min-width:851px){.vehicle-scene-copy h2{font-size:43px}.vehicle-scene-copy>p:not(.eyebrow){max-width:290px}.vehicle-showcase-inner{min-height:390px;padding-block:55px}}
+@media(max-width:850px){.vehicle-showcase{padding-top:85px}.vehicle-showcase-inner{min-height:0;padding-top:315px;padding-bottom:50px}.vehicle-scene-copy{width:100%;max-width:560px}.vehicle-scene-copy>p:not(.eyebrow){max-width:500px}.vehicle-cutout{width:105%;right:-10%}.vehicle-cutout figcaption{right:22%;bottom:7%}}
+@media(max-width:650px){.vehicle-showcase{padding-top:65px}.vehicle-showcase-inner{padding-top:230px;padding-bottom:42px}.vehicle-cutout{width:135%;right:-25%;transform:translateY(-38%)}.vehicle-cutout figcaption{font-size:8px;right:23%;bottom:6%}.vehicle-scene-copy h2{font-size:43px}.vehicle-scene-copy>p:not(.eyebrow){font-size:13px}}
+/* Real lab activity lives below the vehicle showcase, leaving the hero untouched. */
+.lab-life{background:white;scroll-margin-top:100px}
 .lab-life-intro{max-width:460px}
 .lab-life-intro p{font-size:14px;color:var(--muted);margin-bottom:12px}
+.news-announcements-heading{margin-top:70px}
 .lab-photo-grid{display:grid;grid-template-columns:1.34fr 1.5fr;gap:36px}
 .lab-photo,.lab-fleet{margin:0;min-width:0}
 .lab-photo>a{display:block;background:#e6e8e1}

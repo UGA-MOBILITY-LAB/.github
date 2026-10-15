@@ -64,7 +64,14 @@ for (const publication of publications) {
 }
 const updates = pages.get('news.html')?.html || '';
 check((updates.match(/class="news-entry"/g) || []).length === news.length, 'News entry count differs from data');
-for (const item of news) check(updates.includes(escape(item.text)), `News missing: ${item.id}`);
+for (const item of news) {
+  check(updates.includes(escape(item.text)), `News missing: ${item.id}`);
+  if (item.dateLabel) {
+    check(Number.isFinite(Date.parse(item.sortDate || item.dateLabel)), `Invalid news date: ${item.id}`);
+    check(updates.includes(escape(item.dateLabel)), `News date missing: ${item.id}`);
+    check(item.links?.some(link => /^https:\/\//.test(link.url)), `Dated news needs an external source: ${item.id}`);
+  }
+}
 const research = pages.get('research.html')?.html || '';
 for (const project of projects) check(research.includes(escape(project.title)), `Project missing: ${project.id}`);
 const team = pages.get('team.html')?.html || '';
@@ -84,6 +91,8 @@ check(pages.get('contact.html')?.ids.has('phd-opportunities'), 'Ph.D. opportunit
 check(team.includes('src="assets/haohua-iros-2026-wide.jpg"'), 'Updated wide Haohua portrait missing');
 const imageCredits = pages.get('credits.html')?.html || '';
 check(home.indexOf('id="lab-in-action"') > home.indexOf('class="featured-grid"'), 'Lab photos must remain below the research spotlight, not in the hero');
+check(home.includes('id="research-vehicle"') && home.includes('src="assets/research-vehicle.png"'), 'Original research vehicle showcase missing');
+check(home.indexOf('id="research-vehicle"') < home.indexOf('id="lab-in-action"'), 'Real lab photos must remain separate and below the vehicle showcase');
 for (const [asset, credit] of [['lab-travels-pulaski-visit-2026.png', 'travels-pulaski'], ['lab-capstone-award-2026.jpg', 'capstone-team'], ['lab-ev-field-experiment.png', 'ev-fleet']]) {
   check(home.includes(`assets/${asset}`), `Lab photo missing: ${asset}`);
   check(imageCredits.includes(`id="${credit}"`), `Lab photo credit missing: ${credit}`);
