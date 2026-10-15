@@ -65,6 +65,30 @@
 @media(max-width:650px){.brand-foil{gap:4px}.foil-wordmark{font-size:27px}.foil-subtitle{font-size:6.6px;letter-spacing:.06em}}
 @media(max-width:360px){.foil-wordmark{font-size:24px}.foil-subtitle{font-size:6px}}
 @media(forced-colors:active){.foil-wordmark{background:none;-webkit-text-fill-color:currentColor;filter:none}}
+/* Real lab activity lives below the research spotlight, leaving the hero untouched. */
+.lab-life{background:var(--cream);scroll-margin-top:100px}
+.lab-life-intro{max-width:460px}
+.lab-life-intro p{font-size:14px;color:var(--muted);margin-bottom:12px}
+.lab-photo-grid{display:grid;grid-template-columns:1.34fr 1.5fr;gap:36px}
+.lab-photo,.lab-fleet{margin:0;min-width:0}
+.lab-photo>a{display:block;background:#e6e8e1}
+.lab-photo img{width:100%;height:auto}
+.lab-photo figcaption{padding-top:25px}
+.lab-photo .eyebrow{font-size:10px;margin-bottom:13px}
+.lab-photo h3{font:30px/1.2 var(--serif);letter-spacing:-.025em;margin-bottom:14px}
+.lab-photo figcaption>p:not(.eyebrow){font-size:13px;max-width:520px;color:var(--muted);margin-bottom:15px}
+.photo-credit{display:block;width:fit-content;font-size:10px;color:var(--muted);margin-top:12px}
+.photo-credit:hover{text-decoration:underline}
+.lab-fleet{margin-top:50px;padding-top:36px;border-top:1px solid #d4d6cf}
+.lab-fleet>a{display:block}
+.lab-fleet img{width:100%;height:auto}
+.lab-fleet figcaption{display:flex;justify-content:space-between;align-items:center;gap:30px;padding-top:25px}
+.lab-fleet .eyebrow{display:block;font-size:10px;margin-bottom:10px}
+.lab-fleet p{font:23px/1.4 var(--serif);margin:0}
+.lab-fleet-links{text-align:right}
+.lab-fleet-links .photo-credit{margin-left:auto}
+@media(max-width:850px){.lab-photo-grid{gap:26px}.lab-life .section-heading{align-items:start}.lab-life-intro{max-width:310px}.lab-photo h3{font-size:26px}.lab-fleet p{font-size:21px}}
+@media(max-width:650px){.lab-photo-grid{grid-template-columns:1fr;gap:36px}.lab-life-intro{margin-top:24px;max-width:none}.lab-photo figcaption{padding-top:20px}.lab-photo h3{font-size:29px}.lab-fleet{margin-top:35px;padding-top:28px}.lab-fleet figcaption{display:block;padding-top:20px}.lab-fleet-links{text-align:left;margin-top:17px}.lab-fleet-links .photo-credit{margin-left:0}}
 /* Without JavaScript, keep every navigation destination directly available. */
 @media(max-width:650px){
   html:not(.js) .site-header nav{display:flex!important}

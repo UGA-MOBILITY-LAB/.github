@@ -83,6 +83,12 @@ check(home.includes('contact.html#phd-opportunities'), 'Homepage recruitment lin
 check(pages.get('contact.html')?.ids.has('phd-opportunities'), 'Ph.D. opportunities section missing');
 check(team.includes('src="assets/haohua-iros-2026-wide.jpg"'), 'Updated wide Haohua portrait missing');
 const imageCredits = pages.get('credits.html')?.html || '';
+check(home.indexOf('id="lab-in-action"') > home.indexOf('class="featured-grid"'), 'Lab photos must remain below the research spotlight, not in the hero');
+for (const [asset, credit] of [['lab-travels-pulaski-visit-2026.png', 'travels-pulaski'], ['lab-capstone-award-2026.jpg', 'capstone-team'], ['lab-ev-field-experiment.png', 'ev-fleet']]) {
+  check(home.includes(`assets/${asset}`), `Lab photo missing: ${asset}`);
+  check(imageCredits.includes(`id="${credit}"`), `Lab photo credit missing: ${credit}`);
+}
+check(imageCredits.includes('ev-car-following-MIT-LICENSE.txt'), 'Research fleet MIT notice missing');
 check(imageCredits.includes('alans1948') && imageCredits.includes('https://creativecommons.org/licenses/by/2.0/'), 'Athens image attribution missing');
 check(imageCredits.includes('United States Department of Agriculture') && imageCredits.includes('Country_road_in_mitchell_co_ga.jpg'), 'Rural Georgia image attribution missing');
 

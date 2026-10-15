@@ -10,7 +10,10 @@ export const publications = [
     year: 2027,
     venue: 'IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)',
     status: 'Accepted',
-    links: [{ label: 'Paper', url: 'https://arxiv.org/abs/2608.29005' }],
+    links: [
+      { label: 'arXiv', url: 'https://arxiv.org/abs/2608.29005' },
+      { label: 'PDF', url: 'https://arxiv.org/pdf/2608.29005' },
+    ],
     image: 'assets/drivedegrade-overview.png',
   },
   {
@@ -50,7 +53,10 @@ export const publications = [
     year: 2026,
     venue: 'IEEE International Conference on Systems, Man, and Cybernetics (SMC)',
     status: 'Accepted',
-    links: [],
+    links: [
+      { label: 'arXiv', url: 'https://arxiv.org/abs/2606.19258' },
+      { label: 'PDF', url: 'https://arxiv.org/pdf/2606.19258' },
+    ],
   },
   {
     id: 'senseexpo',
@@ -60,7 +66,10 @@ export const publications = [
     year: 2026,
     venue: 'IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)',
     status: 'Accepted',
-    links: [],
+    links: [
+      { label: 'arXiv', url: 'https://arxiv.org/abs/2503.16000' },
+      { label: 'PDF', url: 'https://arxiv.org/pdf/2503.16000' },
+    ],
   },
   {
     id: 'acesplat',
@@ -70,7 +79,10 @@ export const publications = [
     year: 2026,
     venue: 'IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)',
     status: 'Accepted',
-    links: [],
+    links: [
+      { label: 'arXiv', url: 'https://arxiv.org/abs/2606.22091' },
+      { label: 'PDF', url: 'https://arxiv.org/pdf/2606.22091' },
+    ],
   },
   {
     id: 'dinolink',
@@ -80,7 +92,11 @@ export const publications = [
     year: 2026,
     venue: 'IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)',
     status: 'Accepted',
-    links: [],
+    links: [
+      { label: 'arXiv', url: 'https://arxiv.org/abs/2606.26398' },
+      { label: 'PDF', url: 'https://arxiv.org/pdf/2606.26398' },
+      { label: 'Code', url: 'https://github.com/UGA-MOBILITY-LAB/dino_link' },
+    ],
   },
   {
     id: 'motimem',
@@ -90,7 +106,10 @@ export const publications = [
     year: 2026,
     venue: 'IEEE World Congress on Computational Intelligence / International Joint Conference on Neural Networks (WCCI / IJCNN)',
     status: 'Accepted',
-    links: [{ label: 'Preprint', url: 'https://doi.org/10.48550/arXiv.2603.27108' }],
+    links: [
+      { label: 'arXiv', url: 'https://arxiv.org/abs/2603.27108' },
+      { label: 'PDF', url: 'https://arxiv.org/pdf/2603.27108' },
+    ],
   },
   {
     id: 'mace',
@@ -100,7 +119,10 @@ export const publications = [
     year: 2026,
     venue: 'IEEE International Conference on Robotics and Automation (ICRA)',
     status: 'Accepted',
-    links: [],
+    links: [
+      { label: 'arXiv', url: 'https://arxiv.org/abs/2510.14251' },
+      { label: 'PDF', url: 'https://arxiv.org/pdf/2510.14251' },
+    ],
     note: 'A preliminary version received the Best Paper Award at the Edge AI for Robotics Workshop, IROS 2025.',
   },
   {
@@ -110,8 +132,12 @@ export const publications = [
     year: 2026,
     venue: '105th TRB Annual Meeting, Washington, DC',
     status: 'Conference presentation',
-    links: [],
-    note: 'A paper with this title has also been accepted by Communications in Transportation Research.',
+    links: [
+      { label: 'Journal version', url: 'https://doi.org/10.26599/COMMTR.2026.9640030' },
+      { label: 'Dataset', url: 'https://doi.org/10.26599/ETSD.2026.9190013' },
+      { label: 'Data repository', url: 'https://github.com/UGA-MOBILITY-LAB/ev-car-following-opd' },
+    ],
+    note: 'The open-access journal version, with an updated title and author list, was published in Communications in Transportation Research, 6(2), 9640030 (2026).',
   },
   {
     id: 'ads-traffic-sign-interactions',
@@ -120,16 +146,24 @@ export const publications = [
     year: 2026,
     venue: '105th TRB Annual Meeting, Washington, DC',
     status: 'Conference presentation',
-    links: [],
+    links: [
+      { label: 'Poster (PDF)', url: 'https://rosap.ntl.bts.gov/view/dot/89235/dot_89235_DS1.pdf' },
+      { label: 'FHWA record', url: 'https://rosap.ntl.bts.gov/view/dot/89235' },
+    ],
   },
   {
     id: 'traffic-lights-signs-dataset',
     title: 'Interaction dataset of autonomous vehicles with traffic lights and signs.',
     authors: 'Li, Z., Bao, Z., Meng, H., Shi, H., Li, Q., Yao, H., &amp; Li, X.',
     year: 2025,
-    venue: 'Communications in Transportation Research, 5, 100217',
+    venue: 'Communications in Transportation Research, 5, 100201',
     status: 'Published',
-    links: [],
+    links: [
+      { label: 'Journal article', url: 'https://doi.org/10.1016/j.commtr.2025.100201' },
+      { label: 'arXiv', url: 'https://arxiv.org/abs/2501.12536' },
+      { label: 'PDF', url: 'https://arxiv.org/pdf/2501.12536' },
+      { label: 'Correction', url: 'https://doi.org/10.1016/j.commtr.2025.100217' },
+    ],
   },
   {
     id: 'edge-computing-intersections',
