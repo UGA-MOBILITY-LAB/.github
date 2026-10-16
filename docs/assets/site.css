@@ -105,6 +105,75 @@
 .lab-fleet-links .photo-credit{margin-left:auto}
 @media(max-width:850px){.lab-photo-grid{gap:26px}.lab-life .section-heading{align-items:start}.lab-life-intro{max-width:310px}.lab-photo h3{font-size:26px}.lab-fleet p{font-size:21px}}
 @media(max-width:650px){.lab-photo-grid{grid-template-columns:1fr;gap:36px}.lab-life-intro{margin-top:24px;max-width:none}.lab-photo figcaption{padding-top:20px}.lab-photo h3{font-size:29px}.lab-fleet{margin-top:35px;padding-top:28px}.lab-fleet figcaption{display:block;padding-top:20px}.lab-fleet-links{text-align:left;margin-top:17px}.lab-fleet-links .photo-credit{margin-left:0}}
+/* Resource discovery and evidence-led project pages. */
+.spotlight-home,.resources-home,.research-home,.lab-life,.news-home{padding-block:74px}
+.resources-home{background:#f6f5f0;border-block:1px solid var(--line)}
+.resource-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.resource-card{background:white;border:1px solid var(--line);border-top:3px solid var(--red);padding:28px;display:flex;flex-direction:column;min-width:0;scroll-margin-top:120px}
+.resource-card-top{display:flex;align-items:center;gap:18px;margin-bottom:28px}
+.resource-number{font:italic 35px/1 var(--serif);color:var(--red)}
+.resource-card .eyebrow{font-size:9px;margin:0;letter-spacing:.12em}
+.resource-card h3{font:29px/1.2 var(--serif);letter-spacing:-.035em;margin-bottom:18px}
+.resource-card>p{font-size:13px;color:var(--muted)}
+.resource-card .resource-detail{font-size:12px;border-top:1px solid var(--line);padding-top:20px}
+.resource-card .link-group{margin-top:auto;padding-top:14px;gap:8px 18px}
+.resource-card .text-link{font-size:11px;gap:10px}
+.resource-catalog{padding-bottom:70px}
+.resource-note{font-size:12px;color:var(--muted);margin:25px 0 0}
+.resource-context{background:var(--cream)}
+.resource-context-inner{display:grid;grid-template-columns:1fr 1.1fr;gap:80px;align-items:center}
+.resource-context p:not(.eyebrow){font-size:15px;color:var(--muted)}
+.resource-context figure,.case-overview figure{margin:0}
+.resource-context img,.case-overview img{width:100%;height:auto}
+.resource-context figcaption,.case-overview figcaption{font-size:10px;color:var(--muted);padding-top:14px}
+.resource-context figcaption a:hover,.case-overview figcaption a:hover{text-decoration:underline}
+.project-summary{font-size:14px;color:var(--muted);max-width:850px;margin:20px 0 12px}
+.project-role{font-size:13px;max-width:850px}
+.project-outputs{padding-left:18px;color:var(--muted);font-size:13px;max-width:850px;margin:0 0 20px}
+.project-outputs li{padding-left:4px;margin-bottom:7px}
+.project-list>article{scroll-margin-top:120px}
+.case-overview{display:grid;grid-template-columns:1fr 1fr;gap:65px;align-items:start;padding-bottom:75px}
+.case-overview h2{font-size:42px;margin-bottom:25px}
+.case-overview p:not(.case-status){font-size:15px;color:var(--muted)}
+.case-status{border-left:3px solid var(--red);padding:9px 14px;background:var(--cream);font-size:12px;line-height:1.5;margin-bottom:30px}
+.case-overview .link-group{margin-top:26px}
+.case-overview .text-link{font-size:11px}
+.case-overview figcaption{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between}
+.case-process{background:var(--cream);padding-block:70px}
+.case-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px;list-style:none;padding:0;margin:0}
+.case-steps li{border-top:1px solid #bfc4bb;padding-top:25px}
+.case-steps h3{font:25px/1.25 var(--serif);margin:25px 0 15px}
+.case-steps p{font-size:13px;color:var(--muted);margin:0}
+.route-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px}
+.route-grid article{border-top:1px solid var(--line);padding-top:25px}
+.route-marker{display:block;width:11px;height:11px;background:var(--red);border-radius:50%;outline:5px solid #f4e5e7;margin:5px 0 28px 5px}
+.route-grid h3{font:28px/1.25 var(--serif);margin-bottom:16px}
+.route-grid p{font-size:14px;color:var(--muted)}
+.case-map{padding-bottom:85px}
+.case-map-copy{font-size:14px;color:var(--muted);max-width:850px}
+.case-map iframe{display:block;width:100%;height:540px;border:1px solid var(--line);background:var(--cream);margin:28px 0 20px}
+@media(max-width:1100px){.header-inner{gap:20px}.site-header nav{gap:16px;font-size:11px}.resource-card{padding:23px}.resource-grid{gap:18px}.resource-card h3{font-size:26px}.case-overview,.resource-context-inner{gap:40px}}
+@media(max-width:1000px){
+  .header-inner{flex-wrap:wrap;gap:0;min-height:85px}
+  .menu-toggle{display:flex;gap:12px;align-items:center;border:0;background:transparent;padding:12px 0;font-size:12px;color:var(--ink)}
+  .menu-toggle span{font-size:20px}
+  .site-header nav{width:100%;flex-wrap:wrap;gap:5px 20px;padding:8px 0 15px;font-size:12px}
+  html.js .site-header nav{display:none}
+  .site-header nav.is-open{display:flex!important}
+  html:not(.js) .site-header nav{display:flex!important}
+  html:not(.js) .menu-toggle{display:none}
+  .case-steps{grid-template-columns:repeat(2,minmax(0,1fr));gap:35px}
+}
+@media(max-width:850px){.resource-grid{grid-template-columns:1fr}.resource-card{padding:26px}.resource-card-top{margin-bottom:20px}.resource-card h3{font-size:30px}.resource-card .link-group{padding-top:5px}.case-overview,.resource-context-inner{grid-template-columns:1fr;gap:35px}.resource-context figure{max-width:680px}.route-grid{gap:20px}.route-grid h3{font-size:24px}}
+@media(max-width:650px){
+  .spotlight-home,.resources-home,.research-home,.lab-life,.news-home{padding-block:52px}
+  .header-inner{min-height:79px}
+  .resource-card{padding:24px}.resource-card h3{font-size:29px}.resource-catalog{padding-bottom:50px}
+  .case-overview{padding-bottom:50px}.case-overview h2{font-size:35px}
+  .case-process{padding-block:52px}.case-steps{grid-template-columns:1fr;gap:28px}.case-steps h3{margin-top:18px}
+  .route-grid{grid-template-columns:1fr;gap:20px}.route-grid h3{font-size:27px}.route-marker{margin-bottom:22px}
+  .case-map{padding-bottom:55px}.case-map iframe{height:480px}
+}
 /* Without JavaScript, keep every navigation destination directly available. */
 @media(max-width:650px){
   html:not(.js) .site-header nav{display:flex!important}

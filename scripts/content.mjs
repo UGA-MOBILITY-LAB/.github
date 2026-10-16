@@ -9,6 +9,7 @@ export const publications = [
     authors: 'Haohua Que, Handong Yao<sup>*</sup>.',
     year: 2027,
     venue: 'IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)',
+    venueShort: 'WACV',
     status: 'Accepted',
     links: [
       { label: 'arXiv', url: 'https://arxiv.org/abs/2608.29005' },
@@ -23,6 +24,7 @@ export const publications = [
     authors: 'Haohua Que<sup>†</sup>, Mingkai Liu<sup>†</sup>, Handong Yao<sup>*</sup>.',
     year: 2027,
     venue: 'IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)',
+    venueShort: 'WACV',
     status: 'Accepted',
     links: [{ label: 'Code', url: 'https://github.com/Que121/falcon-kr260-release' }],
     image: 'assets/falcon-overview.png',
@@ -124,6 +126,31 @@ export const publications = [
       { label: 'PDF', url: 'https://arxiv.org/pdf/2510.14251' },
     ],
     note: 'A preliminary version received the Best Paper Award at the Edge AI for Robotics Workshop, IROS 2025.',
+  },
+  {
+    id: 'road-readiness-ictd',
+    title: 'Road Infrastructure Readiness Evaluation for Commercial Low-Level Autonomous Vehicles.',
+    authors: 'Tianle Zhu, Haohua Que, Handong Yao.',
+    year: 2026,
+    venue: 'ASCE International Conference on Transportation and Development (ICTD)',
+    status: 'Accepted',
+    links: [
+      { label: 'Project & conference record', url: 'https://www.cr2c2.com/research/major-research-initiatives/mri-2/project-r2-5' },
+      { label: 'Related symposium poster', url: 'https://www.cr2c2.com/technology-transfer-and-collaboration/annual-regional-conferences/southeastconferences-2026/posters-26/36' },
+    ],
+  },
+  {
+    id: 'one-pedal-ctr',
+    title: 'Investigating the car-following behavior of electric vehicles with one-pedal driving.',
+    authors: 'Tianle Zhu, Handong Yao<sup>*</sup>, Wenjie Zhao, Qianwen Li.',
+    year: 2026,
+    venue: 'Communications in Transportation Research, 6(2), 9640030',
+    status: 'Published',
+    links: [
+      { label: 'Open-access article', url: 'https://doi.org/10.26599/COMMTR.2026.9640030' },
+      { label: 'Dataset', url: 'https://doi.org/10.26599/ETSD.2026.9190013' },
+      { label: 'Data repository', url: 'https://github.com/UGA-MOBILITY-LAB/ev-car-following-opd' },
+    ],
   },
   {
     id: 'one-pedal-car-following',
@@ -344,7 +371,17 @@ export const projects = [
     title: 'Tribal & Rural Autonomous Vehicles for Efficiency, Livability and Safety (TRAVELS)',
     funder: 'USDOT',
     period: '2026–2032',
-    links: [{ label: 'Project website', url: 'https://travels.project.wiscweb.wisc.edu/' }],
+    summary: 'Connect rural mobility needs with autonomous passenger-service concepts, route assessment, and demonstration planning.',
+    role: 'UGA contributes the Georgia site work within the UW–Madison-led TRAVELS program, including local engagement and high-definition mapping.',
+    outputs: [
+      'Pulaski County stakeholder visit and mapping data collection in July 2026.',
+      'Public Hawkinsville route viewer with a Lanelet2 map, LiDAR point cloud, and infrastructure challenge annotations.',
+      'Candidate service routes for everyday trips, healthcare access, and community recreation.',
+    ],
+    links: [
+      { label: 'Project website', url: 'https://travels.project.wiscweb.wisc.edu/' },
+      { label: 'Official Georgia plan', url: 'https://travels.project.wiscweb.wisc.edu/georgia/' },
+    ],
   },
   {
     id: 'uga-traffic-safety',
@@ -358,7 +395,17 @@ export const projects = [
     title: 'Rural Road Infrastructure Assessment and Enhancement for Autonomous Vehicle Deployment',
     funder: 'USDOT CR2C2',
     period: '2025–2026',
-    links: [],
+    summary: 'Assess how rural road markings, signs, and digital connectivity support vehicles with driver assistance and automated driving systems.',
+    role: 'A joint North Carolina A&T–UGA project led by Tesfamichael Getahun, with Handong Yao and Qianwen Li as investigators.',
+    outputs: [
+      'Camera, GPS, and 5G measurements planned across rural roads and test facilities in Georgia and North Carolina.',
+      'Planned infrastructure readiness reports and visualizations to help prioritize improvements.',
+      'UGA study on commercial low-level autonomous vehicles accepted at ASCE ICTD 2026.',
+    ],
+    links: [
+      { label: 'Official project record', url: 'https://www.cr2c2.com/research/major-research-initiatives/mri-2/project-r2-5' },
+      { label: 'Readiness study poster', url: 'https://www.cr2c2.com/technology-transfer-and-collaboration/annual-regional-conferences/southeastconferences-2026/posters-26/36' },
+    ],
   },
   {
     id: 'raise',
@@ -382,6 +429,75 @@ export const projects = [
     links: [],
   },
 ];
+
+export const openResources = [
+  {
+    id: 'hawkinsville-map',
+    kicker: 'Map & interactive demo',
+    title: 'Explore the Hawkinsville route',
+    description: 'Inspect the rural route in 3D and see where road geometry, markings, and roadside conditions challenge automated driving.',
+    detail: 'Lanelet2 (.osm) + LiDAR point cloud (.pcd), with route annotations and a browser-based viewer.',
+    links: [
+      { label: 'Explore map', url: 'https://uga-mobility-lab.github.io/rav-demo/' },
+      { label: 'Download data', url: 'https://github.com/UGA-MOBILITY-LAB/rav-demo/releases/tag/data' },
+      { label: 'Code', url: 'https://github.com/UGA-MOBILITY-LAB/rav-demo' },
+    ],
+  },
+  {
+    id: 'ev-platoon',
+    kicker: 'Field experiment dataset',
+    title: 'Study EV car-following behavior',
+    description: 'Compare one-pedal and two-pedal driving under manual control and adaptive cruise control, and examine how speed disturbances travel through a platoon.',
+    detail: 'Synchronized 10 Hz GPS trajectories from four vehicles across 12 experiments.',
+    links: [
+      { label: 'Dataset record', url: 'https://doi.org/10.26599/ETSD.2026.9190013' },
+      { label: 'Data & documentation', url: 'https://github.com/UGA-MOBILITY-LAB/ev-car-following-opd' },
+      { label: 'Related paper', url: 'https://doi.org/10.26599/COMMTR.2026.9640030' },
+    ],
+  },
+  {
+    id: 'rav-evidence',
+    kicker: 'Interactive evidence hub',
+    title: 'Navigate rural AV research',
+    description: 'Explore research findings, field pilots, and deployment implications through a searchable evidence map and linked stakeholder recommendations.',
+    detail: 'Filterable reference records, cross-study synthesis, and citation exports in BibTeX, RIS, and EndNote XML.',
+    links: [
+      { label: 'Explore evidence', url: 'https://uga-mobility-lab.github.io/rav-literature-review/' },
+      { label: 'Code & documentation', url: 'https://github.com/UGA-MOBILITY-LAB/rav-literature-review' },
+    ],
+  },
+];
+
+export const travelsCaseStudy = {
+  title: 'From community needs to a mapped rural route',
+  summary: 'In Hawkinsville and Pulaski County, Georgia, UGA is connecting local mobility priorities with route planning and infrastructure evidence for the TRAVELS program.',
+  role: 'Handong Yao’s UGA team met county and city leaders on July 13, 2026, discussed a route linking residential areas with the regional hospital, and collected data for HD mapping.',
+  status: 'Candidate service routes · Planning and infrastructure assessment',
+  steps: [
+    {
+      title: 'Understand local trips',
+      text: 'Discuss everyday access and healthcare travel with local officials, then connect those needs to candidate service concepts.',
+    },
+    {
+      title: 'Collect route evidence',
+      text: 'Survey the Hawkinsville route and collect data for an HD map and LiDAR point cloud, documenting the physical road environment.',
+    },
+    {
+      title: 'Make challenges visible',
+      text: 'Publish an interactive viewer that connects lane geometry with route annotations, supporting inspection and discussion of rural driving challenges.',
+    },
+  ],
+  routes: [
+    { name: 'Downtown Hawkinsville', purpose: 'Everyday trips between neighborhoods, shops, and community destinations (CREAT).' },
+    { name: 'Taylor Regional Hospital', purpose: 'Healthcare access between the hospital and nearby residential and community areas (HONR-AV).' },
+    { name: 'Veterans Memorial Park', purpose: 'Short recreation, tourism, and event trips linking the park, downtown, and nearby neighborhoods (TEAS).' },
+  ],
+  links: [
+    { label: 'Explore the mapped route', url: 'https://uga-mobility-lab.github.io/rav-demo/' },
+    { label: 'Official Georgia route plan', url: 'https://travels.project.wiscweb.wisc.edu/georgia/' },
+    { label: 'TRAVELS field-visit report', url: 'https://travels.project.wiscweb.wisc.edu/' },
+  ],
+};
 
 export const alumni = [
   { name: 'Abhinav Yedla', role: 'Undergraduate Student (CS)', period: 'Summer 2026' },
