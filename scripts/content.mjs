@@ -23,7 +23,7 @@ export const publications = [
     authors: 'Haohua Que<sup>†</sup>, Mingkai Liu<sup>†</sup>, Handong Yao<sup>*</sup>.',
     year: 2027,
     venue: 'IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)',
-    status: 'Accepted · Applications track',
+    status: 'Accepted',
     links: [{ label: 'Code', url: 'https://github.com/Que121/falcon-kr260-release' }],
     image: 'assets/falcon-overview.png',
   },
