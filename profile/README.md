@@ -78,12 +78,12 @@ Our team works on cutting-edge technologies, including but not limited to:
 <sub><sup>*</sup> Corresponding author &nbsp; <sup>&dagger;</sup> Equal contribution</sub>
 
 * **When Does Corruption Break the Plan? A Degradation-Tolerance Benchmark for Camera-Only End-to-End Driving.**  
-  Haohua Que, Handong Yao.  
+  Haohua Que, Handong Yao<sup>*</sup>.  
   **IEEE/CVF Winter Conference on Applications of Computer Vision (WACV), 2027 (Accepted).** [[Paper]](https://arxiv.org/abs/2608.29005)
 
 * **FALCON: FPGA-Accelerated Latency-Certifiable Occupancy Networks for Camera-Based Autonomous Driving.**  
-  Haohua Que<sup>&dagger;</sup>, Mingkai Liu<sup>&dagger;</sup>, Handong Yao.  
-  **IEEE/CVF Winter Conference on Applications of Computer Vision (WACV), 2027 (Accepted, Applications track).**
+  Haohua Que<sup>&dagger;</sup>, Mingkai Liu<sup>&dagger;</sup>, Handong Yao<sup>*</sup>.  
+  **IEEE/CVF Winter Conference on Applications of Computer Vision (WACV), 2027 (Accepted).** [[Paper]](https://arxiv.org/abs/2610.22143) [[PDF]](https://arxiv.org/pdf/2610.22143) [[Code]](https://github.com/Que121/falcon-kr260-release)
 
 * **Behavioral Analysis and Impact Assessment of Advanced Driver Assistance Systems' Interaction with Traffic Signs.**  
   Q. Wu, H. Yao (2027). The 106th TRB Annual Meeting, Washington, DC.

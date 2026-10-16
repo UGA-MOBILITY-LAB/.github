@@ -26,7 +26,11 @@ export const publications = [
     venue: 'IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)',
     venueShort: 'WACV',
     status: 'Accepted',
-    links: [{ label: 'Code', url: 'https://github.com/Que121/falcon-kr260-release' }],
+    links: [
+      { label: 'arXiv', url: 'https://arxiv.org/abs/2610.22143' },
+      { label: 'PDF', url: 'https://arxiv.org/pdf/2610.22143' },
+      { label: 'Code', url: 'https://github.com/Que121/falcon-kr260-release' },
+    ],
     image: 'assets/falcon-overview.png',
   },
   {
@@ -211,6 +215,7 @@ export const news = [
     text: 'DriveDegrade and FALCON have been accepted at the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV 2027).',
     links: [
       { label: 'DriveDegrade paper', url: 'https://arxiv.org/abs/2608.29005' },
+      { label: 'FALCON paper', url: 'https://arxiv.org/abs/2610.22143' },
       { label: 'FALCON code', url: 'https://github.com/Que121/falcon-kr260-release' },
     ],
   },
