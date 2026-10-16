@@ -30,7 +30,7 @@ export const publications = [
   {
     id: 'adas-traffic-signs',
     title: "Behavioral Analysis and Impact Assessment of Advanced Driver Assistance Systems' Interaction with Traffic Signs.",
-    authors: 'Q. Wu, H. Yao.',
+    authors: 'Q. Wu, H. Yao<sup>*</sup>.',
     year: 2027,
     venue: '106th TRB Annual Meeting, Washington, DC',
     status: 'Recommended for presentation',
@@ -39,7 +39,7 @@ export const publications = [
   {
     id: 'camera-degradation-closed-loop',
     title: 'End-to-End Automated Driving Under Camera Degradation: Planning Tolerance Thresholds and Closed-Loop Evidence.',
-    authors: 'H. Que, H. Yao.',
+    authors: 'H. Que, H. Yao<sup>*</sup>.',
     year: 2027,
     venue: '106th TRB Annual Meeting, Washington, DC',
     status: 'Recommended for presentation',
@@ -128,7 +128,7 @@ export const publications = [
   {
     id: 'one-pedal-car-following',
     title: 'Investigating the Car Following Behavior of Electric Vehicles with One-Pedal Driving Through Field Experiments.',
-    authors: 'T. Zhu, H. Yao.',
+    authors: 'T. Zhu, H. Yao<sup>*</sup>.',
     year: 2026,
     venue: '105th TRB Annual Meeting, Washington, DC',
     status: 'Conference presentation',
@@ -142,7 +142,7 @@ export const publications = [
   {
     id: 'ads-traffic-sign-interactions',
     title: 'Modeling Autonomous Driving Systems-Equipped Vehicle Interactions with Traffic Signs.',
-    authors: 'X. Wang, Q. Li, H. Yao, J. Hourdos, G. McHale.',
+    authors: 'X. Wang, Q. Li, H. Yao<sup>*</sup>, J. Hourdos, G. McHale.',
     year: 2026,
     venue: '105th TRB Annual Meeting, Washington, DC',
     status: 'Conference presentation',
