@@ -49,7 +49,7 @@ We are a research group dedicated to advancing safer and smarter transportation 
 
 | Former Team Member | Period |
 | :---: | :--- |
-| **Richard Alexander Booth Fritz**<br>_Master Student (IAI)_<br><br>> | 2026 Summer |
+| **Richard Alexander Booth Fritz**<br>_Master Student (IAI)_<br><br> | 2026 Summer |
 | **Abhinav Yedla**<br>_Undergraduate Student (CS)_<br><br> | 2026 Summer |
 | **Luke Greenfield**<br>_Undergraduate Student (ECAM)_<br><br> | 2025 Fall |
 | **James Volfson**<br>_Young Dawgs Intern (North Oconee High School)_<br><br> | 2025 Spring |
