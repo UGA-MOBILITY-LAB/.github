@@ -45,10 +45,11 @@ We are a research group dedicated to advancing safer and smarter transportation 
 | <img src="./Tianle.jpg?raw=true" width="140"> | **Tianle Zhu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** Cooperative Perception, AI, Safety <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:tianle.zhu@uga.edu) |
 | <img src="./hua.png?raw=true" width="140"> | **Haohua Que**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** Autonomous Vehicle, Robotics, Computer Vision, AI Application<br>🌐 [Google Scholar](https://scholar.google.com/citations?user=EWgqpTgAAAAJ&hl)<br>✉️ [Email](mailto:hq10606@uga.edu) |
 | <img src="./qianyi.jpg?raw=true" width="140"> | **Qianyi Wu**<br>_Ph.D. Student (ECAM)_<br><br>🔬 **Focus:** CAV Modeling and Simulation, AI, CPS <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:qianyi.wu@uga.edu) |
-| <div align="center" style="font-size:64px">👤</div> | **Richard Alexander Booth Fritz**<br>_Master Student (IAI)_<br><br>🔬 **Focus:** CAV Network Optimization and Simulation, AI <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:Richard.Fritz@uga.edu) |
+| <div align="center" style="font-size:64px"> | **Abhinav Yedla**<br>_Master Student (CS)_<br><br>🔬 **Focus:** Perception <br>🌐 [Profile Link]()<br>✉️ [Email](mailto:ayedla1@uga.edu) |
 
 | Former Team Member | Period |
 | :---: | :--- |
+| **Richard Alexander Booth Fritz**<br>_Master Student (IAI)_<br><br>> | 2026 Summer |
 | **Abhinav Yedla**<br>_Undergraduate Student (CS)_<br><br> | 2026 Summer |
 | **Luke Greenfield**<br>_Undergraduate Student (ECAM)_<br><br> | 2025 Fall |
 | **James Volfson**<br>_Young Dawgs Intern (North Oconee High School)_<br><br> | 2025 Spring |
