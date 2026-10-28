@@ -16,6 +16,7 @@ export const publications = [
       { label: 'PDF', url: 'https://arxiv.org/pdf/2608.29005' },
     ],
     image: 'assets/drivedegrade-overview.png',
+    note: 'Also selected for a poster presentation at TRB 2027.',
   },
   {
     id: 'falcon',
@@ -48,7 +49,7 @@ export const publications = [
     authors: 'H. Que, H. Yao<sup>*</sup>.',
     year: 2027,
     venue: '106th TRB Annual Meeting, Washington, DC',
-    status: 'Recommended for presentation',
+    status: 'Poster presentation accepted',
     links: [],
   },
   {
@@ -225,6 +226,10 @@ export const news = [
       { src: 'assets/nhtsa-visit-2026-vehicle.jpg', width: 800, height: 543, alt: 'Sensor-equipped UGA research vehicle alongside attendees at an autonomous vehicle demonstration' },
       { src: 'assets/nhtsa-visit-2026-group.jpg', width: 800, height: 533, alt: 'Visit participants standing beside a sensor-equipped UGA research vehicle' },
     ],
+    homeImages: [
+      { src: 'assets/lab-team-2026.jpg', width: 800, height: 533, alt: 'Seven members of the UGA Mobility Lab team standing beside a sensor-equipped research vehicle' },
+      { src: 'assets/nhtsa-visit-2026-vehicle.jpg', width: 800, height: 543, alt: 'Sensor-equipped UGA research vehicle alongside attendees at an autonomous vehicle demonstration' },
+    ],
     photoCredit: 'Georgia Network for Electric Mobility',
   },
   {
@@ -248,8 +253,8 @@ export const news = [
   {
     id: 'trb-2027-degradation',
     year: 2027,
-    title: 'Camera degradation and planning at TRB 2027',
-    text: 'End-to-End Automated Driving Under Camera Degradation: Planning Tolerance Thresholds and Closed-Loop Evidence has been recommended for presentation at the TRB 2027 Annual Meeting.',
+    title: 'Camera degradation research selected for a TRB 2027 poster',
+    text: 'End-to-End Automated Driving Under Camera Degradation: Planning Tolerance Thresholds and Closed-Loop Evidence has been selected for a poster presentation at the TRB 2027 Annual Meeting.',
     links: [],
   },
   {

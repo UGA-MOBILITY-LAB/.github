@@ -85,6 +85,7 @@
 .lab-life-intro{max-width:460px}
 .lab-life-intro p{font-size:14px;color:var(--muted);margin-bottom:12px}
 .news-announcements-heading{margin-top:70px}
+.paper-feature-copy>p.paper-feature-note{min-height:0;font-size:12px;color:var(--red);margin-top:14px}
 .home-visit-feature{background:var(--cream);padding-block:64px;scroll-margin-top:100px}
 .home-visit-heading{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:end;margin-bottom:30px}
 .home-visit-heading .eyebrow{margin-bottom:18px}
