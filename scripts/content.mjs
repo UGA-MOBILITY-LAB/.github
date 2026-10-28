@@ -223,14 +223,19 @@ export const news = [
       { label: 'View all photos', url: 'https://www.linkedin.com/posts/georgiae-mobility_futuremobility-autonomousvehicles-mobilityatuga-activity-7520847165024423937-N_et' },
     ],
     images: [
-      { src: 'assets/nhtsa-visit-2026-vehicle.jpg', width: 800, height: 543, alt: 'Sensor-equipped UGA research vehicle alongside attendees at an autonomous vehicle demonstration' },
-      { src: 'assets/nhtsa-visit-2026-group.jpg', width: 800, height: 533, alt: 'Visit participants standing beside a sensor-equipped UGA research vehicle' },
-    ],
-    homeImages: [
       { src: 'assets/lab-team-2026.jpg', width: 800, height: 533, alt: 'Seven members of the UGA Mobility Lab team standing beside a sensor-equipped research vehicle' },
+      { src: 'assets/nhtsa-visit-2026-group.jpg', width: 800, height: 533, alt: 'Visit participants standing beside a sensor-equipped UGA research vehicle' },
       { src: 'assets/nhtsa-visit-2026-vehicle.jpg', width: 800, height: 543, alt: 'Sensor-equipped UGA research vehicle alongside attendees at an autonomous vehicle demonstration' },
+      { src: 'assets/nhtsa-visit-2026-briefing.jpg', width: 800, height: 559, alt: 'A researcher explaining a visualization on a monitor to visit attendees' },
+      { src: 'assets/nhtsa-visit-2026-demonstration.jpg', width: 800, height: 533, alt: 'A researcher and visitors discussing equipment in the open rear compartment of the UGA research vehicle' },
+      { src: 'assets/nhtsa-visit-2026-equipment.jpg', width: 800, height: 533, alt: 'Research computers and connected equipment installed in the rear compartment of the UGA vehicle' },
     ],
     photoCredit: 'Georgia Network for Electric Mobility',
+    video: {
+      embedUrl: 'https://www.linkedin.com/embed/feed/update/urn:li:activity:7520854447384612865?compact=true',
+      postUrl: 'https://www.linkedin.com/posts/georgiae-mobility_futuremobility-autonomousvehicles-mobilityatuga-activity-7520854447384612865-O7oJ',
+      title: 'Autonomous vehicle demonstration during the NHTSA visit to UGA',
+    },
   },
   {
     id: 'wacv-2027',
