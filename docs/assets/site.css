@@ -85,6 +85,14 @@
 .lab-life-intro{max-width:460px}
 .lab-life-intro p{font-size:14px;color:var(--muted);margin-bottom:12px}
 .news-announcements-heading{margin-top:70px}
+.news-entry{scroll-margin-top:120px}
+.news-media{margin:26px 0 0}
+.news-media-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+.news-media-grid a{display:block}
+.news-media-grid img{display:block;width:100%;height:auto}
+.news-media figcaption{margin-top:12px;font-size:10px;color:var(--muted)}
+.news-media figcaption a:hover,.news-preview h3 a:hover{text-decoration:underline}
+@media(max-width:650px){.news-media-grid{grid-template-columns:1fr;gap:14px}}
 .lab-photo-grid{display:grid;grid-template-columns:1.34fr 1.5fr;gap:36px}
 .lab-photo,.lab-fleet{margin:0;min-width:0}
 .lab-photo>a{display:block;background:#e6e8e1}

@@ -209,6 +209,25 @@ export const publications = [
 
 export const news = [
   {
+    id: 'nhtsa-visit-2026',
+    year: 2026,
+    dateLabel: 'Oct 27, 2026',
+    sortDate: '2026-10-27',
+    dateKind: 'Media coverage',
+    title: "NHTSA Deputy Administrator visits UGA's Future Mobility Living Lab",
+    summary: "NHTSA Deputy Administrator Lee White visited UGA's Future Mobility Living Lab for a research briefing and autonomous vehicle demonstration highlighting a USDOT-funded rural mobility project.",
+    text: 'UGA researchers briefed Lee White, Deputy Administrator of the National Highway Traffic Safety Administration (NHTSA), on a USDOT-funded rural autonomous vehicle project. Handong Yao, Qianwen (Cami) Li, Haijian Sun, and the Future Mobility Living Lab team presented their work and demonstrated an autonomous vehicle. The Georgia Network for Electric Mobility published video and photo highlights of the visit on October 27, 2026.',
+    links: [
+      { label: 'Watch the video', url: 'https://www.linkedin.com/posts/georgiae-mobility_futuremobility-autonomousvehicles-mobilityatuga-activity-7520854447384612865-O7oJ' },
+      { label: 'View all photos', url: 'https://www.linkedin.com/posts/georgiae-mobility_futuremobility-autonomousvehicles-mobilityatuga-activity-7520847165024423937-N_et' },
+    ],
+    images: [
+      { src: 'assets/nhtsa-visit-2026-vehicle.jpg', width: 800, height: 543, alt: 'Sensor-equipped UGA research vehicle alongside attendees at an autonomous vehicle demonstration' },
+      { src: 'assets/nhtsa-visit-2026-group.jpg', width: 800, height: 533, alt: 'Visit participants standing beside a sensor-equipped UGA research vehicle' },
+    ],
+    photoCredit: 'Georgia Network for Electric Mobility',
+  },
+  {
     id: 'wacv-2027',
     year: 2027,
     title: 'Two papers accepted at WACV 2027',
