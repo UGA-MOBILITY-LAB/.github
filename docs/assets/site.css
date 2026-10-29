@@ -268,6 +268,33 @@ html:not(.js) .scene-controls,html:not(.js) .publication-controls,html:not(.js) 
   .thread-copy{padding:18px 18px 18px}
   .thread h3{font-size:22px}
 }
+/* Driving game at the foot of the home page; hidden without JavaScript or if its script fails to load. */
+html:not(.js) .drive-game,.no-drive-game .drive-game{display:none}
+.drive-game{background:var(--surface);scroll-margin-top:100px}
+.drive-game-inner{display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.4fr);gap:56px;align-items:center}
+.drive-game-copy h2{font-size:42px;margin-bottom:18px}
+.drive-game-copy>p:not(.eyebrow){font-size:16px;color:var(--muted);margin-bottom:22px}
+.drive-game-keys{list-style:none;margin:0;padding:18px 0 0;border-top:1px solid var(--line);display:grid;gap:10px;font-size:15px;color:var(--muted)}
+.drive-game-keys kbd{display:inline-block;min-width:28px;padding:0 7px;margin-right:3px;border:1px solid #c9ced4;border-bottom-width:2px;background:#fff;font:600 15px/1.6 var(--sans);color:var(--ink);text-align:center}
+.drive-game-hud{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.drive-game-hud span{background:var(--ink);color:#fff;font-size:15px;font-weight:600;line-height:1.4;padding:5px 11px;font-variant-numeric:tabular-nums}
+.drive-game-hud .is-alert{background:var(--red)}
+.drive-game-screen{position:relative}
+.drive-game-canvas{display:block;width:100%;aspect-ratio:16/10;background:#25322a;touch-action:manipulation;cursor:pointer}
+.drive-game-canvas:focus-visible{outline:3px solid var(--red);outline-offset:4px}
+.drive-game-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px;background:rgba(11,14,18,.62);color:#fff;text-align:center}
+.drive-game-message{font:600 28px/1.25 var(--display);letter-spacing:-.02em;margin:0}
+.drive-game-detail{font-size:16px;color:#e8eaed;max-width:400px;margin:0 0 8px}
+.drive-game .drive-game-start{gap:0;justify-content:center;min-width:190px}
+.drive-game-controls{display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:10px;margin-top:10px}
+.drive-game-controls button{border:1px solid var(--line);background:#fff;color:var(--ink);padding:12px 10px;font-size:16px;font-weight:600;touch-action:manipulation;transition:border-color .2s,background .2s}
+.drive-game-controls button:hover{border-color:var(--red)}
+.drive-game-controls .drive-game-autopilot[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+/* Touchscreens see the tap hint; devices with a mouse or trackpad see the keyboard keys. */
+@media(hover:none) and (pointer:coarse){.drive-game-keys .keys-only{display:none}}
+@media(hover:hover),(pointer:fine){.drive-game-keys .touch-only{display:none}}
+@media(max-width:850px){.drive-game-inner{grid-template-columns:1fr;gap:28px}.drive-game-copy{max-width:640px}}
+@media(max-width:650px){.drive-game-copy h2{font-size:34px}.drive-game-canvas{aspect-ratio:4/5}.drive-game-message{font-size:24px}}
 /* Decorative line icons (Lucide), drawn in the current text colour. */
 .icon{width:1em;height:1em;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
 
