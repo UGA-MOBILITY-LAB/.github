@@ -216,6 +216,7 @@ export const news = [
     sortDate: '2026-10-29',
     dateKind: 'In the news',
     title: 'UGA partners with UW–Madison on $15M rural autonomous vehicle initiative',
+    titleHighlight: '$15M',
     summary: 'Led by Handong Yao, UGA is partnering with UW–Madison on the TRAVELS Center, supported by a $15 million U.S. Department of Transportation grant. UGA will receive approximately $3.6 million to advance autonomous transportation in rural Georgia.',
     text: "UGA Today highlights the university's role in the TRAVELS Center, a UW–Madison-led initiative supported by a $15 million U.S. Department of Transportation grant. Handong Yao leads UGA's interdisciplinary team, which will receive approximately $3.6 million to advance autonomous transportation in rural Georgia. The center's work aims to improve transportation access, safety, and efficiency for rural and tribal communities.",
     links: [
