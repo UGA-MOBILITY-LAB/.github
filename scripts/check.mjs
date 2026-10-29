@@ -110,7 +110,7 @@ check(home.includes('contact.html#phd-opportunities'), 'Homepage recruitment lin
 check(pages.get('contact.html')?.ids.has('phd-opportunities'), 'Ph.D. opportunities section missing');
 check(/src="assets\/haohua-iros-2026-wide[-.]/.test(team), 'Updated wide Haohua portrait missing');
 const imageCredits = pages.get('credits.html')?.html || '';
-check(home.indexOf('id="lab-in-action"') > home.indexOf('class="featured-grid"'), 'Lab photos must remain below the research spotlight, not in the hero');
+check(home.indexOf('id="lab-in-action"') > home.indexOf('class="research-mosaic"'), 'Lab photos must remain below the research spotlight, not in the hero');
 check(home.includes('id="research-vehicle"') && home.includes('src="assets/research-vehicle.png"'), 'Original research vehicle showcase missing');
 check(home.indexOf('id="research-vehicle"') < home.indexOf('id="lab-in-action"'), 'Real lab photos must remain separate and below the vehicle showcase');
 for (const [asset, credit] of [['lab-travels-pulaski-visit-2026.png', 'travels-pulaski'], ['lab-capstone-award-2026.jpg', 'capstone-team'], ['lab-ev-field-experiment.png', 'ev-fleet']]) {

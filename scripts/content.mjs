@@ -94,6 +94,7 @@ export const publications = [
   {
     id: 'dinolink',
     shortName: 'DinoLink',
+    image: 'assets/dinolink-overview.webp',
     title: 'DinoLink: A Token-Centric Representation Compression Framework for Bandwidth-Constrained Collaborative V2X Perception.',
     authors: 'Tianle Zhu<sup>†</sup>, Haohua Que<sup>†</sup>, Hongyi Xu, Handong Yao<sup>*</sup>, Zhipeng Bao.',
     year: 2026,
