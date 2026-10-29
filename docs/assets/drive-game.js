@@ -11,6 +11,7 @@
   const message = game.querySelector('.drive-game-message');
   const detail = game.querySelector('.drive-game-detail');
   const startButton = game.querySelector('.drive-game-start');
+  const shareButton = game.querySelector('.drive-game-share');
   const autopilotButton = game.querySelector('.drive-game-autopilot');
   const status = game.querySelector('.drive-game-status');
   const hud = {};
@@ -25,11 +26,11 @@
   // Each condition scales the sensor range; autopilot also plans less often as perception degrades.
   const conditions = [
     { name: 'Clear', label: 'Clear · full sensor range', range: 1, plan: 0.08 },
-    { name: 'Rain', label: 'Rain · sensors 62%', range: 0.62, plan: 0.2, rain: 1 },
+    { name: 'Rain', label: 'Rain · sensors 62%', range: 0.62, plan: 0.2, rain: 1, phrase: ' in the rain' },
     { name: 'Clear', label: 'Clear · full sensor range', range: 1, plan: 0.08 },
-    { name: 'Fog', label: 'Fog · sensors 36%', range: 0.36, plan: 0.34, fog: 1 },
+    { name: 'Fog', label: 'Fog · sensors 36%', range: 0.36, plan: 0.34, fog: 1, phrase: ' in fog' },
     { name: 'Clear', label: 'Clear · full sensor range', range: 1, plan: 0.08 },
-    { name: 'Night', label: 'Night · sensors 55%', range: 0.55, plan: 0.16, night: 1 },
+    { name: 'Night', label: 'Night · sensors 55%', range: 0.55, plan: 0.16, night: 1, phrase: ' at night' },
   ];
   const vehicles = [
     { type: 'car', color: '#d9dde2', w: 1, h: 1, weight: 5 },
@@ -51,6 +52,7 @@
   const shadeCtx = shade.getContext('2d');
   let obstacles = [], trees = [], drops = [];
   let best = readBest();
+  let lastRun = null;
 
   function readBest() {
     try { return Number(localStorage.getItem('uga-drive-best')) || 0; } catch { return 0; }
@@ -490,6 +492,7 @@
     if (mode !== 'paused') reset();
     mode = 'running';
     overlay.hidden = true;
+    shareButton.hidden = true;
     last = 0;
     updateHud();
     canvas.focus({ preventScroll: true });
@@ -508,11 +511,13 @@
     const record = reached > best;
     if (record) { best = reached; saveBest(best); }
     const now = condition();
-    const cause = now.name === 'Clear' ? '' : ` in ${now.name.toLowerCase()}`;
     const title = record ? `New best: ${reached.toFixed(2)} mi` : `Crashed at ${reached.toFixed(2)} mi`;
-    const note = `${autopilot ? 'Autopilot crashed' : 'You crashed'}${cause} at ${Math.round(mph(speed))} mph. Best: ${best.toFixed(2)} mi.`;
+    const note = `${autopilot ? 'Autopilot crashed' : 'You crashed'}${now.phrase || ''} at ${Math.round(mph(speed))} mph. Best: ${best.toFixed(2)} mi.`;
+    lastRun = { miles: reached, phrase: now.phrase || '', autopilot };
     updateHud();
     draw(true);
+    shareButton.hidden = false;
+    shareButton.textContent = 'Share score';
     showOverlay(title, 'Drive again', note);
     announce(`${title}. ${note}`);
   }
@@ -529,6 +534,26 @@
   }
 
   startButton.addEventListener('click', start);
+  // Share a run with the system share sheet where there is one, otherwise copy it.
+  shareButton.addEventListener('click', async () => {
+    if (!lastRun) return;
+    const url = new URL('#drive-game', document.querySelector('link[rel=canonical]')?.href || location.href).href;
+    const text = `${lastRun.autopilot ? 'Autopilot drove' : 'I drove'} ${lastRun.miles.toFixed(2)} mi${lastRun.phrase} in the UGA Mobility Lab driving game. Can you out-drive the autopilot?`;
+    const flash = label => {
+      shareButton.textContent = label;
+      setTimeout(() => { shareButton.textContent = 'Share score'; }, 2500);
+    };
+    try {
+      if (navigator.share) await navigator.share({ title: 'Can you out-drive the autopilot?', text, url });
+      else {
+        await navigator.clipboard.writeText(`${text} ${url}`);
+        flash('Copied to clipboard');
+        announce('Score copied to the clipboard.');
+      }
+    } catch (error) {
+      if (error?.name !== 'AbortError') flash('Could not share');
+    }
+  });
   autopilotButton.addEventListener('click', toggleAutopilot);
   for (const button of game.querySelectorAll('[data-steer]')) button.addEventListener('click', () => steer(Number(button.dataset.steer)));
   canvas.addEventListener('pointerdown', event => {

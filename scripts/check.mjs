@@ -108,6 +108,12 @@ for (const scene of ['athens', 'rural', 'atlanta']) {
 }
 check(home.includes('contact.html#phd-opportunities'), 'Homepage recruitment link missing');
 check(home.includes('id="drive-game"') && home.includes('src="assets/drive-game.js?v='), 'Homepage driving game missing');
+check(home.includes('data-scan-open') && home.includes('id="scan-dialog"'), 'Homepage 3D scan view missing');
+for (const file of ['hawkinsville-scan.bin.gz', 'hawkinsville-spots.json']) {
+  const { size } = await stat(path.join(root, 'assets', file)).catch(() => ({ size: 0 }));
+  check(size > 0, `3D scan data missing: ${file}`);
+}
+check(research.includes('id="field-sites"') && research.includes('class="ga-map"'), 'Research field-site map missing');
 check(pages.get('contact.html')?.ids.has('phd-opportunities'), 'Ph.D. opportunities section missing');
 check(/src="assets\/haohua-iros-2026-wide[-.]/.test(team), 'Updated wide Haohua portrait missing');
 const imageCredits = pages.get('credits.html')?.html || '';

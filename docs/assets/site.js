@@ -124,3 +124,46 @@ if (controls) {
   input.addEventListener('input', filter);
   filter();
 }
+// Field-site map: markers and cards highlight each other. A marker selects its card without jumping the page.
+const fieldMap = document.querySelector('.field-map');
+if (fieldMap) {
+  const sites = [...fieldMap.querySelectorAll('[data-site]')];
+  let chosen = null;
+  const mark = id => sites.forEach(site => site.classList.toggle('is-active', site.dataset.site === id));
+  for (const type of ['pointerover', 'focusin']) {
+    fieldMap.addEventListener(type, event => {
+      const site = event.target.closest('[data-site]');
+      if (site) mark(site.dataset.site);
+    });
+  }
+  fieldMap.addEventListener('pointerleave', () => mark(chosen));
+  fieldMap.addEventListener('focusout', event => { if (!fieldMap.contains(event.relatedTarget)) mark(chosen); });
+  for (const link of fieldMap.querySelectorAll('.ga-site')) {
+    link.addEventListener('click', event => {
+      event.preventDefault();
+      chosen = link.dataset.site;
+      mark(chosen);
+      const smooth = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.getElementById(`site-${chosen}`)?.scrollIntoView({ block: 'nearest', behavior: smooth ? 'smooth' : 'auto' });
+    });
+  }
+}
+// Easter egg: typing "go dawgs" outside a form field sends a small car across the screen.
+// It is decorative only: it never takes focus or blocks clicks, and it only fades with reduced motion.
+let typed = '';
+document.addEventListener('keydown', event => {
+  if (event.ctrlKey || event.metaKey || event.altKey || event.key.length !== 1) return;
+  if (event.target.closest?.('input, textarea, select, [contenteditable]')) return;
+  typed = (typed + event.key.toLowerCase()).replace(/[^a-z]/g, '').slice(-7);
+  if (typed !== 'godawgs' || document.querySelector('.dawg-run')) return;
+  typed = '';
+  const run = document.createElement('div');
+  run.className = 'dawg-run';
+  run.setAttribute('aria-hidden', 'true');
+  run.innerHTML = '<span class="dawg-cheer">Go Dawgs!</span><svg viewBox="0 0 120 50"><path d="M6 36c0-5 3-8 8-9l20-3 14-12c3-2 6-3 10-3h22c4 0 7 1 10 4l11 11 9 1c5 1 8 4 8 9v4c0 2-2 4-4 4H10c-2 0-4-2-4-4z" fill="#ba0c2f"/><path d="M50 15c2-2 4-3 7-3h9v12H40zM70 12h10c3 0 5 1 7 3l8 9H70z" fill="#16181b"/><rect x="61" y="5" width="12" height="5" rx="2" fill="#16181b"/><circle cx="30" cy="42" r="8" fill="#16181b"/><circle cx="30" cy="42" r="3" fill="#d4d7db"/><circle cx="92" cy="42" r="8" fill="#16181b"/><circle cx="92" cy="42" r="3" fill="#d4d7db"/><rect x="108" y="30" width="6" height="4" rx="1" fill="#fff4cc"/></svg>';
+  document.body.append(run);
+  const animation = matchMedia('(prefers-reduced-motion: reduce)').matches
+    ? run.animate([{ opacity: 0 }, { opacity: 1, offset: 0.15 }, { opacity: 1, offset: 0.85 }, { opacity: 0 }], { duration: 1800 })
+    : run.animate([{ transform: 'translateX(-160px)' }, { transform: `translateX(${innerWidth + 40}px)` }], { duration: 2600, easing: 'cubic-bezier(.45,0,.25,1)' });
+  animation.onfinish = () => run.remove();
+});

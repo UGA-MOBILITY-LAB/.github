@@ -18,7 +18,9 @@ VARIANTS = {
     # Research figures and lab photographs shown in page columns.
     "assets/drivedegrade-overview.png": (640, 1280),
     "assets/falcon-overview.png": (640, 1280),
-    "assets/lab-travels-pulaski-visit-2026.png": (720, 1280),
+    "assets/lab-travels-pulaski-visit-2026.png": (240, 720, 1280),
+    # Field-site card thumbnail on the research page (the cutout keeps its transparency).
+    "assets/research-vehicle.png": (240,),
     "assets/lab-capstone-award-2026.jpg": (720, 1280),
     "assets/lab-ev-field-experiment.png": (720, 1236),
     # Homepage research mosaic. The Hawkinsville view is rendered from the lab's public

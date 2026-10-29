@@ -268,6 +268,100 @@ html:not(.js) .scene-controls,html:not(.js) .publication-controls,html:not(.js) 
   .thread-copy{padding:18px 18px 18px}
   .thread h3{font-size:22px}
 }
+/* Field sites on the research page: a Georgia outline beside the site cards. */
+.field-map{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:56px;align-items:center}
+.field-map-figure{margin:0}
+.ga-map{display:block;width:100%;max-width:400px;height:auto;margin:auto;overflow:visible}
+.ga-outline{fill:var(--surface);stroke:#c3c9d0;stroke-width:1.2;stroke-linejoin:round}
+.ga-reference circle{fill:#9aa2ab}
+.ga-reference text{font:15px var(--sans);fill:var(--muted)}
+.ga-route{fill:none;stroke:var(--red);stroke-width:4;stroke-linecap:round}
+.ga-leader{stroke:var(--ink);stroke-width:1}
+.ga-site circle{fill:var(--red);stroke:#fff;stroke-width:2.5;transition:fill .2s}
+.ga-number{font:700 13px var(--sans);fill:#fff;text-anchor:middle;pointer-events:none}
+.ga-label{font:600 15px var(--display);fill:var(--ink)}
+.ga-site:hover circle,.ga-site.is-active circle{fill:var(--ink)}
+.ga-site:focus{outline:none}
+.ga-site:focus-visible circle{stroke:var(--ink);stroke-width:3}
+.field-map-figure figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:14px}
+.field-site-list{display:grid;gap:14px}
+.field-site{display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px;align-items:start;padding:16px;border:1px solid var(--line);background:#fff;transition:border-color .2s,box-shadow .2s;scroll-margin-top:120px}
+.field-site.is-active,.field-site:target{border-color:var(--red);box-shadow:0 14px 30px -26px rgba(0,0,0,.55)}
+.field-site-image{aspect-ratio:3/2;background:var(--surface);overflow:hidden}
+.field-site-image img{width:100%;height:100%;object-fit:cover}
+.field-site-image img[src*="research-vehicle"]{object-fit:contain;padding:6px}
+.field-site .eyebrow{margin-bottom:6px}
+.field-site h3{font-size:21px;margin:0 0 6px}
+.field-site p:not(.eyebrow){font-size:15px;color:var(--muted);margin:0 0 8px}
+.field-site .link-group{align-items:center;gap:6px 18px}
+.field-site-credit{font-size:15px;color:var(--muted)}
+@media(max-width:850px){.field-map{grid-template-columns:1fr;gap:28px}.ga-map{max-width:330px}}
+@media(max-width:650px){.field-site{grid-template-columns:92px minmax(0,1fr);gap:14px;padding:14px}}
+/* Easter egg: type "go dawgs" outside a form field. Decorative, never takes focus or clicks. */
+.dawg-run{position:fixed;left:0;bottom:22px;z-index:60;display:flex;flex-direction:column;align-items:flex-end;pointer-events:none}
+.dawg-cheer{background:var(--ink);color:#fff;font:700 15px/1.3 var(--display);padding:5px 11px;margin:0 6px 6px 0;white-space:nowrap}
+.dawg-run svg{display:block;width:120px;height:50px;filter:drop-shadow(0 6px 6px rgba(0,0,0,.25))}
+/* 3D view of the Hawkinsville scan, opened on request from the research mosaic. */
+.thread-3d{position:absolute;top:10px;right:10px;display:inline-flex;align-items:center;gap:7px;border:0;background:#ffffffeb;color:var(--ink);font-size:15px;font-weight:600;line-height:1.3;padding:6px 11px;transition:background .2s,color .2s}
+.thread-3d .icon{width:17px;height:17px;color:var(--red);stroke-width:2}
+.thread-3d:hover{background:#fff;color:var(--red)}
+.scan-dialog{width:min(1120px,calc(100% - 32px));max-height:calc(100% - 32px);padding:0;border:0;background:#fff;color:var(--ink);box-shadow:0 30px 80px -20px rgba(0,0,0,.45)}
+.scan-dialog::backdrop{background:rgba(10,12,16,.62);backdrop-filter:blur(4px)}
+.scan-inner{padding:22px 24px 18px}
+.scan-head{display:flex;align-items:end;gap:20px;margin-bottom:16px}
+.scan-head .eyebrow{margin-bottom:6px}
+.scan-head h2{font-size:30px;margin:0}
+.scan-modes{display:flex;margin-left:auto;border:1px solid var(--line)}
+.scan-modes button{border:0;background:#fff;color:var(--muted);font-size:15px;font-weight:600;padding:8px 16px}
+.scan-modes button[aria-pressed=true]{background:var(--ink);color:#fff}
+.scan-close{border:0;background:transparent;font-size:30px;line-height:1;padding:2px 6px;color:var(--muted)}
+.scan-close:hover{color:var(--red)}
+.scan-stage{position:relative;height:min(62vh,600px);min-height:340px;background:#0b0e12;overflow:hidden}
+.scan-canvas{display:block;width:100%;height:100%;cursor:grab;touch-action:none}
+.scan-canvas:active{cursor:grabbing}
+.scan-canvas:focus-visible{outline:3px solid var(--red);outline-offset:-3px}
+.scan-markers{position:absolute;inset:0;pointer-events:none}
+.scan-marker{position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;border:2px solid var(--red);background:#fff;color:var(--ink);font-size:15px;font-weight:700;line-height:1;pointer-events:auto;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+.scan-marker.is-selected{background:var(--red);color:#fff;border-color:#fff}
+.scan-status{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;margin:0;color:#e8eaed;font-size:16px}
+.scan-panel{position:absolute;left:16px;bottom:16px;width:min(380px,calc(100% - 32px));background:#fff;padding:18px 20px;box-shadow:0 12px 30px -12px rgba(0,0,0,.5)}
+.scan-panel:empty{display:none}
+.scan-panel h3{font-size:21px;margin:0 0 8px}
+.scan-panel p{font-size:15px;color:var(--muted);margin:0 0 12px}
+.scan-panel .scan-hint{margin:0}
+.scan-category{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink)!important}
+.scan-category::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--dot)}
+.scan-progress{font-size:15px;font-weight:600;color:var(--red)!important}
+.scan-result{font-weight:700;color:var(--red)!important}
+.scan-result.is-right{color:#1f7a45!important}
+.scan-options{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.scan-action{border:1px solid var(--line);background:#fff;color:var(--ink);font-size:15px;font-weight:600;padding:9px 12px;margin:0 8px 0 0;text-align:left}
+.scan-options .scan-action{margin:0}
+.scan-action:hover{border-color:var(--red)}
+.scan-action.is-primary{background:var(--red);border-color:var(--red);color:#fff}
+.scan-action.is-primary:hover{background:var(--red-dark)}
+.scan-tools{position:absolute;right:16px;top:14px;display:flex;align-items:center;gap:14px;color:#cfd4da;font-size:15px}
+.scan-tools button{border:1px solid #ffffff55;background:#0b0e12cc;color:#fff;font-size:15px;padding:6px 12px}
+.scan-tools button:hover{border-color:#fff}
+.scan-credit{font-size:15px;color:var(--muted);margin:12px 0 0}
+.scan-credit a{color:var(--ink);font-weight:600;margin-left:10px;white-space:nowrap}
+.scan-credit a:hover{color:var(--red)}
+@media(max-width:760px){
+  .scan-dialog{width:100%;max-width:none;height:100%;max-height:none;margin:0}
+  .scan-inner{display:flex;flex-direction:column;height:100%;padding:16px 16px 14px}
+  .scan-head{flex-wrap:wrap;align-items:center;gap:12px}
+  .scan-head h2{font-size:24px}
+  .scan-head .eyebrow{display:none}
+  .scan-head>div:first-child{flex:1 1 100%;order:2}
+  .scan-modes{margin-left:0;order:3}
+  .scan-close{order:1;margin-left:auto}
+  /* Phones keep the panel below the scan, so it never covers the view. */
+  .scan-stage{flex:1 1 auto;display:flex;flex-direction:column;height:auto;min-height:0;background:transparent;overflow:visible}
+  .scan-canvas{flex:1 1 auto;min-height:240px;height:auto;background:#0b0e12}
+  .scan-tools span{display:none}
+  .scan-panel{position:static;width:auto;box-shadow:none;border:1px solid var(--line);margin-top:12px;padding:14px 16px}
+  .scan-credit{margin-top:10px}
+}
 /* Driving game at the foot of the home page; hidden without JavaScript or if its script fails to load. */
 html:not(.js) .drive-game,.no-drive-game .drive-game{display:none}
 .drive-game{background:var(--surface);scroll-margin-top:100px}
@@ -286,6 +380,9 @@ html:not(.js) .drive-game,.no-drive-game .drive-game{display:none}
 .drive-game-message{font:600 28px/1.25 var(--display);letter-spacing:-.02em;margin:0}
 .drive-game-detail{font-size:16px;color:#e8eaed;max-width:400px;margin:0 0 8px}
 .drive-game .drive-game-start{gap:0;justify-content:center;min-width:190px}
+.drive-game-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.drive-game-share{border:1px solid #ffffff90;background:transparent;color:#fff;font-size:15px;font-weight:600;padding:15px 20px}
+.drive-game-share:hover{background:#fff;color:var(--ink)}
 .drive-game-controls{display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:10px;margin-top:10px}
 .drive-game-controls button{border:1px solid var(--line);background:#fff;color:var(--ink);padding:12px 10px;font-size:16px;font-weight:600;touch-action:manipulation;transition:border-color .2s,background .2s}
 .drive-game-controls button:hover{border-color:var(--red)}
