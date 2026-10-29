@@ -214,7 +214,7 @@ export const news = [
     year: 2026,
     dateLabel: 'Oct 29, 2026',
     sortDate: '2026-10-29',
-    dateKind: 'In the news',
+    dateKind: 'Media coverage',
     title: 'UGA partners with UW–Madison on $15M rural autonomous vehicle initiative',
     titleHighlight: '$15M',
     summary: 'Led by Handong Yao, UGA is partnering with UW–Madison on the TRAVELS Center, supported by a $15 million U.S. Department of Transportation grant. UGA will receive approximately $3.6 million to advance autonomous transportation in rural Georgia.',
