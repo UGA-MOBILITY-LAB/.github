@@ -152,9 +152,12 @@ if (fieldMap) {
 // It is decorative only: it never takes focus or blocks clicks, and it only fades with reduced motion.
 let typed = '';
 document.addEventListener('keydown', event => {
-  if (event.ctrlKey || event.metaKey || event.altKey || event.key.length !== 1) return;
+  if (event.ctrlKey || event.metaKey || event.altKey) return;
   if (event.target.closest?.('input, textarea, select, [contenteditable]')) return;
-  typed = (typed + event.key.toLowerCase()).replace(/[^a-z]/g, '').slice(-7);
+  // The physical key still names the letter while a Chinese or other input method is active.
+  const letter = /^Key[A-Z]$/.test(event.code) ? event.code.slice(3).toLowerCase() : event.key.length === 1 ? event.key.toLowerCase() : '';
+  if (!letter) return;
+  typed = (typed + letter).replace(/[^a-z]/g, '').slice(-7);
   if (typed !== 'godawgs' || document.querySelector('.dawg-run')) return;
   typed = '';
   const run = document.createElement('div');
