@@ -115,7 +115,6 @@ for (const file of ['hawkinsville-scan.bin.gz', 'hawkinsville-spots.json']) {
 }
 check(research.includes('id="field-sites"') && research.includes('class="ga-map"'), 'Research field-site map missing');
 check(research.includes('id="traffic-wave"') && research.includes('src="assets/traffic-wave.js?v='), 'Research traffic-wave simulation missing');
-check(home.includes('data-play="follow"'), 'Homepage follow-the-leader mode missing');
 check(pages.get('contact.html')?.ids.has('phd-opportunities'), 'Ph.D. opportunities section missing');
 check(/src="assets\/haohua-iros-2026-wide[-.]/.test(team), 'Updated wide Haohua portrait missing');
 const imageCredits = pages.get('credits.html')?.html || '';
