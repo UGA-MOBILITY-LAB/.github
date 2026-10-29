@@ -210,6 +210,20 @@ export const publications = [
 
 export const news = [
   {
+    id: 'uga-today-travels-2026',
+    year: 2026,
+    dateLabel: 'Oct 29, 2026',
+    sortDate: '2026-10-29',
+    dateKind: 'In the news',
+    title: 'UGA partners with UW–Madison on $15M rural autonomous vehicle initiative',
+    summary: 'Led by Handong Yao, UGA is partnering with UW–Madison on the TRAVELS Center, supported by a $15 million U.S. Department of Transportation grant. UGA will receive approximately $3.6 million to advance autonomous transportation in rural Georgia.',
+    text: "UGA Today highlights the university's role in the TRAVELS Center, a UW–Madison-led initiative supported by a $15 million U.S. Department of Transportation grant. Handong Yao leads UGA's interdisciplinary team, which will receive approximately $3.6 million to advance autonomous transportation in rural Georgia. The center's work aims to improve transportation access, safety, and efficiency for rural and tribal communities.",
+    links: [
+      { label: 'Read the UGA Today story', url: 'https://news.uga.edu/uga-partners-with-uw-madison-on-15m-rural-autonomous-vehicle-project/' },
+      { label: 'Georgia case study', url: 'travels.html' },
+    ],
+  },
+  {
     id: 'nhtsa-visit-2026',
     year: 2026,
     dateLabel: 'Oct 27, 2026',
