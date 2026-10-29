@@ -1,5 +1,5 @@
 // Progressive enhancement: all page content and navigation work without JavaScript.
-document.documentElement.classList.add('js');
+// Each page's <head> sets the js class before first paint, so menus do not collapse after load.
 const toggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('#main-nav');
 toggle?.addEventListener('click', () => {
@@ -66,7 +66,6 @@ if (sceneControls) {
     });
     return pending;
   }
-  sceneControls.hidden = false;
   buttons.forEach(button => button.addEventListener('click', async () => {
     const requested = ++selection;
     const next = images.find(image => image.dataset.scene === button.dataset.showScene);
@@ -102,7 +101,6 @@ if (sceneControls) {
 }
 const controls = document.querySelector('.publication-controls');
 if (controls) {
-  controls.hidden = false;
   const input = controls.querySelector('input');
   const buttons = [...controls.querySelectorAll('[data-filter]')];
   const entries = [...document.querySelectorAll('.publication')];
@@ -115,7 +113,6 @@ if (controls) {
       entry.hidden = !((year === 'all' || entry.dataset.year === year) && entry.dataset.search.includes(query));
       if (!entry.hidden) shown++;
     });
-    counter.hidden = false;
     counter.textContent = `${shown} ${shown === 1 ? 'publication' : 'publications'}`;
     document.querySelector('.empty-state').hidden = shown !== 0;
   }
