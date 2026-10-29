@@ -423,11 +423,6 @@ html:not(.js) .drive-game,.no-drive-game .drive-game{display:none}
 .drive-game-detail{font-size:16px;color:#e8eaed;max-width:400px;margin:0 0 8px}
 .drive-game .drive-game-start{gap:0;justify-content:center;min-width:190px}
 .drive-game-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
-.drive-game-choice{display:flex;border:1px solid #ffffff70}
-.drive-game-choice button{border:0;background:transparent;color:#e8eaed;font-size:15px;font-weight:600;padding:8px 14px}
-.drive-game-choice button+button{border-left:1px solid #ffffff70}
-.drive-game-choice button[aria-pressed=true]{background:#fff;color:var(--ink)}
-.drive-game-pedals{margin-top:-4px}
 .drive-game-share{border:1px solid #ffffff90;background:transparent;color:#fff;font-size:15px;font-weight:600;padding:15px 20px}
 .drive-game-share:hover{background:#fff;color:var(--ink)}
 .drive-game-controls{display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:10px;margin-top:10px}

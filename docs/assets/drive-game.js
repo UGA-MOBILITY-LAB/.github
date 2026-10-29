@@ -1,8 +1,6 @@
-// A small driving game at the foot of the home page, in two modes. Dodge traffic: steer a UGA research
-// vehicle between lanes. Follow the leader: hold a safe gap behind a car that speeds up and brakes.
-// Rain, fog, and nightfall shrink what the sensors can see, and autopilot (lane changes, or adaptive
-// cruise control when following) can drive until it struggles. The game starts only when asked,
-// pauses when scrolled away, and handles keys only while it has focus.
+// A small driving game at the foot of the home page: steer a UGA research vehicle while rain, fog,
+// and nightfall shrink what its sensors can see, or let autopilot drive and take over when it struggles.
+// It starts only when asked, pauses when scrolled away, and handles keys only while it has focus.
 (() => {
   const game = document.querySelector('#drive-game');
   if (!game) return;
@@ -15,11 +13,6 @@
   const startButton = game.querySelector('.drive-game-start');
   const shareButton = game.querySelector('.drive-game-share');
   const autopilotButton = game.querySelector('.drive-game-autopilot');
-  const playButtons = [...game.querySelectorAll('[data-play]')];
-  const pedalButtons = [...game.querySelectorAll('[data-pedal]')];
-  const pedalGroup = game.querySelector('.drive-game-pedals');
-  const leftButton = game.querySelector('[data-steer="-1"]');
-  const rightButton = game.querySelector('[data-steer="1"]');
   const status = game.querySelector('.drive-game-status');
   const hud = {};
   for (const item of game.querySelectorAll('[data-hud]')) hud[item.dataset.hud] = item;
@@ -50,8 +43,6 @@
 
   let width = 0, height = 0, lane = 0, roadX = 0, carW = 0, carH = 0, egoY = 0, treesFor = 0;
   let mode = 'ready'; // ready, running, paused, over
-  let play = 'dodge'; // dodge or follow
-  let pedal = 'one'; // one-pedal (strong regenerative braking) or two-pedal (coasting)
   let autopilot = false;
   let speed, distance, roadOffset, elapsed, spawnTimer, lastFreeLane, lastBlocked, egoLane = 1, egoX = 0;
   let sweep, planClock, hudClock, last = 0;
@@ -60,15 +51,14 @@
   const shade = document.createElement('canvas');
   const shadeCtx = shade.getContext('2d');
   let obstacles = [], trees = [], drops = [];
-  const bestKeys = { dodge: 'uga-drive-best', follow: 'uga-follow-best' };
-  const best = { dodge: readBest('dodge'), follow: readBest('follow') };
+  let best = readBest();
   let lastRun = null;
 
-  function readBest(which) {
-    try { return Number(localStorage.getItem(bestKeys[which])) || 0; } catch { return 0; }
+  function readBest() {
+    try { return Number(localStorage.getItem('uga-drive-best')) || 0; } catch { return 0; }
   }
-  function saveBest(which, value) {
-    try { localStorage.setItem(bestKeys[which], String(value)); } catch { /* storage unavailable */ }
+  function saveBest(value) {
+    try { localStorage.setItem('uga-drive-best', String(value)); } catch { /* storage unavailable */ }
   }
   const miles = px => px * METERS_PER_PX / 1609.34;
   const mph = pxPerSecond => pxPerSecond * METERS_PER_PX * 2.23694;
@@ -141,7 +131,6 @@
     fog = rain = night = 0;
     obstacles = [];
     drops = Array.from({ length: reducedMotion.matches ? 36 : 90 }, () => ({ x: Math.random() * width, y: Math.random() * height, l: 9 + Math.random() * 11 }));
-    if (play === 'follow') resetFollow();
   }
 
   // Traffic arrives in rows that block one or two of the three lanes, never all of them. A two-lane
@@ -199,6 +188,7 @@
 
   function update(dt) {
     elapsed += dt;
+    speed = Math.min(640, 300 + elapsed * 7);
     const now = condition();
     const ease = 1 - Math.exp(-dt * 2.5);
     range += (now.range - range) * ease;
@@ -206,8 +196,6 @@
     rain += ((now.rain || 0) - rain) * ease;
     night += ((now.night || 0) - night) * ease;
     planClock = Math.max(0, planClock - dt);
-    if (play === 'follow') return updateFollow(dt);
-    speed = Math.min(640, 300 + elapsed * 7);
     const step = speed * dt;
     distance += step;
     roadOffset = (roadOffset + step) % 56;
@@ -233,304 +221,6 @@
       }
     }
     if (crashed()) crash();
-  }
-
-  // ---- Follow the leader ------------------------------------------------------------
-  // A chase view from behind your car. Keep the lead car between 1 and 3 seconds ahead (the white band
-  // on the road). Distances are in metres and speeds in metres per second; the view compresses depth
-  // so a realistic gap still reads clearly.
-  const CAMERA = 2.4, BEHIND = 6.5, DEPTH = 0.55, CAR = 4.5, SENSOR = 150;
-  let follow = null;
-  const pedals = { throttle: new Set(), brake: new Set() };
-  function press(name, source) {
-    if (mode !== 'running' || play !== 'follow') return;
-    takeOver();
-    pedals[name].add(source);
-  }
-  function lift(name, source) { pedals[name].delete(source); }
-  function tap(name) {
-    press(name, 'tap');
-    setTimeout(() => lift(name, 'tap'), 350);
-  }
-  function releasePedals() {
-    pedals.throttle.clear();
-    pedals.brake.clear();
-  }
-  function sprout(tree) {
-    tree.x = (Math.random() < 0.5 ? -1 : 1) * (8.5 + Math.random() * 26);
-    tree.h = 5 + Math.random() * 8;
-    tree.dark = Math.random() < 0.5;
-    return tree;
-  }
-  function resetFollow() {
-    follow = {
-      v: 20, a: 0, gap: 40, travelled: 0, pocket: 0, lost: 0, seenGap: 40, seenLead: 20,
-      lead: { v: 20, a: 0, target: 22, next: 4, brakeIn: 8, braking: 0, decel: 0 },
-      trees: Array.from({ length: 70 }, (_, i) => sprout({ z: 4 + i * 4.3 })),
-    };
-  }
-
-  // Adaptive cruise control: the Intelligent Driver Model on what the sensor last reported. It only
-  // sees the lead within the (weather-shortened) sensor range and updates less often in bad weather.
-  function cruise(brakeMax) {
-    const f = follow;
-    if (planClock <= 0) {
-      planClock = condition().plan;
-      const visible = f.gap <= SENSOR * range;
-      f.seenGap = visible ? f.gap : Infinity;
-      f.seenLead = visible ? f.lead.v : f.v;
-    }
-    const v = f.v, a = 1.4, b = 2.8;
-    const desired = 5 + v * 1.7 + v * (v - f.seenLead) / (2 * Math.sqrt(a * b));
-    const spacing = Number.isFinite(f.seenGap) ? (desired / Math.max(f.seenGap, 0.5)) ** 2 : 0;
-    return Math.max(-brakeMax, Math.min(2.6, a * (1 - (v / 29) ** 4 - spacing)));
-  }
-
-  function updateFollow(dt) {
-    const f = follow, lead = f.lead;
-    // The lead car changes speed every few seconds and sometimes brakes hard, more often over time.
-    lead.next -= dt;
-    if (lead.next <= 0) { lead.target = 12 + Math.random() * 18; lead.next = 3.5 + Math.random() * 4; }
-    lead.brakeIn -= dt;
-    if (lead.brakeIn <= 0) {
-      lead.braking = 0.8 + Math.random() * 1.6;
-      lead.decel = 4 + Math.random() * 2.5 + Math.min(1.5, elapsed / 100);
-      lead.brakeIn = Math.max(4.5, 12 - elapsed * 0.05) + Math.random() * 5;
-    }
-    if (lead.braking > 0) { lead.braking -= dt; lead.a = -lead.decel; }
-    else lead.a = Math.max(-2.2, Math.min(1.3, (lead.target - lead.v) * 0.6));
-    lead.v = Math.max(0, Math.min(33, lead.v + lead.a * dt));
-    // Your car: accelerator or brake, otherwise the pedal feel (regenerative braking or coasting).
-    const brakeMax = 6.5 * (1 - 0.3 * rain);
-    let a;
-    if (autopilot) a = cruise(brakeMax);
-    else if (pedals.brake.size) a = -brakeMax;
-    else if (pedals.throttle.size) a = 2.6 * (1 - (f.v / 38) ** 2);
-    else a = pedal === 'one' ? -1.9 : -0.35;
-    f.v = Math.max(0, Math.min(38, f.v + a * dt));
-    f.a = a;
-    f.gap += (lead.v - f.v) * dt;
-    f.travelled += f.v * dt;
-    for (const tree of f.trees) {
-      tree.z -= f.v * dt;
-      if (tree.z < 2) { tree.z += 300; sprout(tree); }
-    }
-    const headway = f.gap / Math.max(f.v, 0.5);
-    if (headway >= 1 && headway <= 3 && f.gap > 2) f.pocket += f.v * dt;
-    f.lost = f.gap > 150 ? f.lost + dt : 0;
-    if (!reducedMotion.matches) sweep += dt * 5;
-    if (rain > 0.02) {
-      for (const d of drops) {
-        d.y += (900 + f.v * 25) * dt;
-        d.x -= 60 * dt;
-        if (d.y > height) { d.y = -d.l; d.x = Math.random() * (width + 60); }
-      }
-    }
-    if (f.gap <= 0) crash();
-    else if (f.lost > 5) crash('lost');
-  }
-
-  function drawRain() {
-    ctx.fillStyle = `rgba(8,12,18,${0.2 * rain})`;
-    ctx.fillRect(0, 0, width, height);
-    ctx.strokeStyle = `rgba(214,224,236,${0.5 * rain})`;
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    for (const d of drops) {
-      ctx.moveTo(d.x, d.y);
-      ctx.lineTo(d.x - 3, d.y + d.l);
-    }
-    ctx.stroke();
-  }
-
-  function drawFollow(flash) {
-    const f = follow, lead = f.lead;
-    const horizon = height * 0.36, focal = height * 1.15;
-    // d is metres ahead of your rear bumper; z is the compressed depth from the camera.
-    const depth = d => BEHIND + d * DEPTH;
-    const sy = d => horizon + focal * CAMERA / depth(d);
-    const sx = (x, d) => width / 2 + focal * x / depth(d);
-    const top = (d, h) => horizon + focal * (CAMERA - h) / depth(d);
-    const quad = (x0, x1, d0, d1, color) => {
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.moveTo(sx(x0, d0), sy(d0));
-      ctx.lineTo(sx(x0, d1), sy(d1));
-      ctx.lineTo(sx(x1, d1), sy(d1));
-      ctx.lineTo(sx(x1, d0), sy(d0));
-      ctx.closePath();
-      ctx.fill();
-    };
-    const sky = ctx.createLinearGradient(0, 0, 0, horizon);
-    sky.addColorStop(0, '#b4c1cd');
-    sky.addColorStop(1, '#e2e7ec');
-    ctx.fillStyle = sky;
-    ctx.fillRect(0, 0, width, horizon);
-    ctx.fillStyle = '#2b3a30';
-    ctx.fillRect(0, horizon, width, height - horizon);
-    const near = -BEHIND / DEPTH + 0.5, far = 700;
-    quad(-6, 6, near, far, '#2a2d32');
-    quad(-5.4, 5.4, near, far, '#34373d');
-    quad(-5.3, -5.15, near, far, '#e6e9ed');
-    quad(5.15, 5.3, near, far, '#e6e9ed');
-    for (let d = -(f.travelled % 12) - 12; d < 420; d += 12) {
-      if (d + 3.5 > near) for (const lx of [-1.8, 1.8]) quad(lx - 0.08, lx + 0.08, Math.max(d, near), d + 3.5, '#e6e9ed');
-    }
-    // The safe band: 1 to 3 seconds ahead of your front bumper at your current speed.
-    const bandNear = CAR + Math.max(4, f.v), bandFar = CAR + Math.max(10, f.v * 3);
-    quad(-1.7, 1.7, bandNear, bandFar, 'rgba(255,255,255,.12)');
-    quad(-1.7, -1.6, bandNear, bandFar, 'rgba(255,255,255,.45)');
-    quad(1.6, 1.7, bandNear, bandFar, 'rgba(255,255,255,.45)');
-    for (const t of [...f.trees].sort((a, b) => b.z - a.z)) {
-      const d = t.z - BEHIND;
-      if (depth(d) < 1) continue;
-      const bx = sx(t.x, d), by = sy(d), ty = top(d, t.h), w = focal * t.h * 0.33 / depth(d);
-      ctx.fillStyle = t.dark ? '#1f3025' : '#27392c';
-      ctx.beginPath();
-      ctx.moveTo(bx, ty);
-      ctx.lineTo(bx - w, by);
-      ctx.lineTo(bx + w, by);
-      ctx.closePath();
-      ctx.fill();
-    }
-    // Both cars are seen from behind; brake lights come on when a car slows hard.
-    const rear = (d, body, glass, braking) => {
-      const x0 = sx(-0.92, d), x1 = sx(0.92, d), yb = sy(d), yt = top(d, 1.45), w = x1 - x0, h = yb - yt;
-      ctx.fillStyle = 'rgba(0,0,0,.35)';
-      ctx.fillRect(x0 - w * 0.04, yb - h * 0.05, w * 1.08, h * 0.09);
-      ctx.fillStyle = '#111316';
-      ctx.fillRect(x0 + w * 0.04, yb - h * 0.14, w * 0.17, h * 0.14);
-      ctx.fillRect(x1 - w * 0.21, yb - h * 0.14, w * 0.17, h * 0.14);
-      ctx.fillStyle = body;
-      shape(x0, yt + h * 0.06, w, h * 0.8, w * 0.08);
-      ctx.fill();
-      ctx.fillStyle = glass;
-      shape(x0 + w * 0.13, yt + h * 0.12, w * 0.74, h * 0.28, w * 0.04);
-      ctx.fill();
-      ctx.fillStyle = 'rgba(0,0,0,.25)';
-      ctx.fillRect(x0, yt + h * 0.7, w, h * 0.12);
-      ctx.fillStyle = '#f4f5f7';
-      ctx.fillRect(x0 + w * 0.4, yt + h * 0.57, w * 0.2, h * 0.09);
-      const lights = () => {
-        ctx.fillStyle = braking ? '#ff3b3b' : '#a3122c';
-        ctx.fillRect(x0 + w * 0.04, yt + h * 0.48, w * 0.2, h * 0.1);
-        ctx.fillRect(x1 - w * 0.24, yt + h * 0.48, w * 0.2, h * 0.1);
-        if (braking) ctx.fillRect(x0 + w * 0.42, yt + h * 0.07, w * 0.16, h * 0.035);
-      };
-      if (braking) { ctx.shadowColor = '#ff3b3b'; ctx.shadowBlur = Math.min(24, w * 0.25); }
-      lights();
-      ctx.shadowBlur = 0;
-      return { x0, yt, w, h, lights };
-    };
-    const leadCar = rear(CAR + Math.max(f.gap, 0.3), '#cfd4da', '#1c1f23', lead.a < -1.5);
-    if (f.gap <= SENSOR * range) {
-      const bx = leadCar.x0 - 6, by = leadCar.yt - 4, bw = leadCar.w + 12, bh = leadCar.h + 8, c = Math.min(12, bw / 3);
-      ctx.strokeStyle = 'rgba(255,255,255,.92)';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      for (const [px, py, dx, dy] of [[bx, by, 1, 1], [bx + bw, by, -1, 1], [bx, by + bh, 1, -1], [bx + bw, by + bh, -1, -1]]) {
-        ctx.moveTo(px + dx * c, py);
-        ctx.lineTo(px, py);
-        ctx.lineTo(px, py + dy * c);
-      }
-      ctx.stroke();
-      const label = `car ${Math.min(0.99, 0.6 + 0.36 * range).toFixed(2)} · ${Math.round(f.gap)} m`;
-      ctx.font = `600 13px ${font}`;
-      ctx.fillStyle = 'rgba(0,0,0,.72)';
-      ctx.fillRect(bx, by - 20, ctx.measureText(label).width + 10, 18);
-      ctx.fillStyle = '#fff';
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(label, bx + 5, by - 11);
-    }
-    if (fog > 0.02) {
-      // Fog thickens with distance and hides everything past the sensor range.
-      const reach = CAR + SENSOR * range, clearY = sy(reach * 0.45), hazeY = sy(reach);
-      const haze = ctx.createLinearGradient(0, clearY, 0, horizon - 20);
-      haze.addColorStop(0, 'rgba(222,226,231,0)');
-      haze.addColorStop(Math.min(0.99, (clearY - hazeY) / (clearY - horizon + 20)), `rgba(222,226,231,${0.9 * fog})`);
-      haze.addColorStop(1, `rgba(222,226,231,${0.97 * fog})`);
-      ctx.fillStyle = haze;
-      ctx.fillRect(0, 0, width, clearY);
-    }
-    if (night > 0.02) {
-      // Darkness except your headlight beam, with tail lights glowing through.
-      const reach = CAR + SENSOR * range;
-      shadeCtx.globalCompositeOperation = 'source-over';
-      shadeCtx.clearRect(0, 0, width, height);
-      shadeCtx.fillStyle = `rgba(4,7,14,${0.9 * night})`;
-      shadeCtx.fillRect(0, 0, width, height);
-      shadeCtx.globalCompositeOperation = 'destination-out';
-      const light = shadeCtx.createLinearGradient(0, sy(CAR), 0, sy(reach));
-      light.addColorStop(0, 'rgba(0,0,0,.95)');
-      light.addColorStop(1, 'rgba(0,0,0,0)');
-      shadeCtx.fillStyle = light;
-      shadeCtx.beginPath();
-      shadeCtx.moveTo(sx(-1.2, CAR), sy(CAR));
-      shadeCtx.lineTo(sx(-7, reach), sy(reach));
-      shadeCtx.lineTo(sx(7, reach), sy(reach));
-      shadeCtx.lineTo(sx(1.2, CAR), sy(CAR));
-      shadeCtx.closePath();
-      shadeCtx.fill();
-      shadeCtx.globalCompositeOperation = 'source-over';
-      ctx.drawImage(shade, 0, 0, width, height);
-      ctx.globalAlpha = night;
-      ctx.shadowColor = '#ff3b3b';
-      ctx.shadowBlur = Math.min(20, leadCar.w * 0.3);
-      leadCar.lights();
-      ctx.shadowBlur = 0;
-      ctx.globalAlpha = 1;
-    }
-    // Your UGA research vehicle, with a roof-mounted LiDAR.
-    const you = rear(0, '#ba0c2f', '#16181b', f.a < -1.5);
-    ctx.fillStyle = '#0d0f12';
-    ctx.beginPath();
-    ctx.ellipse(you.x0 + you.w / 2, you.yt + you.h * 0.05, you.w * 0.12, you.h * 0.05, 0, 0, Math.PI * 2);
-    ctx.fill();
-    if (rain > 0.02) drawRain();
-    if (flash) {
-      ctx.fillStyle = 'rgba(186,12,47,.35)';
-      ctx.fillRect(0, 0, width, height);
-    }
-  }
-
-  function followHud(now) {
-    const f = follow, headway = f.gap / Math.max(f.v, 0.5);
-    const state = headway < 1 ? 'too close' : headway > 3 ? 'too far' : 'safe gap';
-    hud.distance.textContent = `${(f.pocket / 1609.34).toFixed(2)} mi`;
-    hud.speed.textContent = `${Math.round(f.v * 2.23694)} mph`;
-    hud.condition.textContent = now.label;
-    hud.condition.classList.toggle('is-alert', now.name !== 'Clear');
-    hud.mode.textContent = `${autopilot ? 'Cruise · ' : ''}${headway > 9.9 ? '9.9+' : headway.toFixed(1)} s · ${state}`;
-    hud.mode.classList.toggle('is-alert', state !== 'safe gap');
-  }
-
-  // Switching modes happens between runs, from the controls on the start card.
-  function seedStill() {
-    for (const [index, kind, share] of [[0, vehicles[0], 0.12], [2, vehicles[2], 0.02], [1, vehicles[1], -0.2]]) {
-      const o = { lane: index, kind, jitter: 0.5 };
-      sizeVehicle(o);
-      o.y = height * share;
-      obstacles.push(o);
-    }
-  }
-  function choosePlay(next) {
-    if (next === play || mode === 'running') return;
-    play = next;
-    for (const b of playButtons) b.setAttribute('aria-pressed', String(b.dataset.play === next));
-    pedalGroup.hidden = next !== 'follow';
-    leftButton.innerHTML = next === 'follow' ? 'Brake' : '<span aria-hidden="true">←</span> Left';
-    rightButton.innerHTML = next === 'follow' ? 'Speed up' : 'Right <span aria-hidden="true">→</span>';
-    mode = 'ready';
-    reset();
-    if (next === 'dodge') seedStill();
-    syncAutopilot();
-    shareButton.hidden = true;
-    message.textContent = 'Ready to drive?';
-    detail.textContent = `${next === 'follow' ? 'Keep the car ahead in the white band, 1 to 3 seconds away.' : 'Avoid traffic as rain, fog, and night roll in.'}${best[next] ? ` Your best: ${best[next].toFixed(2)} mi.` : ''}`;
-    startButton.textContent = 'Start driving';
-    updateHud();
-    draw();
   }
 
   function shape(x, y, w, h, r) {
@@ -673,7 +363,18 @@
   }
 
   function drawWeather() {
-    if (rain > 0.02) drawRain();
+    if (rain > 0.02) {
+      ctx.fillStyle = `rgba(8,12,18,${0.2 * rain})`;
+      ctx.fillRect(0, 0, width, height);
+      ctx.strokeStyle = `rgba(214,224,236,${0.5 * rain})`;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (const d of drops) {
+        ctx.moveTo(d.x, d.y);
+        ctx.lineTo(d.x - 3, d.y + d.l);
+      }
+      ctx.stroke();
+    }
     if (fog > 0.02) {
       // Fog hides everything beyond the sensor range.
       const edge = egoY - sensorRange();
@@ -717,7 +418,6 @@
 
   function draw(flash = false) {
     if (!width) return;
-    if (play === 'follow') return drawFollow(flash);
     ctx.fillStyle = '#25322a';
     ctx.fillRect(0, 0, width, height);
     for (const t of trees) {
@@ -752,7 +452,6 @@
 
   function updateHud() {
     const now = condition();
-    if (play === 'follow') return followHud(now);
     hud.distance.textContent = `${miles(distance).toFixed(2)} mi`;
     hud.speed.textContent = `${Math.round(mph(speed))} mph`;
     hud.condition.textContent = now.label;
@@ -763,7 +462,7 @@
 
   function syncAutopilot() {
     autopilotButton.setAttribute('aria-pressed', String(autopilot));
-    autopilotButton.textContent = `${play === 'follow' ? 'Cruise control' : 'Autopilot'} ${autopilot ? 'on' : 'off'}`;
+    autopilotButton.textContent = autopilot ? 'Autopilot on' : 'Autopilot off';
     if (speed !== undefined) updateHud();
   }
   function toggleAutopilot() {
@@ -771,15 +470,13 @@
     syncAutopilot();
     announce(autopilot ? 'Autopilot on.' : 'Autopilot off. You are driving.');
   }
-  function takeOver() {
-    if (!autopilot) return;
-    autopilot = false;
-    syncAutopilot();
-    announce('You took over from autopilot.');
-  }
   function steer(direction) {
-    if (mode !== 'running' || play !== 'dodge') return;
-    takeOver();
+    if (mode !== 'running') return;
+    if (autopilot) {
+      autopilot = false;
+      syncAutopilot();
+      announce('You took over from autopilot.');
+    }
     egoLane = Math.max(0, Math.min(LANES - 1, egoLane + direction));
   }
 
@@ -799,29 +496,24 @@
     last = 0;
     updateHud();
     canvas.focus({ preventScroll: true });
-    announce(autopilot ? 'Driving on autopilot.' : play === 'follow' ? 'Following. Hold the up arrow to speed up and the down arrow to brake.' : 'Driving. Use the left and right arrow keys to change lanes.');
+    announce(autopilot ? 'Driving on autopilot.' : 'Driving. Use the left and right arrow keys to change lanes.');
     requestAnimationFrame(loop);
   }
   function pause() {
     if (mode !== 'running') return;
     mode = 'paused';
-    releasePedals();
-    showOverlay('Paused', 'Resume', `${(play === 'follow' ? follow.pocket / 1609.34 : miles(distance)).toFixed(2)} mi so far.`);
+    showOverlay('Paused', 'Resume', `${miles(distance).toFixed(2)} mi so far.`);
     announce('Paused.');
   }
-  function crash(reason = 'crash') {
+  function crash() {
     mode = 'over';
-    releasePedals();
-    const reached = play === 'follow' ? follow.pocket / 1609.34 : miles(distance);
-    const record = reached > best[play];
-    if (record) { best[play] = reached; saveBest(play, best[play]); }
+    const reached = miles(distance);
+    const record = reached > best;
+    if (record) { best = reached; saveBest(best); }
     const now = condition();
-    const driver = autopilot ? (play === 'follow' ? 'Cruise control' : 'Autopilot') : 'You';
-    const what = reason === 'lost' ? `${driver === 'You' ? 'You' : driver} fell too far behind` : play === 'follow' ? `${driver} rear-ended the lead car` : `${driver === 'You' ? 'You' : driver} crashed`;
-    const at = play === 'follow' ? follow.v * 2.23694 : mph(speed);
-    const title = record ? `New best: ${reached.toFixed(2)} mi` : `${play === 'follow' ? 'Run over' : 'Crashed'} at ${reached.toFixed(2)} mi`;
-    const note = `${what}${now.phrase || ''}${reason === 'lost' ? '' : ` at ${Math.round(at)} mph`}. Best: ${best[play].toFixed(2)} mi.`;
-    lastRun = { miles: reached, phrase: now.phrase || '', autopilot, play };
+    const title = record ? `New best: ${reached.toFixed(2)} mi` : `Crashed at ${reached.toFixed(2)} mi`;
+    const note = `${autopilot ? 'Autopilot crashed' : 'You crashed'}${now.phrase || ''} at ${Math.round(mph(speed))} mph. Best: ${best.toFixed(2)} mi.`;
+    lastRun = { miles: reached, phrase: now.phrase || '', autopilot };
     updateHud();
     draw(true);
     shareButton.hidden = false;
@@ -846,9 +538,7 @@
   shareButton.addEventListener('click', async () => {
     if (!lastRun) return;
     const url = new URL('#drive-game', document.querySelector('link[rel=canonical]')?.href || location.href).href;
-    const text = lastRun.play === 'follow'
-      ? `${lastRun.autopilot ? 'Cruise control held' : 'I held'} a safe gap for ${lastRun.miles.toFixed(2)} mi${lastRun.phrase} in the UGA Mobility Lab driving game. Can you out-drive the autopilot?`
-      : `${lastRun.autopilot ? 'Autopilot drove' : 'I drove'} ${lastRun.miles.toFixed(2)} mi${lastRun.phrase} in the UGA Mobility Lab driving game. Can you out-drive the autopilot?`;
+    const text = `${lastRun.autopilot ? 'Autopilot drove' : 'I drove'} ${lastRun.miles.toFixed(2)} mi${lastRun.phrase} in the UGA Mobility Lab driving game. Can you out-drive the autopilot?`;
     const flash = label => {
       shareButton.textContent = label;
       setTimeout(() => { shareButton.textContent = 'Share score'; }, 2500);
@@ -865,27 +555,11 @@
     }
   });
   autopilotButton.addEventListener('click', toggleAutopilot);
-  // The left and right controls steer when dodging; when following, they are held as brake and accelerator.
-  for (const button of [leftButton, rightButton]) {
-    const direction = Number(button.dataset.steer);
-    const pedalName = direction < 0 ? 'brake' : 'throttle';
-    let pointer = false;
-    button.addEventListener('pointerdown', () => { if (play === 'follow') { pointer = true; press(pedalName, 'button'); } });
-    for (const type of ['pointerup', 'pointerleave', 'pointercancel']) button.addEventListener(type, () => { if (pointer) { pointer = false; lift(pedalName, 'button'); } });
-    button.addEventListener('click', () => {
-      if (play === 'dodge') steer(direction);
-      else if (!pointer) tap(pedalName); // keyboard activation: a short press
-    });
-  }
-  let canvasPedal = null;
+  for (const button of game.querySelectorAll('[data-steer]')) button.addEventListener('click', () => steer(Number(button.dataset.steer)));
   canvas.addEventListener('pointerdown', event => {
     const box = canvas.getBoundingClientRect();
-    const left = event.clientX - box.left < box.width / 2;
-    if (play === 'dodge') return steer(left ? -1 : 1);
-    canvasPedal = left ? 'brake' : 'throttle';
-    press(canvasPedal, 'canvas');
+    steer(event.clientX - box.left < box.width / 2 ? -1 : 1);
   });
-  for (const type of ['pointerup', 'pointerleave', 'pointercancel']) canvas.addEventListener(type, () => { if (canvasPedal) { lift(canvasPedal, 'canvas'); canvasPedal = null; } });
   game.addEventListener('keydown', event => {
     if (event.altKey || event.ctrlKey || event.metaKey || !event.target.closest('.drive-game-stage')) return;
     const key = event.key.toLowerCase();
@@ -893,26 +567,11 @@
     if (key === 't') toggleAutopilot();
     else if (key === ' ' && event.target === canvas) mode === 'running' ? pause() : start();
     else if ((key === 'p' || key === 'escape') && mode === 'running') pause();
-    else if (mode === 'running' && play === 'dodge' && (key === 'arrowleft' || key === 'a')) steer(-1);
-    else if (mode === 'running' && play === 'dodge' && (key === 'arrowright' || key === 'd')) steer(1);
-    else if (mode === 'running' && play === 'follow' && (key === 'arrowup' || key === 'w')) press('throttle', 'key');
-    else if (mode === 'running' && play === 'follow' && (key === 'arrowdown' || key === 's')) press('brake', 'key');
+    else if (mode === 'running' && (key === 'arrowleft' || key === 'a')) steer(-1);
+    else if (mode === 'running' && (key === 'arrowright' || key === 'd')) steer(1);
     else return;
     event.preventDefault();
   });
-  game.addEventListener('keyup', event => {
-    const key = event.key.toLowerCase();
-    if (key === 'arrowup' || key === 'w') lift('throttle', 'key');
-    if (key === 'arrowdown' || key === 's') lift('brake', 'key');
-  });
-  canvas.addEventListener('blur', releasePedals);
-  for (const button of playButtons) button.addEventListener('click', () => choosePlay(button.dataset.play));
-  for (const button of pedalButtons) {
-    button.addEventListener('click', () => {
-      pedal = button.dataset.pedal;
-      for (const b of pedalButtons) b.setAttribute('aria-pressed', String(b === button));
-    });
-  }
   new IntersectionObserver(entries => {
     for (const entry of entries) if (!entry.isIntersecting) pause();
   }, { threshold: 0.25 }).observe(screen);
@@ -922,7 +581,12 @@
   // A still first frame: a little traffic ahead and the best distance so far.
   reset();
   layout();
-  seedStill();
+  for (const [index, kind, share] of [[0, vehicles[0], 0.12], [2, vehicles[2], 0.02], [1, vehicles[1], -0.2]]) {
+    const o = { lane: index, kind, jitter: 0.5 };
+    sizeVehicle(o);
+    o.y = height * share;
+    obstacles.push(o);
+  }
   draw();
-  if (best.dodge) detail.textContent = `Your best: ${best.dodge.toFixed(2)} mi.`;
+  if (best) detail.textContent = `Your best: ${best.toFixed(2)} mi.`;
 })();
