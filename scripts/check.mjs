@@ -100,7 +100,7 @@ check(![...pages.values()].some(p => /via\.placeholder\.com|TODO|Lorem ipsum/.te
 
 const home = pages.get('index.html')?.html || '';
 for (const [name, html] of [['index.html', home], ['news.html', updates]]) {
-  check(html.includes('<strong class="news-amount">$15M</strong>'), `${name}: TRAVELS funding highlight missing`);
+  check(html.includes('<em>$15M</em>'), `${name}: TRAVELS funding highlight missing`);
 }
 for (const scene of ['athens', 'rural', 'atlanta']) {
   check(home.includes(`data-scene="${scene}"`), `Homepage scene missing: ${scene}`);
