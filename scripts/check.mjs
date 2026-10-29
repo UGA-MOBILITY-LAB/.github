@@ -27,13 +27,16 @@ for (const name of await readdir(root)) {
   check(html.includes('class="skip-link" href="#main"'), `${name}: missing skip link`);
   for (const tag of html.matchAll(/<img\b[^>]*>/g)) {
     check(/\balt="[^"]*"/.test(tag[0]), `${name}: image has no alt attribute`);
+    check(!/\bsrcset="/.test(tag[0]) || /\bsizes="/.test(tag[0]), `${name}: responsive image has no sizes attribute`);
   }
 }
+const candidates = value => decode(value).split(',').map(candidate => candidate.trim().split(/\s+/)[0]);
 
 let internalReferences = 0;
 for (const [name, { html }] of pages) {
-  for (const match of html.matchAll(/\b(?:href|src)="([^"]*)"/g)) {
-    const reference = decode(match[1]);
+  const references = [...html.matchAll(/\b(?:href|src)="([^"]*)"/g)].map(match => decode(match[1]));
+  for (const match of html.matchAll(/\bsrcset="([^"]*)"/g)) references.push(...candidates(match[1]));
+  for (const reference of references) {
     check(reference !== '' && reference !== '#', `${name}: empty/placeholder link`);
     check(!/^javascript:/i.test(reference), `${name}: javascript URL`);
     if (/^(?:https?:|mailto:|tel:|data:|\/\/)/i.test(reference)) continue;
@@ -51,6 +54,20 @@ for (const [name, { html }] of pages) {
       check(pages.get(relative).ids.has(decodeURIComponent(url.hash.slice(1))), `${name}: missing anchor ${reference}`);
     }
     internalReferences++;
+  }
+}
+
+// Inline images must use display-sized copies; full-size originals may only be linked.
+const imageBudget = 700 * 1024;
+for (const [name, { html }] of pages) {
+  for (const tag of html.matchAll(/<img\b[^>]*>/g)) {
+    for (const match of tag[0].matchAll(/\b(?:src|srcset)="([^"]*)"/g)) {
+      for (const file of candidates(match[1])) {
+        if (/^(?:https?:|data:|\/\/)/i.test(file)) continue;
+        const { size } = await stat(path.resolve(root, file)).catch(() => ({ size: 0 }));
+        check(size <= imageBudget, `${name}: inline image over ${imageBudget / 1024} KiB: ${file}`);
+      }
+    }
   }
 }
 
@@ -88,7 +105,7 @@ for (const scene of ['athens', 'rural', 'atlanta']) {
 }
 check(home.includes('contact.html#phd-opportunities'), 'Homepage recruitment link missing');
 check(pages.get('contact.html')?.ids.has('phd-opportunities'), 'Ph.D. opportunities section missing');
-check(team.includes('src="assets/haohua-iros-2026-wide.jpg"'), 'Updated wide Haohua portrait missing');
+check(/src="assets\/haohua-iros-2026-wide[-.]/.test(team), 'Updated wide Haohua portrait missing');
 const imageCredits = pages.get('credits.html')?.html || '';
 check(home.indexOf('id="lab-in-action"') > home.indexOf('class="featured-grid"'), 'Lab photos must remain below the research spotlight, not in the hero');
 check(home.includes('id="research-vehicle"') && home.includes('src="assets/research-vehicle.png"'), 'Original research vehicle showcase missing');
