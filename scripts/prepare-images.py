@@ -43,6 +43,8 @@ def responsive_copies():
     for name, widths in VARIANTS.items():
         source = DOCS / name
         with Image.open(source) as original:
+            # Keep the colour profile (e.g. Display P3 phone photos) so copies render the same colours.
+            icc_profile = original.info.get("icc_profile")
             image = ImageOps.exif_transpose(original)
             # Keep transparency only where an image actually uses it.
             alpha = "A" in image.getbands() and image.getchannel("A").getextrema()[0] < 255
@@ -53,7 +55,7 @@ def responsive_copies():
                 height = round(image.height * width / image.width)
                 resized = image.resize((width, height), Image.Resampling.LANCZOS)
                 destination = ASSETS / f"{source.stem}-{width}.webp"
-                resized.save(destination, "WEBP", quality=82, method=6)
+                resized.save(destination, "WEBP", quality=82, method=6, icc_profile=icc_profile)
                 print(f"{destination.name}: {destination.stat().st_size:,} bytes")
 
 
