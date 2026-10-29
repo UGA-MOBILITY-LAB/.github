@@ -84,7 +84,7 @@
 .lab-life-intro p{font-size:15px;color:var(--muted);margin-bottom:12px}
 .news-announcements-heading{margin-top:70px}
 .paper-feature-copy>p.paper-feature-note{min-height:0;font-size:14px;color:var(--red);margin-top:14px}
-.home-visit-feature{padding-block:64px;scroll-margin-top:100px}
+.home-visit-feature{background:var(--cream);padding-block:64px;scroll-margin-top:100px}
 .home-visit-heading{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:end;margin-bottom:30px}
 .home-visit-heading .eyebrow{margin-bottom:18px}
 .home-visit-heading h2{font-size:38px;line-height:1.18;margin:0}
@@ -140,8 +140,8 @@
 @media(max-width:650px){.lab-photo-grid{grid-template-columns:1fr;gap:36px}.lab-life-intro{margin-top:24px;max-width:none}.lab-photo figcaption{padding-top:20px}.lab-photo h3{font-size:29px}.lab-fleet{margin-top:35px;padding-top:28px}.lab-fleet figcaption{display:block;padding-top:20px}.lab-fleet-links{text-align:left;margin-top:17px}.lab-fleet-links .photo-credit{margin-left:0}}
 /* Resource discovery and evidence-led project pages. */
 .spotlight-home,.resources-home,.research-home,.lab-life,.news-home{padding-block:74px}
-/* Home bands alternate white and cream, so neighbouring sections never merge into one blank gap. */
-.news-home{background:var(--cream)}
+/* Neighbouring home sections that share a background are divided by a rule, like the resources band. */
+.research-home,.news-home{border-top:1px solid var(--line)}
 .research-home .vision{margin-bottom:60px}
 @media(max-width:650px){.research-home .vision{margin-bottom:40px}}
 .resources-home{background:#f6f5f0;border-block:1px solid var(--line)}
