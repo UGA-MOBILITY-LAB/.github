@@ -107,6 +107,7 @@ for (const scene of ['athens', 'rural', 'atlanta']) {
   check(home.includes(`data-show-scene="${scene}"`), `Homepage scene control missing: ${scene}`);
 }
 check(home.includes('contact.html#phd-opportunities'), 'Homepage recruitment link missing');
+check(home.includes('id="drive-game"') && home.includes('src="assets/drive-game.js?v='), 'Homepage driving game missing');
 check(pages.get('contact.html')?.ids.has('phd-opportunities'), 'Ph.D. opportunities section missing');
 check(/src="assets\/haohua-iros-2026-wide[-.]/.test(team), 'Updated wide Haohua portrait missing');
 const imageCredits = pages.get('credits.html')?.html || '';
