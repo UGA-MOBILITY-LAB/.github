@@ -89,6 +89,23 @@ for (const entry of pubs.matchAll(/<article class="publication"[^>]*>/g)) {
   check(/data-topics="[^"]+"/.test(entry[0]), `Publication has no research thread: ${/id="([^"]*)"/.exec(entry[0])?.[1]}`);
 }
 check((pubs.match(/class="pub-bibtex"/g) || []).length === publications.length, 'Every publication needs a BibTeX entry');
+// Link previews, structured data, and the sitemap.
+for (const [name, { html }] of pages) {
+  const image = /<meta property="og:image" content="https:\/\/uga-mobility-lab\.github\.io\/\.github\/([^"]+)"/.exec(html)?.[1];
+  const exists = image && await stat(path.join(root, image)).then(info => info.isFile(), () => false);
+  check(exists, `${name}: og:image must point to a file in docs/`);
+  for (const block of html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)) {
+    try { JSON.parse(block[1]); } catch { failures.push(`${name}: structured data is not valid JSON`); }
+  }
+}
+const scholarly = (pubs.match(/"@type":"ScholarlyArticle"/g) || []).length;
+check(scholarly === publications.length, 'Every publication needs a ScholarlyArticle in the structured data');
+check((pages.get('index.html')?.html || '').includes('"@type":"ResearchOrganization"'), 'Home page organization structured data missing');
+const sitemap = await readFile(path.join(root, 'sitemap.xml'), 'utf8').catch(() => '');
+for (const name of pages.keys()) {
+  if (name === '404.html') continue;
+  check(sitemap.includes(`<loc>https://uga-mobility-lab.github.io/.github/${name === 'index.html' ? '' : name}</loc>`), `Sitemap missing ${name}`);
+}
 const lost = pages.get('404.html')?.html || '';
 check(lost.includes('<meta name="robots" content="noindex">') && !lost.includes('rel="canonical"'), '404.html must be noindex without a canonical URL');
 const updates = pages.get('news.html')?.html || '';
@@ -133,7 +150,7 @@ check(pages.get('contact.html')?.ids.has('phd-opportunities'), 'Ph.D. opportunit
 check(/src="assets\/haohua-iros-2026-wide[-.]/.test(team), 'Updated wide Haohua portrait missing');
 const imageCredits = pages.get('credits.html')?.html || '';
 check(home.indexOf('id="lab-in-action"') > home.indexOf('class="research-mosaic"'), 'Lab photos must remain below the research spotlight, not in the hero');
-check(home.includes('id="research-vehicle"') && home.includes('src="assets/research-vehicle.png"'), 'Original research vehicle showcase missing');
+check(home.includes('id="research-vehicle"') && /src="assets\/research-vehicle[-.]/.test(home), 'Original research vehicle showcase missing');
 check(home.indexOf('id="research-vehicle"') < home.indexOf('id="lab-in-action"'), 'Real lab photos must remain separate and below the vehicle showcase');
 for (const [asset, credit] of [['lab-travels-pulaski-visit-2026.png', 'travels-pulaski'], ['lab-capstone-award-2026.jpg', 'capstone-team'], ['lab-ev-field-experiment.png', 'ev-fleet']]) {
   check(home.includes(`assets/${asset}`), `Lab photo missing: ${asset}`);

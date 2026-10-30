@@ -1,0 +1,23 @@
+# Rebuilds the site from scripts/ and checks it on every pull request and push to main:
+# the committed docs/ must match a fresh build, and links, images, and content must pass.
+name: Site check
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Rebuild the pages from source
+        run: node scripts/build.mjs
+      - name: Committed pages match the source
+        run: git diff --exit-code -- docs
+      - name: Check links, images, and content
+        run: node scripts/check.mjs

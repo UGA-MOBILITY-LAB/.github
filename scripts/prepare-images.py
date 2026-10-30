@@ -17,16 +17,17 @@ VARIANTS = {
     "assets/atlanta-mobility.jpg": (720, 1280, 1920),
     # Research figures and lab photographs shown in page columns.
     "assets/drivedegrade-overview.png": (640, 1280),
-    "assets/falcon-overview.png": (640, 1280),
+    "assets/falcon-overview.png": (640, 960, 1280),
     "assets/lab-travels-pulaski-visit-2026.png": (240, 720, 1280),
-    # Field-site card thumbnail on the research page (the cutout keeps its transparency).
-    "assets/research-vehicle.png": (240,),
+    # The vehicle cutout keeps its transparency: a field-site card thumbnail on the research
+    # page, and a full-size WebP for the homepage, about a tenth of the PNG's size.
+    "assets/research-vehicle.png": (240, 719),
     "assets/lab-capstone-award-2026.jpg": (720, 1280),
     "assets/lab-ev-field-experiment.png": (720, 1236),
     # Homepage research mosaic. The Hawkinsville view is rendered from the lab's public
     # HD-map and point-cloud release in its rav-demo viewer.
-    "assets/dinolink-overview.webp": (640, 1280),
-    "assets/hawkinsville-lidar-hdmap.webp": (640, 1280),
+    "assets/dinolink-overview.webp": (640, 960, 1280),
+    "assets/hawkinsville-lidar-hdmap.webp": (640, 960, 1280),
     # NHTSA visit gallery. The 800px originals stay as the large candidate; only small copies help.
     "assets/lab-team-2026.jpg": (400,),
     "assets/nhtsa-visit-2026-group.jpg": (400,),
@@ -39,11 +40,13 @@ VARIANTS = {
     "Tianle.jpg": (480, 960),
     "assets/haohua-iros-2026-wide.jpg": (480, 960),
 }
+# Hero scenes also get AVIF copies, about half the size of the WebP ones at the same visual quality.
+AVIF_VARIANTS = ("assets/athens-downtown.jpg", "assets/rural-georgia-road.jpg", "assets/atlanta-mobility.jpg")
 # Detail crops: (source, output stem, crop box in source pixels, widths).
 # The DriveDegrade detail keeps the surround-view input and the degradation injector.
 CROPS = [("assets/drivedegrade-overview.png", "drivedegrade-detail", (0, 0, 2275, 1062), (480, 960))]
 # The GA-72 experiment route, redrawn in UGA red on a grey basemap. Map data © OpenStreetMap contributors.
-ROUTE_MAP = ("assets/ev-car-following-route.png", "ev-car-following-route-red", (500, 478), (640, 1280))
+ROUTE_MAP = ("assets/ev-car-following-route.png", "ev-car-following-route-red", (500, 478), (640, 960, 1280))
 UGA_RED = (186, 12, 47)
 # The car-and-signal mark from the lab logo, squared for browser tabs and home screens.
 LOGO = DOCS / "image.png"
@@ -76,6 +79,16 @@ def responsive_copies():
     for name, widths in VARIANTS.items():
         image, icc_profile = open_original(name)
         save_widths(image, Path(name).stem, widths, icc_profile)
+
+
+def avif_copies():
+    for name in AVIF_VARIANTS:
+        image, _ = open_original(name)
+        for width in VARIANTS[name]:
+            resized = image.resize((width, round(image.height * width / image.width)), Image.Resampling.LANCZOS)
+            destination = ASSETS / f"{Path(name).stem}-{width}.avif"
+            resized.save(destination, "AVIF", quality=55, speed=4)
+            print(f"{destination.name}: {destination.stat().st_size:,} bytes")
 
 
 def detail_crops():
@@ -113,6 +126,7 @@ def icons():
 
 if __name__ == "__main__":
     responsive_copies()
+    avif_copies()
     detail_crops()
     route_map()
     icons()

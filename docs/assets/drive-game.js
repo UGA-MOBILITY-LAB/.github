@@ -997,7 +997,7 @@
     for (const p of walkers) drawWalker(p);
     drawEgo();
     drawSignals();
-    drawDetections();
+    if (mode !== 'ready') drawDetections(); // the start screen's text sits over the road
     drawWeather();
     drawSignalGlow();
     drawRadar();
