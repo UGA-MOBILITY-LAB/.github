@@ -62,6 +62,9 @@
   const PLAYLIST = [['town', 5200], ['farm', 5600], ['bridge', 2400], ['downtown', 6200], ['forest', 5000], ['rural', 5200]];
   // Signals: our direction is green, then yellow, then red while the cross street goes and people walk.
   const CYCLE = 16, GREEN = 7.5, YELLOW = 10;
+  const LAMPS = { red: ['#ff3b3b', '#4a1414'], yellow: ['#ffc233', '#4a3a10'], green: ['#34d399', '#0f3a2a'] }; // lit, unlit
+  // Connected signals broadcast their timing, so the car knows the next light from this far before its stop line.
+  const SIGNAL_AHEAD = 1300;
   const CROSS = { near: 40, far: 150 }; // cross street, ahead of the stop line
   const WALK = { from: 6, to: 34 }; // crosswalk, between the stop line and the cross street
 
@@ -581,7 +584,7 @@
     for (const ix of intersections) {
       const y = toY(ix.s + (CROSS.near + CROSS.far) / 2);
       if (y < -30 || y > height + 30) continue;
-      const state = light(ix), lit = { red: '#ff3b3b', yellow: '#ffc233', green: '#34d399' }[state];
+      const state = light(ix);
       ctx.strokeStyle = 'rgba(20,22,26,.85)';
       ctx.lineWidth = 1.5;
       ctx.beginPath();
@@ -596,16 +599,81 @@
         ctx.fillStyle = '#111315';
         shape(x - 7, y - 14, 14, 28, 3);
         ctx.fill();
-        for (const [k, color] of [['red', '#4a1414'], ['yellow', '#4a3a10'], ['green', '#0f3a2a']].entries()) {
-          ctx.fillStyle = state === color[0] ? lit : color[1];
+        Object.keys(LAMPS).forEach((name, k) => {
+          ctx.fillStyle = LAMPS[name][name === state ? 0 : 1];
           circle(x, y - 8 + k * 8, 3);
-        }
+        });
       }
       if (state !== 'green') {
         ctx.fillStyle = state === 'red' ? 'rgba(255,59,59,.22)' : 'rgba(255,194,51,.22)';
         ctx.fillRect(roadX + 4, toY(ix.s) - 8, roadW - 8, 5);
       }
     }
+  }
+
+  // Lit lamps show through rain, fog, and the dark.
+  function drawSignalGlow() {
+    const veil = Math.max(fog, night, rain * 0.4);
+    if (veil < 0.02) return;
+    ctx.save();
+    ctx.globalAlpha = veil;
+    for (const ix of intersections) {
+      const y = toY(ix.s + (CROSS.near + CROSS.far) / 2);
+      if (y < -30 || y > height + 30) continue;
+      const state = light(ix), color = LAMPS[state][0], ly = y - 8 + Object.keys(LAMPS).indexOf(state) * 8, r = 11 + 9 * fog;
+      for (let i = 0; i < LANES; i++) {
+        const x = laneCenter(i);
+        const halo = ctx.createRadialGradient(x, ly, 0, x, ly, r);
+        halo.addColorStop(0, `${color}a0`);
+        halo.addColorStop(1, `${color}00`);
+        ctx.fillStyle = halo;
+        ctx.fillRect(x - r, ly - r, r * 2, r * 2);
+        ctx.fillStyle = color;
+        circle(x, ly, 3);
+      }
+    }
+    ctx.restore();
+  }
+  // The next light, before it comes into view: its colour, distance, and seconds until it changes.
+  function drawSignalAhead() {
+    let ix = null;
+    for (const i of intersections) if (i.s > distance && i.s - distance < SIGNAL_AHEAD && (!ix || i.s < ix.s)) ix = i;
+    if (!ix) return;
+    const fade = Math.min(1, Math.max(0, (-toY(ix.s + (CROSS.near + CROSS.far) / 2) - 10) / 40));
+    if (!fade) return;
+    const state = light(ix);
+    const seconds = Math.ceil((state === 'green' ? GREEN : state === 'yellow' ? YELLOW : CYCLE) - phase(ix));
+    const feet = Math.round((ix.s - distance) * METERS_PER_PX * 3.28084 / 10) * 10;
+    ctx.save();
+    ctx.globalAlpha = fade;
+    ctx.font = `600 13px ${font}`;
+    ctx.textBaseline = 'middle';
+    // Fixed-width slots, so the pill keeps its size as the numbers change.
+    const slotA = ctx.measureText('000 ft').width, slotB = ctx.measureText('00 s').width;
+    const h = 26, w = 50 + slotA + 10 + slotB + 12, x = Math.round(roadX + roadW / 2 - w / 2), y = 10, mid = y + h / 2;
+    ctx.fillStyle = 'rgba(14,16,20,.86)';
+    ctx.strokeStyle = 'rgba(255,255,255,.16)';
+    ctx.lineWidth = 1;
+    shape(x + 0.5, y + 0.5, w - 1, h - 1, h / 2);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(255,255,255,.16)';
+    ctx.fillRect(x + 50 + slotA + 4, y + 7, 1, h - 14);
+    Object.keys(LAMPS).forEach((name, k) => {
+      const lit = name === state;
+      ctx.shadowColor = lit ? LAMPS[name][0] : 'transparent';
+      ctx.shadowBlur = lit ? 8 : 0;
+      ctx.fillStyle = LAMPS[name][lit ? 0 : 1];
+      circle(x + 15 + k * 11, mid, 4);
+    });
+    ctx.shadowBlur = 0;
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#fff';
+    ctx.fillText(`${feet} ft`, x + 50, mid);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = LAMPS[state][0];
+    ctx.fillText(`${seconds} s`, x + w - 12, mid);
+    ctx.restore();
   }
 
   function drawBody(cx, top, o) {
@@ -931,7 +999,9 @@
     drawSignals();
     drawDetections();
     drawWeather();
+    drawSignalGlow();
     drawRadar();
+    drawSignalAhead();
     if (flash) {
       ctx.fillStyle = 'rgba(186,12,47,.35)';
       ctx.fillRect(0, 0, width, height);
