@@ -1,6 +1,8 @@
-// A small driving game at the foot of the home page: steer a UGA research vehicle while rain, fog,
-// and nightfall shrink what its sensors can see, or let autopilot drive and take over when it struggles.
-// It starts only when asked, pauses when scrolled away, and handles keys only while it has focus.
+// A small driving game at the foot of the home page. Change lanes and set your speed on a rural Georgia
+// road: slower farm and school traffic ahead, faster cars coming up from behind, and rain, fog, and
+// nightfall that shrink what the front and rear sensors can see. Autopilot can drive (speed and lanes)
+// until it struggles. The game starts only when asked, pauses when scrolled away, and handles keys only
+// while it has focus.
 (() => {
   const game = document.querySelector('#drive-game');
   if (!game) return;
@@ -20,37 +22,40 @@
   const font = getComputedStyle(game).fontFamily;
 
   const LANES = 3;
-  const METERS_PER_PX = 0.06; // 300 px/s on screen is about 40 mph
-  const TRAFFIC = 0.6; // other traffic closes in at 60% of your speed
+  const METERS_PER_PX = 0.06; // on screen, 1 px is 6 cm of road
+  const MPH = 1 / (METERS_PER_PX * 2.23694); // px/s per mph
+  const SPEED = { min: 20 * MPH, max: 90 * MPH, start: 45 * MPH, accel: 7 * MPH, brake: 18 * MPH };
   const CONDITION_SECONDS = 9;
-  // Each condition scales the sensor range; autopilot also plans less often as perception degrades.
+  // Each condition scales the sensor range; autopilot also plans less often and drives slower.
   const conditions = [
-    { name: 'Clear', label: 'Clear · full sensor range', range: 1, plan: 0.08 },
-    { name: 'Rain', label: 'Rain · sensors 62%', range: 0.62, plan: 0.2, rain: 1, phrase: ' in the rain' },
-    { name: 'Clear', label: 'Clear · full sensor range', range: 1, plan: 0.08 },
-    { name: 'Fog', label: 'Fog · sensors 36%', range: 0.36, plan: 0.34, fog: 1, phrase: ' in fog' },
-    { name: 'Clear', label: 'Clear · full sensor range', range: 1, plan: 0.08 },
-    { name: 'Night', label: 'Night · sensors 55%', range: 0.55, plan: 0.16, night: 1, phrase: ' at night' },
+    { name: 'Clear', label: 'Clear · full sensor range', range: 1, plan: 0.08, cruise: 62 },
+    { name: 'Rain', label: 'Rain · sensors 62%', range: 0.62, plan: 0.2, cruise: 52, rain: 1, phrase: ' in the rain' },
+    { name: 'Clear', label: 'Clear · full sensor range', range: 1, plan: 0.08, cruise: 62 },
+    { name: 'Fog', label: 'Fog · sensors 36%', range: 0.36, plan: 0.34, cruise: 42, fog: 1, phrase: ' in fog' },
+    { name: 'Clear', label: 'Clear · full sensor range', range: 1, plan: 0.08, cruise: 62 },
+    { name: 'Night', label: 'Night · sensors 55%', range: 0.55, plan: 0.16, cruise: 52, night: 1, phrase: ' at night' },
   ];
+  // Natural speeds in mph: farm and school traffic is slow, cars and pickups often faster than you.
   const vehicles = [
-    { type: 'car', color: '#d9dde2', w: 1, h: 1, weight: 5 },
-    { type: 'pickup', color: '#6f7a86', w: 1.04, h: 1.14, weight: 3 },
-    { type: 'truck', color: '#eef0f2', w: 1.12, h: 1.9, weight: 2 },
-    { type: 'tractor', color: '#7a8b3c', w: 1.08, h: 0.9, weight: 1 },
-    { type: 'school bus', color: '#e8b21f', w: 1.12, h: 2.1, weight: 1 },
+    { type: 'car', color: '#d9dde2', w: 1, h: 1, weight: 5, mph: [50, 80] },
+    { type: 'pickup', color: '#6f7a86', w: 1.04, h: 1.14, weight: 3, mph: [45, 70] },
+    { type: 'truck', color: '#eef0f2', w: 1.12, h: 1.9, weight: 2, mph: [40, 55] },
+    { type: 'tractor', color: '#7a8b3c', w: 1.08, h: 0.9, weight: 1, mph: [15, 22] },
+    { type: 'school bus', color: '#e8b21f', w: 1.12, h: 2.1, weight: 1, mph: [30, 40] },
   ];
   const totalWeight = vehicles.reduce((sum, v) => sum + v.weight, 0);
 
   let width = 0, height = 0, lane = 0, roadX = 0, carW = 0, carH = 0, egoY = 0, treesFor = 0;
   let mode = 'ready'; // ready, running, paused, over
   let autopilot = false;
-  let speed, distance, roadOffset, elapsed, spawnTimer, lastFreeLane, lastBlocked, egoLane = 1, egoX = 0;
-  let sweep, planClock, hudClock, last = 0;
+  let speed = SPEED.start, distance, roadOffset, elapsed, spawnTimer, egoLane = 1, egoX = 0;
+  let sweep, planClock, hudClock, last = 0, alongside = [false, false], autoBraking = false;
   let range = 1, fog = 0, rain = 0, night = 0;
   // Night is drawn on an offscreen layer so the headlight beam can be cut out of the darkness.
   const shade = document.createElement('canvas');
   const shadeCtx = shade.getContext('2d');
   let obstacles = [], trees = [], drops = [];
+  const pedals = { faster: new Set(), slower: new Set() };
   let best = readBest();
   let lastRun = null;
 
@@ -61,10 +66,12 @@
     try { localStorage.setItem('uga-drive-best', String(value)); } catch { /* storage unavailable */ }
   }
   const miles = px => px * METERS_PER_PX / 1609.34;
-  const mph = pxPerSecond => pxPerSecond * METERS_PER_PX * 2.23694;
+  const mph = pxPerSecond => pxPerSecond / MPH;
   const laneCenter = index => roadX + lane * (index + 0.5);
   const condition = () => conditions[Math.floor(elapsed / CONDITION_SECONDS) % conditions.length];
-  const sensorRange = () => Math.max(0, egoY - 16) * range;
+  const frontRange = () => Math.max(0, egoY - 16) * range;
+  const rearRange = () => 460 * range; // px behind your rear bumper, mostly off-screen
+  const egoBack = () => egoY + carH;
   const announce = text => { status.textContent = text; };
 
   function layout() {
@@ -81,7 +88,8 @@
     roadX = (width - lane * LANES) / 2;
     carW = lane * 0.46;
     carH = carW * 1.85;
-    egoY = height - carH - Math.max(24, height * 0.1);
+    // Your car sits above the bottom edge so traffic coming up from behind is visible.
+    egoY = Math.round(height * 0.58);
     egoX = laneCenter(egoLane);
     for (const o of obstacles) sizeVehicle(o);
     if (treesFor !== width) plantTrees();
@@ -115,13 +123,11 @@
   }
 
   function reset() {
-    speed = 300;
+    speed = SPEED.start;
     distance = 0;
     roadOffset = 0;
     elapsed = 0;
-    spawnTimer = 0.5;
-    lastFreeLane = null;
-    lastBlocked = [];
+    spawnTimer = 0.4;
     egoLane = 1;
     egoX = laneCenter(1);
     sweep = 0;
@@ -130,57 +136,98 @@
     range = 1;
     fog = rain = night = 0;
     obstacles = [];
+    alongside = [false, false];
+    autoBraking = false;
+    releasePedals();
     drops = Array.from({ length: reducedMotion.matches ? 36 : 90 }, () => ({ x: Math.random() * width, y: Math.random() * height, l: 9 + Math.random() * 11 }));
   }
 
-  // Traffic arrives in rows that block one or two of the three lanes, never all of them. A two-lane
-  // block leaves open a lane the previous row also left open, and the row after it keeps that lane
-  // open, so there is always a way through.
-  function spawnRow() {
-    const any = list => list[Math.floor(Math.random() * list.length)];
-    let lanes;
-    if (Math.random() < Math.min(0.55, 0.25 + elapsed / 160)) {
-      const free = lastFreeLane ?? any([0, 1, 2].filter(l => !lastBlocked.includes(l)));
-      lanes = [0, 1, 2].filter(l => l !== free);
-      lastFreeLane = free;
-    } else {
-      lanes = [any([0, 1, 2].filter(l => l !== lastFreeLane))];
-      lastFreeLane = null;
+  // New traffic appears ahead if it is slower than you and behind if it is faster, so you meet it
+  // either way. It never fills all three lanes near the top of the road at once.
+  function spawn() {
+    const kind = pickVehicle();
+    const desired = (kind.mph[0] + Math.random() * (kind.mph[1] - kind.mph[0])) * MPH;
+    if (Math.abs(desired - speed) < 4 * MPH) return;
+    const ahead = desired < speed;
+    const o = { kind, jitter: Math.random(), v: desired, desired };
+    sizeVehicle(o);
+    // Faster traffic starts far enough behind to brake for you if it has to.
+    const closing = Math.max(0, desired - speed);
+    o.y = ahead ? -o.h - 20 - Math.random() * 60 : height + 40 + Math.min(560, closing * closing / 220) + Math.random() * 60;
+    const crowdedTop = new Set(obstacles.filter(x => x.y < height * 0.3).map(x => x.lane));
+    const lanes = [0, 1, 2].filter(index => {
+      if (ahead && !crowdedTop.has(index) && crowdedTop.size >= 2) return false;
+      return !obstacles.some(x => x.lane === index && x.y < o.y + o.h + carH * 1.5 && x.y + x.h > o.y - carH * 1.5);
+    });
+    if (!lanes.length) return;
+    o.lane = lanes[Math.floor(Math.random() * lanes.length)];
+    obstacles.push(o);
+  }
+
+  // Traffic keeps its lane and follows whatever is ahead of it, you included, with the Intelligent
+  // Driver Model. It does not ram you on purpose, but it cannot stop instantly if you cut in or brake.
+  const egoLaneNow = () => Math.max(0, Math.min(LANES - 1, Math.round((egoX - roadX) / lane - 0.5)));
+  function idm(v, desired, gap, dv) {
+    const a = 70, b = 140;
+    const wanted = 14 + v * 0.9 + v * dv / (2 * Math.sqrt(a * b));
+    return a * (1 - (v / desired) ** 4 - (wanted / Math.max(gap, 1)) ** 2);
+  }
+  function moveTraffic(dt) {
+    const youLane = egoLaneNow();
+    for (const o of obstacles) {
+      let gap = Infinity, leadV = o.v;
+      for (const other of obstacles) {
+        if (other === o || other.lane !== o.lane || other.y >= o.y) continue;
+        const g = o.y - (other.y + other.h);
+        if (g < gap) { gap = g; leadV = other.v; }
+      }
+      if (o.lane === youLane && egoY < o.y) {
+        const g = o.y - egoBack();
+        if (g < gap) { gap = g; leadV = speed; }
+      }
+      const acc = Math.max(-160, idm(o.v, o.desired, gap, o.v - leadV));
+      o.v = Math.max(0, o.v + acc * dt);
     }
-    lastBlocked = lanes;
-    for (const index of lanes) {
-      const o = { lane: index, kind: pickVehicle(), jitter: Math.random() };
-      sizeVehicle(o);
-      o.y = -o.h - 12 - Math.random() * carH * 0.4;
-      obstacles.push(o);
-    }
+    for (const o of obstacles) o.y += (speed - o.v) * dt;
+    obstacles = obstacles.filter(o => o.y < height + 720 && o.y > -620);
   }
 
   function detected(o) {
-    return o.y + o.h > egoY - sensorRange() && o.y < egoY + carH;
+    const ahead = o.y + o.h > egoY - frontRange() && o.y < egoY;
+    const behind = o.y >= egoY && o.y < egoBack() + rearRange();
+    return ahead || behind;
   }
 
-  // Autopilot keeps its lane until detected traffic is too close, then moves to the clearer
-  // adjacent lane. It cannot see past the sensor range, and it replans less often in bad weather.
-  function drive() {
-    if (planClock > 0) return;
-    planClock = condition().plan;
-    if (Math.abs(egoX - laneCenter(egoLane)) > lane * 0.25) return;
-    const clearance = index => {
-      let gap = Infinity;
-      for (const o of obstacles) if (o.lane === index && detected(o)) gap = Math.min(gap, egoY - (o.y + o.h));
-      return gap;
-    };
-    const beside = index => obstacles.some(o => o.lane === index && o.y + o.h > egoY - carH * 0.5 && o.y < egoY + carH * 1.15);
-    const here = clearance(egoLane);
-    if (here > speed * TRAFFIC * 0.65 + carH * 0.4) return;
-    const options = [egoLane - 1, egoLane + 1].filter(l => l >= 0 && l < LANES && !beside(l) && clearance(l) > here);
-    if (options.length) egoLane = options.sort((a, b) => clearance(b) - clearance(a))[0];
+  // Autopilot: cruise at a weather-dependent speed, follow detected traffic ahead, and change lanes only
+  // when its sensors show the target lane clear ahead and behind. It cannot see past its sensor range.
+  function drive(dt) {
+    const now = condition();
+    const target = now.cruise * MPH;
+    let gap = Infinity, leadV = target;
+    for (const o of obstacles) {
+      if (o.lane !== egoLane || o.y >= egoY || !detected(o)) continue;
+      const g = egoY - (o.y + o.h);
+      if (g < gap) { gap = g; leadV = o.v; }
+    }
+    const acc = Math.max(-SPEED.brake * (1 - 0.3 * rain), Math.min(SPEED.accel, idm(speed, target, gap, speed - leadV)));
+    autoBraking = acc < -SPEED.accel * 0.5;
+    speed = Math.max(SPEED.min, Math.min(SPEED.max, speed + acc * dt));
+    if (planClock > 0 || Math.abs(egoX - laneCenter(egoLane)) > lane * 0.25) return;
+    planClock = now.plan;
+    if (gap > carH * 3 || leadV > target - 6 * MPH) return;
+    const clear = index => obstacles.every(o => {
+      if (o.lane !== index || !detected(o)) return true;
+      if (o.y + o.h < egoY) return egoY - (o.y + o.h) > carH * 2.2 && o.v >= speed - 10 * MPH;
+      if (o.y > egoBack()) return o.y - egoBack() > carH * 1.2 + Math.max(0, o.v - speed) * 1.4;
+      return false;
+    });
+    const options = [egoLane - 1, egoLane + 1].filter(l => l >= 0 && l < LANES && clear(l));
+    if (options.length) egoLane = options[Math.floor(Math.random() * options.length)];
   }
 
-  function crashed() {
+  function hit() {
     const inset = carW * 0.1;
-    return obstacles.some(o => {
+    return obstacles.find(o => {
       const x = laneCenter(o.lane);
       return x + o.w * 0.45 > egoX - carW / 2 + inset && x - o.w * 0.45 < egoX + carW / 2 - inset && o.y + o.h * 0.96 > egoY + carH * 0.06 && o.y + o.h * 0.04 < egoY + carH * 0.94;
     });
@@ -188,7 +235,6 @@
 
   function update(dt) {
     elapsed += dt;
-    speed = Math.min(640, 300 + elapsed * 7);
     const now = condition();
     const ease = 1 - Math.exp(-dt * 2.5);
     range += (now.range - range) * ease;
@@ -196,6 +242,13 @@
     rain += ((now.rain || 0) - rain) * ease;
     night += ((now.night || 0) - night) * ease;
     planClock = Math.max(0, planClock - dt);
+    if (autopilot) drive(dt);
+    else {
+      // You hold your speed unless you press the accelerator or the brake.
+      if (pedals.slower.size) speed -= SPEED.brake * (1 - 0.3 * rain) * dt;
+      else if (pedals.faster.size) speed += SPEED.accel * dt;
+      speed = Math.max(SPEED.min, Math.min(SPEED.max, speed));
+    }
     const step = speed * dt;
     distance += step;
     roadOffset = (roadOffset + step) % 56;
@@ -203,15 +256,15 @@
       tree.y += step;
       if (tree.y - tree.r > height) { tree.y -= height + 80; placeTree(tree); }
     }
-    for (const o of obstacles) o.y += step * TRAFFIC;
-    obstacles = obstacles.filter(o => o.y < height + 20);
+    moveTraffic(dt);
     spawnTimer -= dt;
     if (spawnTimer <= 0) {
-      spawnRow();
-      spawnTimer = Math.max(0.72, 1.3 - elapsed * 0.006);
+      spawn();
+      spawnTimer = Math.max(0.45, 1.05 - elapsed * 0.004);
     }
-    if (autopilot) drive();
     egoX += (laneCenter(egoLane) - egoX) * (1 - Math.exp(-dt * 16));
+    const here = egoLaneNow();
+    alongside = [-1, 1].map(side => obstacles.some(o => o.lane === here + side && o.y + o.h > egoY - carH * 0.4 && o.y < egoBack() + carH * 0.6));
     if (!reducedMotion.matches) sweep += dt * 5;
     if (rain > 0.02) {
       for (const d of drops) {
@@ -220,7 +273,8 @@
         if (d.y > height) { d.y = -d.l; d.x = Math.random() * (width + 60); }
       }
     }
-    if (crashed()) crash();
+    const crashed = hit();
+    if (crashed) crash(crashed);
   }
 
   function shape(x, y, w, h, r) {
@@ -236,6 +290,7 @@
   function drawVehicle(o) {
     const { w, h } = o;
     const x = laneCenter(o.lane) - w / 2, y = o.y;
+    if (y > height + 4 || y + h < -4) return;
     ctx.fillStyle = 'rgba(0,0,0,.35)';
     shape(x + 3, y + 5, w, h, w * 0.2);
     ctx.fill();
@@ -299,6 +354,11 @@
     ctx.fillStyle = '#fff4cc';
     ctx.fillRect(x + carW * 0.1, y + 1, carW * 0.22, 3);
     ctx.fillRect(x + carW * 0.68, y + 1, carW * 0.22, 3);
+    // Brake lights while slowing down.
+    const braking = mode === 'running' && (autopilot ? autoBraking : pedals.slower.size > 0);
+    ctx.fillStyle = braking ? '#ff3b3b' : '#7d0a20';
+    ctx.fillRect(x + carW * 0.1, y + carH - 4, carW * 0.24, 3);
+    ctx.fillRect(x + carW * 0.66, y + carH - 4, carW * 0.24, 3);
     // Roof-mounted LiDAR with a rotating sweep.
     const cx = egoX, cy = y + carH * 0.55;
     ctx.fillStyle = '#0d0f12';
@@ -309,10 +369,22 @@
     ctx.moveTo(cx, cy);
     ctx.lineTo(cx + Math.cos(sweep) * carW * 0.15, cy + Math.sin(sweep) * carW * 0.15);
     ctx.stroke();
+    // Blind-spot warnings: a car alongside in the next lane.
+    ctx.fillStyle = '#ffb020';
+    alongside.forEach((warn, i) => {
+      if (!warn) return;
+      const side = i === 0 ? x - 7 : x + carW + 7;
+      ctx.beginPath();
+      ctx.moveTo(side, y + carH * 0.28);
+      ctx.lineTo(side + (i === 0 ? -6 : 6), y + carH * 0.4);
+      ctx.lineTo(side, y + carH * 0.52);
+      ctx.closePath();
+      ctx.fill();
+    });
   }
 
   function beam(target) {
-    const r = sensorRange(), spread = lane * 1.45;
+    const r = frontRange(), spread = lane * 1.45;
     target.beginPath();
     target.moveTo(egoX - carW * 0.3, egoY + 6);
     target.lineTo(egoX - spread, egoY - r);
@@ -322,13 +394,28 @@
   }
 
   function drawSensor() {
-    const r = sensorRange();
+    const r = frontRange();
     const glow = ctx.createLinearGradient(0, egoY, 0, egoY - r);
     glow.addColorStop(0, 'rgba(255,255,255,.17)');
     glow.addColorStop(1, 'rgba(255,255,255,0)');
     ctx.fillStyle = glow;
     beam(ctx);
     ctx.fill();
+    // A fainter rear sensor field.
+    const back = egoBack(), rr = Math.min(rearRange(), height - back);
+    if (rr > 4) {
+      const rearGlow = ctx.createLinearGradient(0, back, 0, back + rr);
+      rearGlow.addColorStop(0, 'rgba(255,255,255,.1)');
+      rearGlow.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = rearGlow;
+      ctx.beginPath();
+      ctx.moveTo(egoX - carW * 0.3, back - 4);
+      ctx.lineTo(egoX - lane * 1.2, back + rr);
+      ctx.lineTo(egoX + lane * 1.2, back + rr);
+      ctx.lineTo(egoX + carW * 0.3, back - 4);
+      ctx.closePath();
+      ctx.fill();
+    }
     ctx.strokeStyle = 'rgba(255,255,255,.4)';
     ctx.lineWidth = 1;
     ctx.setLineDash([4, 6]);
@@ -339,7 +426,25 @@
     ctx.setLineDash([]);
   }
 
+  // Rear radar: a chevron at the bottom of a lane when traffic is closing in from off-screen behind.
+  function drawRadar() {
+    for (const o of obstacles) {
+      if (o.y < height || o.v <= speed || o.y > egoBack() + rearRange()) continue;
+      const urgency = 1 - (o.y - height) / Math.max(1, egoBack() + rearRange() - height);
+      const cx = laneCenter(o.lane), by = height - 10;
+      ctx.fillStyle = `rgba(255,59,59,${0.35 + 0.6 * Math.max(0, urgency)})`;
+      ctx.beginPath();
+      ctx.moveTo(cx - 12, by);
+      ctx.lineTo(cx, by - 12);
+      ctx.lineTo(cx + 12, by);
+      ctx.lineTo(cx, by - 5);
+      ctx.closePath();
+      ctx.fill();
+    }
+  }
+
   function drawDetection(o) {
+    if (o.y > height || o.y + o.h < 0) return;
     const x = laneCenter(o.lane) - o.w / 2 - 5, y = o.y - 5, w = o.w + 10, h = o.h + 10, c = Math.min(12, w / 3);
     ctx.strokeStyle = 'rgba(255,255,255,.92)';
     ctx.lineWidth = 2;
@@ -350,8 +455,7 @@
       ctx.lineTo(px, py + dy * c);
     }
     ctx.stroke();
-    const confidence = Math.min(0.99, 0.6 + 0.36 * range + o.jitter * 0.04);
-    const label = `${o.kind.type} ${confidence.toFixed(2)}`;
+    const label = `${o.kind.type} ${Math.round(mph(o.v))} mph`;
     ctx.font = `600 13px ${font}`;
     const labelWidth = ctx.measureText(label).width + 10;
     ctx.fillStyle = 'rgba(0,0,0,.72)';
@@ -376,14 +480,20 @@
       ctx.stroke();
     }
     if (fog > 0.02) {
-      // Fog hides everything beyond the sensor range.
-      const edge = egoY - sensorRange();
-      const clear = edge + sensorRange() * 0.45;
+      // Fog hides everything beyond the sensor range, ahead and behind.
+      const edge = egoY - frontRange();
+      const clear = edge + frontRange() * 0.45;
       const haze = ctx.createLinearGradient(0, clear, 0, edge - 30);
       haze.addColorStop(0, 'rgba(222,226,231,0)');
       haze.addColorStop(1, `rgba(222,226,231,${0.97 * fog})`);
       ctx.fillStyle = haze;
       ctx.fillRect(0, 0, width, clear);
+      const behind = egoBack() + 12;
+      const rearHaze = ctx.createLinearGradient(0, behind, 0, height);
+      rearHaze.addColorStop(0, 'rgba(222,226,231,0)');
+      rearHaze.addColorStop(1, `rgba(222,226,231,${0.85 * fog})`);
+      ctx.fillStyle = rearHaze;
+      ctx.fillRect(0, behind, width, height - behind);
     }
     if (night > 0.02) {
       // Darkness everywhere except the headlight beam and a glow around the car.
@@ -392,7 +502,7 @@
       shadeCtx.fillStyle = `rgba(4,7,14,${0.88 * night})`;
       shadeCtx.fillRect(0, 0, width, height);
       shadeCtx.globalCompositeOperation = 'destination-out';
-      const light = shadeCtx.createLinearGradient(0, egoY, 0, egoY - sensorRange());
+      const light = shadeCtx.createLinearGradient(0, egoY, 0, egoY - frontRange());
       light.addColorStop(0, 'rgba(0,0,0,.95)');
       light.addColorStop(1, 'rgba(0,0,0,0)');
       shadeCtx.fillStyle = light;
@@ -406,12 +516,18 @@
       shadeCtx.fillRect(egoX - carH * 1.4, cy - carH * 1.4, carH * 2.8, carH * 2.8);
       shadeCtx.globalCompositeOperation = 'source-over';
       ctx.drawImage(shade, 0, 0, width, height);
-      // Tail lights stay visible in the dark.
-      ctx.fillStyle = `rgba(255,64,64,${0.9 * night})`;
+      // Other cars' lights stay visible in the dark: tail lights ahead, headlights behind.
       for (const o of obstacles) {
         const x = laneCenter(o.lane) - o.w / 2;
-        ctx.fillRect(x + o.w * 0.08, o.y + o.h - 4, o.w * 0.2, 3);
-        ctx.fillRect(x + o.w * 0.72, o.y + o.h - 4, o.w * 0.2, 3);
+        if (o.y < egoY) {
+          ctx.fillStyle = `rgba(255,64,64,${0.9 * night})`;
+          ctx.fillRect(x + o.w * 0.08, o.y + o.h - 4, o.w * 0.2, 3);
+          ctx.fillRect(x + o.w * 0.72, o.y + o.h - 4, o.w * 0.2, 3);
+        } else {
+          ctx.fillStyle = `rgba(255,244,204,${0.9 * night})`;
+          ctx.fillRect(x + o.w * 0.08, o.y + 1, o.w * 0.22, 3);
+          ctx.fillRect(x + o.w * 0.7, o.y + 1, o.w * 0.22, 3);
+        }
       }
     }
   }
@@ -444,6 +560,7 @@
     drawEgo();
     for (const o of obstacles) if (detected(o)) drawDetection(o);
     drawWeather();
+    drawRadar();
     if (flash) {
       ctx.fillStyle = 'rgba(186,12,47,.35)';
       ctx.fillRect(0, 0, width, height);
@@ -463,21 +580,34 @@
   function syncAutopilot() {
     autopilotButton.setAttribute('aria-pressed', String(autopilot));
     autopilotButton.textContent = autopilot ? 'Autopilot on' : 'Autopilot off';
-    if (speed !== undefined) updateHud();
+    if (distance !== undefined) updateHud();
   }
   function toggleAutopilot() {
     autopilot = !autopilot;
     syncAutopilot();
     announce(autopilot ? 'Autopilot on.' : 'Autopilot off. You are driving.');
   }
+  function takeOver() {
+    if (!autopilot) return;
+    autopilot = false;
+    syncAutopilot();
+    announce('You took over from autopilot.');
+  }
   function steer(direction) {
     if (mode !== 'running') return;
-    if (autopilot) {
-      autopilot = false;
-      syncAutopilot();
-      announce('You took over from autopilot.');
-    }
+    takeOver();
     egoLane = Math.max(0, Math.min(LANES - 1, egoLane + direction));
+  }
+  // Speed pedals are held: by key, by the on-screen buttons, or briefly by a keyboard click on a button.
+  function press(name, source) {
+    if (mode !== 'running') return;
+    takeOver();
+    pedals[name].add(source);
+  }
+  function lift(name, source) { pedals[name].delete(source); }
+  function releasePedals() {
+    pedals.faster.clear();
+    pedals.slower.clear();
   }
 
   function showOverlay(title, action, note) {
@@ -496,23 +626,30 @@
     last = 0;
     updateHud();
     canvas.focus({ preventScroll: true });
-    announce(autopilot ? 'Driving on autopilot.' : 'Driving. Use the left and right arrow keys to change lanes.');
+    announce(autopilot ? 'Driving on autopilot.' : 'Driving. Left and right arrow keys change lanes; up and down change speed.');
     requestAnimationFrame(loop);
   }
   function pause() {
     if (mode !== 'running') return;
     mode = 'paused';
+    releasePedals();
     showOverlay('Paused', 'Resume', `${miles(distance).toFixed(2)} mi so far.`);
     announce('Paused.');
   }
-  function crash() {
+  function crash(other) {
     mode = 'over';
+    releasePedals();
     const reached = miles(distance);
     const record = reached > best;
     if (record) { best = reached; saveBest(best); }
     const now = condition();
+    const who = autopilot ? 'Autopilot' : 'You';
+    const changingLanes = other.lane !== egoLaneNow() || Math.abs(egoX - laneCenter(egoLane)) > lane * 0.2;
+    const what = changingLanes ? `${who} side-swiped a ${other.kind.type}`
+      : other.y > egoY + carH * 0.45 ? `A ${other.kind.type} hit ${autopilot ? 'the car' : 'you'} from behind`
+      : `${who} hit a ${other.kind.type}`;
     const title = record ? `New best: ${reached.toFixed(2)} mi` : `Crashed at ${reached.toFixed(2)} mi`;
-    const note = `${autopilot ? 'Autopilot crashed' : 'You crashed'}${now.phrase || ''} at ${Math.round(mph(speed))} mph. Best: ${best.toFixed(2)} mi.`;
+    const note = `${what}${now.phrase || ''} at ${Math.round(mph(speed))} mph. Best: ${best.toFixed(2)} mi.`;
     lastRun = { miles: reached, phrase: now.phrase || '', autopilot };
     updateHud();
     draw(true);
@@ -556,6 +693,24 @@
   });
   autopilotButton.addEventListener('click', toggleAutopilot);
   for (const button of game.querySelectorAll('[data-steer]')) button.addEventListener('click', () => steer(Number(button.dataset.steer)));
+  for (const button of game.querySelectorAll('[data-speed]')) {
+    const name = Number(button.dataset.speed) > 0 ? 'faster' : 'slower';
+    let pointer = false, downAt = 0;
+    button.addEventListener('pointerdown', () => { pointer = true; downAt = performance.now(); press(name, 'button'); });
+    for (const type of ['pointerup', 'pointerleave', 'pointercancel']) {
+      button.addEventListener(type, () => {
+        if (!pointer) return;
+        pointer = false;
+        // A quick tap still counts as a short press.
+        setTimeout(() => lift(name, 'button'), Math.max(0, 400 - (performance.now() - downAt)));
+      });
+    }
+    button.addEventListener('click', event => {
+      if (event.detail) return; // a pointer press already held the pedal
+      press(name, 'tap'); // keyboard activation: a short press
+      setTimeout(() => lift(name, 'tap'), 400);
+    });
+  }
   canvas.addEventListener('pointerdown', event => {
     const box = canvas.getBoundingClientRect();
     steer(event.clientX - box.left < box.width / 2 ? -1 : 1);
@@ -569,20 +724,29 @@
     else if ((key === 'p' || key === 'escape') && mode === 'running') pause();
     else if (mode === 'running' && (key === 'arrowleft' || key === 'a')) steer(-1);
     else if (mode === 'running' && (key === 'arrowright' || key === 'd')) steer(1);
+    else if (mode === 'running' && (key === 'arrowup' || key === 'w')) press('faster', 'key');
+    else if (mode === 'running' && (key === 'arrowdown' || key === 's')) press('slower', 'key');
     else return;
     event.preventDefault();
   });
+  game.addEventListener('keyup', event => {
+    const key = event.key.toLowerCase();
+    if (key === 'arrowup' || key === 'w') lift('faster', 'key');
+    if (key === 'arrowdown' || key === 's') lift('slower', 'key');
+  });
+  // Losing focus releases keys held on the canvas; on-screen buttons keep their own press.
+  canvas.addEventListener('blur', () => { lift('faster', 'key'); lift('slower', 'key'); });
   new IntersectionObserver(entries => {
     for (const entry of entries) if (!entry.isIntersecting) pause();
   }, { threshold: 0.25 }).observe(screen);
   document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); });
   new ResizeObserver(layout).observe(canvas);
 
-  // A still first frame: a little traffic ahead and the best distance so far.
+  // A still first frame: slower traffic ahead, a faster car coming up behind, and the best distance.
   reset();
   layout();
-  for (const [index, kind, share] of [[0, vehicles[0], 0.12], [2, vehicles[2], 0.02], [1, vehicles[1], -0.2]]) {
-    const o = { lane: index, kind, jitter: 0.5 };
+  for (const [index, kind, share, mphNow] of [[0, vehicles[0], 0.08, 40], [2, vehicles[2], -0.04, 45], [1, vehicles[3], 0.16, 18], [2, vehicles[1], 0.86, 62]]) {
+    const o = { lane: index, kind, jitter: 0.5, v: mphNow * MPH, desired: mphNow * MPH };
     sizeVehicle(o);
     o.y = height * share;
     obstacles.push(o);
