@@ -50,6 +50,12 @@ if (sceneControls) {
       // The initial scene is already in HTML. Other photographs are only
       // requested after a visitor chooses them, including their responsive set.
       if (image.dataset.src) {
+        // The <picture> source (AVIF) is set first, so the browser chooses between the two formats.
+        const source = image.previousElementSibling;
+        if (source?.dataset.srcset) {
+          source.sizes = source.dataset.sizes;
+          source.srcset = source.dataset.srcset;
+        }
         if (image.dataset.sizes) image.sizes = image.dataset.sizes;
         if (image.dataset.srcset) image.srcset = image.dataset.srcset;
         image.src = image.dataset.src;
@@ -210,3 +216,17 @@ document.addEventListener('keydown', event => {
     : run.animate([{ transform: 'translateX(-160px)' }, { transform: `translateX(${innerWidth + 40}px)` }], { duration: 2600, easing: 'cubic-bezier(.45,0,.25,1)' });
   animation.onfinish = () => run.remove();
 });
+// The Hawkinsville route viewer loads about 70 MB of point-cloud data, so it opens only when asked.
+// Without JavaScript, the button is a link to the viewer itself.
+for (const launch of document.querySelectorAll('[data-map-src]')) {
+  launch.querySelector('[data-map-launch]').addEventListener('click', event => {
+    event.preventDefault();
+    const frame = document.createElement('iframe');
+    frame.title = launch.dataset.mapTitle;
+    frame.src = launch.dataset.mapSrc;
+    frame.referrerPolicy = 'strict-origin-when-cross-origin';
+    frame.allow = 'fullscreen';
+    launch.replaceWith(frame);
+    frame.focus();
+  });
+}

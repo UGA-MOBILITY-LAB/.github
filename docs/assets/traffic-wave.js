@@ -15,6 +15,12 @@
   const stats = section.querySelector('.wave-stats');
   const status = section.querySelector('.wave-status');
   const font = getComputedStyle(section).fontFamily;
+  // Canvas colours come from CSS custom properties, so the drawing follows light and dark mode.
+  let palette = {};
+  const readPalette = () => {
+    const style = getComputedStyle(section);
+    for (const name of ['road', 'edge', 'text', 'chart', 'av', 'av-dot']) palette[name] = style.getPropertyValue(`--wave-${name}`).trim();
+  };
 
   const N = 22, L = 300, CAR = 4.5, DT = 0.05, SPEEDUP = 3, DELAY = 12; // DELAY steps = 0.6 s
   const human = { a: 0.7, b: 1.5, v0: 15, T: 1.0, s0: 2 };
@@ -86,13 +92,14 @@
     const { width, height } = ring.getBoundingClientRect();
     const cx = width / 2, cy = height / 2, r = Math.min(width, height) / 2 - 26;
     ringCtx.clearRect(0, 0, width, height);
+    if (r <= 0) return; // not laid out yet
     ringCtx.lineWidth = 26;
-    ringCtx.strokeStyle = '#e3e6ea';
+    ringCtx.strokeStyle = palette.road;
     ringCtx.beginPath();
     ringCtx.arc(cx, cy, r, 0, Math.PI * 2);
     ringCtx.stroke();
     ringCtx.lineWidth = 1;
-    ringCtx.strokeStyle = '#c5cbd2';
+    ringCtx.strokeStyle = palette.edge;
     for (const edge of [r - 13, r + 13]) {
       ringCtx.beginPath();
       ringCtx.arc(cx, cy, edge, 0, Math.PI * 2);
@@ -103,19 +110,19 @@
       ringCtx.save();
       ringCtx.translate(cx + Math.cos(angle) * r, cy + Math.sin(angle) * r);
       ringCtx.rotate(angle + Math.PI / 2);
-      ringCtx.fillStyle = automated[i] ? '#1d1d1f' : speedColor(v[i]);
+      ringCtx.fillStyle = automated[i] ? palette.av : speedColor(v[i]);
       ringCtx.beginPath();
       if (ringCtx.roundRect) ringCtx.roundRect(-8, -4.5, 16, 9, 2.5); else ringCtx.rect(-8, -4.5, 16, 9);
       ringCtx.fill();
       if (automated[i]) {
-        ringCtx.fillStyle = '#fff';
+        ringCtx.fillStyle = palette['av-dot'];
         ringCtx.beginPath();
         ringCtx.arc(0, 0, 2.2, 0, Math.PI * 2);
         ringCtx.fill();
       }
       ringCtx.restore();
     }
-    ringCtx.fillStyle = '#5d6168';
+    ringCtx.fillStyle = palette.text;
     ringCtx.font = `600 15px ${font}`;
     ringCtx.textAlign = 'center';
     ringCtx.textBaseline = 'middle';
@@ -128,18 +135,18 @@
     const { width, height } = chart.getBoundingClientRect();
     const left = 8, top = 8, w = width - 16, h = height - 34;
     chartCtx.clearRect(0, 0, width, height);
-    chartCtx.fillStyle = '#f4f5f7';
+    chartCtx.fillStyle = palette.chart;
     chartCtx.fillRect(left, top, w, h);
     const r = Math.max(1.4, Math.min(2.4, w / 380));
     for (const sample of samples) {
       const px = left + w - (clock - sample.t) / HISTORY_SECONDS * w;
       if (px < left) continue;
       for (let i = 0; i < N; i++) {
-        chartCtx.fillStyle = sample.auto[i] ? '#1d1d1f' : speedColor(sample.v[i]);
+        chartCtx.fillStyle = sample.auto[i] ? palette.av : speedColor(sample.v[i]);
         chartCtx.fillRect(px - r / 2, top + h - sample.x[i] / L * h - r / 2, r, r);
       }
     }
-    chartCtx.fillStyle = '#5d6168';
+    chartCtx.fillStyle = palette.text;
     chartCtx.font = `15px ${font}`;
     chartCtx.textBaseline = 'alphabetic';
     chartCtx.textAlign = 'left';
@@ -223,6 +230,8 @@
   document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); });
   new ResizeObserver(() => { size(ring, ringCtx); size(chart, chartCtx); draw(); }).observe(section.querySelector('.wave-stage'));
 
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { readPalette(); draw(); });
+  readPalette();
   reset();
   setAutomated(0);
   updateStats();
