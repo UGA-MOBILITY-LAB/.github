@@ -34,10 +34,27 @@
 .scene-controls button[aria-pressed=true]{color:white;border-top:2px solid #fff;padding-top:11px}
 .scene-controls button:hover{border-top-color:white;color:white}
 .scene-controls button:focus-visible{outline-color:#fff}
-.recruitment-section{display:grid;grid-template-columns:1fr 1.1fr;gap:60px;padding:36px 0 44px;border-block:1px solid var(--line);margin-bottom:44px;scroll-margin-top:120px}
-.recruitment-section h2{font-size:45px;margin-bottom:0}
-.recruitment-section p:not(.eyebrow):not(.lead){font-size:16px;color:var(--muted)}
-.recruitment-section .button{gap:24px}
+.join-section{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:56px;padding:40px 0 48px;border-block:1px solid var(--line);margin-bottom:44px;scroll-margin-top:120px}
+.join-section h2{font-size:45px;margin-bottom:18px}
+.join-intro>p:not(.eyebrow):not(.lead){font-size:16px;color:var(--muted)}
+.join-intro .lead{margin-bottom:12px}
+.join-intro .join-label{margin:24px 0 10px;font-size:15px;font-weight:700;color:var(--ink)}
+.join-threads{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.join-threads a{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);padding:6px 11px;font-size:15px;font-weight:600;line-height:1.4;transition:border-color .2s,color .2s}
+.join-threads a:hover{border-color:var(--red);color:var(--red)}
+.join-threads .icon{width:16px;height:16px;color:var(--red);stroke-width:1.8;flex:none}
+.join-intro .join-note{margin:18px 0 0;font-size:15px}
+.join-apply{align-self:start;background:var(--surface);padding:30px 32px 32px}
+.join-apply h3{font:600 24px/1.25 var(--display);letter-spacing:-.02em;margin:0 0 20px}
+.join-steps{list-style:none;counter-reset:step;margin:0;padding:0;display:grid;gap:18px}
+.join-steps li{counter-increment:step;display:grid;grid-template-columns:38px minmax(0,1fr);font-size:15px;line-height:1.6;color:var(--muted)}
+.join-steps li::before{content:counter(step,decimal-leading-zero);font:400 20px/1.25 var(--display);color:var(--red)}
+.join-steps strong{color:var(--ink)}
+.join-links{display:flex;flex-wrap:wrap;gap:4px 18px;margin-top:6px}
+.join-links a{font-weight:600;color:var(--ink);border-bottom:1px solid #c9ced4;display:inline-flex;gap:8px}
+.join-links a:hover{border-color:var(--red)}
+.join-apply .button{gap:24px;margin-top:26px}
+@media(max-width:850px){.join-section{grid-template-columns:1fr;gap:28px}}
 @media(max-width:1100px){.recruitment-topics{display:none}.recruitment-banner a{margin-left:auto}.hero-discover{display:none}}
 @media(max-width:650px){
   .recruitment-banner .wrap{gap:12px;padding-block:13px}
@@ -52,8 +69,9 @@
   .scene-controls{gap:16px}
   .scene-controls button{flex:1 1 auto;min-width:0;font-size:14px;white-space:nowrap}
   .scene-controls button span{margin-right:4px}
-  .recruitment-section{grid-template-columns:1fr;gap:28px;padding-block:35px;margin-bottom:35px;scroll-margin-top:100px}
-  .recruitment-section h2{font-size:38px}
+  .join-section{padding-block:32px;margin-bottom:35px;scroll-margin-top:100px}
+  .join-section h2{font-size:38px}
+  .join-apply{padding:24px 20px 26px}
 }
 @media(prefers-reduced-motion:reduce){.hero-scenes .hero-image{transition:none}}
 /* Crimson foil wordmark: red lettering with restrained warm metallic highlights. */
@@ -449,3 +467,50 @@ html:not(.js) .drive-game,.no-drive-game .drive-game{display:none}
 .footer-main>div:last-child>a .icon{width:18px;height:18px;color:#9a9a9a}
 @media(max-width:650px){.research-number .icon{width:24px;height:24px;margin-top:12px}.resource-card-top .icon{width:26px;height:26px}}
 @media print{.site-header,.site-footer,.publication-controls,.result-count,.menu-toggle,.contact-band{display:none!important}.wrap{width:100%}.section,.page-intro{padding:20px 0}.hero{height:auto;min-height:0;padding:20px;color:black}.hero-image,.hero-shade,.hero-bottom{display:none}.hero-content{padding:0}.hero h1 em,.hero .eyebrow,.hero-content>p:not(.eyebrow){color:black}.hero .button{display:none}a{color:inherit}.publication{break-inside:avoid}.pub-thumbnail{display:none}.publication:has(.pub-thumbnail){grid-template-columns:135px 1fr}body{font-size:14px}}
+/* Research threads: the home page's six threads in detail, each with its figure beside the headline. */
+.research-people{margin:16px 0 0;font:600 15px/1.5 var(--display);letter-spacing:-.01em;color:var(--muted)}
+.research-detail .thread-figure{margin-top:24px;border:1px solid var(--line)}
+.research-detail .thread-figure:hover img{transform:scale(1.03)}
+.research-detail .thread-work{margin-bottom:8px}
+.research-number[id]{scroll-margin-top:115px}
+/* Publications: research-thread filter and tags, BibTeX copy, and the .bib download. */
+.pub-notes{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 24px;margin-bottom:26px}
+.pub-notes .author-note{margin:0}
+.pub-notes .text-link{gap:10px}
+.publication-controls{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 25px}
+.topic-filter{grid-column:1/-1;flex-wrap:wrap}
+.topic-filter button{display:inline-flex;align-items:center;gap:7px}
+.topic-filter .icon{width:16px;height:16px;stroke-width:1.8;flex:none}
+.topic-filter button[aria-pressed=false] .icon{color:var(--red)}
+.pub-topic{display:inline-block;margin-top:12px;font-size:14px;font-weight:600;line-height:1.35;color:var(--ink);border-bottom:1px solid var(--line);padding-bottom:1px}
+.pub-topic+.pub-topic{margin-left:10px}
+.pub-topic:hover{border-color:var(--red);color:var(--red)}
+button.text-link{background:none;border:0;border-bottom:1px solid var(--line);padding:7px 0;color:inherit;font:inherit;font-size:15px;font-weight:600;line-height:inherit;cursor:pointer}
+button.text-link:hover{border-color:var(--red)}
+.pub-cite .icon{width:15px;height:15px;stroke-width:2;flex:none}
+.pub-cite.is-copied{color:var(--red);border-color:var(--red)}
+html:not(.js) .pub-cite{display:none}
+.pub-bibtex{margin:14px 0 0;padding:14px 16px;background:var(--surface);border:1px solid var(--line);font:13px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+@media(max-width:650px){
+  .publication-controls{display:block}
+  .topic-filter{flex-wrap:nowrap;overflow-x:auto;margin:0 -20px 14px;padding:0 20px 2px;scrollbar-width:none}
+  .topic-filter::-webkit-scrollbar{display:none}
+  .topic-filter button{flex:none;white-space:nowrap}
+  .pub-meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px}
+  .pub-meta .pub-year{margin:0}
+  .pub-topic{margin-top:0}
+}
+/* 404: a wrong turn into a cul-de-sac. */
+.lost{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:56px;align-items:center;padding-block:64px 88px}
+.lost h1{font-size:56px;margin-bottom:20px}
+.lost .intro-copy{margin-bottom:26px}
+.lost-links{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:28px;font-size:15px;font-weight:600}
+.lost-links a{border-bottom:1px solid var(--line);padding-block:4px}
+.lost-links a:hover{border-color:var(--red);color:var(--red)}
+.lost-scene{margin:0}
+.lost-scene svg{display:block;width:100%;height:auto;overflow:visible}
+.lost-paint{font:700 34px var(--display);letter-spacing:.04em;fill:#e6e9ed;opacity:.9}
+.lost-car-still{display:none}
+@media(prefers-reduced-motion:reduce){.lost-car-moving{display:none}.lost-car-still{display:inline}}
+@media(max-width:850px){.lost{grid-template-columns:1fr;gap:24px;padding-block:36px 64px}.lost-scene{order:-1}}
+@media(max-width:650px){.lost h1{font-size:40px;line-height:1.13}}
