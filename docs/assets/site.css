@@ -261,7 +261,6 @@ html:not(.js) .scene-controls,html:not(.js) .publication-controls,html:not(.js) 
 .thread-figure img{width:100%;height:100%;object-fit:contain;padding:14px 16px 38px;transition:transform .45s ease}
 .thread-figure.is-photo img{object-fit:cover;padding:0}
 .thread-figure.is-dark{background:#0b0e12}
-.thread-figure img[src*="haohua-iros"]{object-position:50% 28%}
 .thread-tag{position:absolute;left:0;bottom:0;background:#000;color:#fff;font-size:15px;font-weight:600;line-height:1.3;padding:5px 11px}
 .map-attribution{position:absolute;top:0;right:0;background:#ffffffe0;color:var(--muted);font-size:14px;line-height:1.4;padding:3px 8px}
 .map-attribution:hover{color:var(--red)}
