@@ -31,6 +31,9 @@ for (const name of await readdir(root)) {
   }
 }
 const candidates = value => decode(value).split(',').map(candidate => candidate.trim().split(/\s+/)[0]);
+// 404.html is served at any missing path, so it links from the site root (/.github/) instead of relatively.
+const siteRoot = '/.github/';
+const fromRoot = reference => (reference.startsWith(siteRoot) ? reference.slice(siteRoot.length) : reference);
 
 let internalReferences = 0;
 for (const [name, { html }] of pages) {
@@ -40,7 +43,8 @@ for (const [name, { html }] of pages) {
     check(reference !== '' && reference !== '#', `${name}: empty/placeholder link`);
     check(!/^javascript:/i.test(reference), `${name}: javascript URL`);
     if (/^(?:https?:|mailto:|tel:|data:|\/\/)/i.test(reference)) continue;
-    const url = new URL(reference, `https://local.test/${name}`);
+    if (name === '404.html') check(reference.startsWith(siteRoot) || reference.startsWith('#'), `404.html: link must start at the site root: ${reference}`);
+    const url = new URL(fromRoot(reference), `https://local.test/${name}`);
     const relative = decodeURIComponent(url.pathname.slice(1)) || 'index.html';
     const target = path.resolve(root, relative);
     check(target.startsWith(root), `${name}: asset escapes site root: ${reference}`);
@@ -64,7 +68,7 @@ for (const [name, { html }] of pages) {
     for (const match of tag[0].matchAll(/\b(?:src|srcset)="([^"]*)"/g)) {
       for (const file of candidates(match[1])) {
         if (/^(?:https?:|data:|\/\/)/i.test(file)) continue;
-        const { size } = await stat(path.resolve(root, file)).catch(() => ({ size: 0 }));
+        const { size } = await stat(path.resolve(root, fromRoot(file))).catch(() => ({ size: 0 }));
         check(size <= imageBudget, `${name}: inline image over ${imageBudget / 1024} KiB: ${file}`);
       }
     }
@@ -79,6 +83,14 @@ for (const publication of publications) {
   check(pubs.includes(publication.authors), `Publication authors missing: ${publication.id}`);
   check(pubs.includes(escape(publication.status)), `Publication status missing: ${publication.id}`);
 }
+const bib = await readFile(path.join(root, 'assets', 'mobility-lab-publications.bib'), 'utf8').catch(() => '');
+check((bib.match(/^@\w+\{/gm) || []).length === publications.length, 'BibTeX file entry count differs from data');
+for (const entry of pubs.matchAll(/<article class="publication"[^>]*>/g)) {
+  check(/data-topics="[^"]+"/.test(entry[0]), `Publication has no research thread: ${/id="([^"]*)"/.exec(entry[0])?.[1]}`);
+}
+check((pubs.match(/class="pub-bibtex"/g) || []).length === publications.length, 'Every publication needs a BibTeX entry');
+const lost = pages.get('404.html')?.html || '';
+check(lost.includes('<meta name="robots" content="noindex">') && !lost.includes('rel="canonical"'), '404.html must be noindex without a canonical URL');
 const updates = pages.get('news.html')?.html || '';
 check((updates.match(/class="news-entry"/g) || []).length === news.length, 'News entry count differs from data');
 for (const item of news) {
@@ -91,6 +103,8 @@ for (const item of news) {
 }
 const research = pages.get('research.html')?.html || '';
 for (const project of projects) check(research.includes(escape(project.title)), `Project missing: ${project.id}`);
+check((research.match(/class="research-detail"/g) || []).length === 6, 'Research page must show the six research threads');
+for (const legacy of ['autonomy', 'cooperation', 'robotics', 'infrastructure']) check(pages.get('research.html')?.ids.has(legacy), `Old research anchor missing: #${legacy}`);
 const team = pages.get('team.html')?.html || '';
 for (const member of alumni) check(team.includes(escape(member.name)), `Former member missing: ${member.name}`);
 for (const name of ['Handong Yao', 'Tianle Zhu', 'Haohua Que', 'Qianyi Wu', 'Richard Alexander Booth Fritz']) {

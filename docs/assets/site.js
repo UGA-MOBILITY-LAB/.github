@@ -99,30 +99,70 @@ if (sceneControls) {
     if (status) status.textContent = `${button.textContent.trim()} photograph displayed.`;
   }));
 }
+// Publications: filter by research thread (also from ?topic= links on the research page), year, and search.
 const controls = document.querySelector('.publication-controls');
 if (controls) {
   const input = controls.querySelector('input');
-  const buttons = [...controls.querySelectorAll('[data-filter]')];
+  const yearButtons = [...controls.querySelectorAll('[data-filter]')];
+  const topicButtons = [...controls.querySelectorAll('[data-topic]')];
   const entries = [...document.querySelectorAll('.publication')];
   const counter = document.querySelector('.result-count');
   let year = 'all';
+  let topic = new URLSearchParams(location.search).get('topic');
+  if (!topicButtons.some(b => b.dataset.topic === topic)) topic = 'all';
   function filter() {
     const query = input.value.toLowerCase().trim();
     let shown = 0;
     entries.forEach(entry => {
-      entry.hidden = !((year === 'all' || entry.dataset.year === year) && entry.dataset.search.includes(query));
+      entry.hidden = !((year === 'all' || entry.dataset.year === year) && (topic === 'all' || entry.dataset.topics.split(' ').includes(topic)) && entry.dataset.search.includes(query));
       if (!entry.hidden) shown++;
     });
     counter.textContent = `${shown} ${shown === 1 ? 'publication' : 'publications'}`;
     document.querySelector('.empty-state').hidden = shown !== 0;
+    yearButtons.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.filter === year)));
+    topicButtons.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.topic === topic)));
   }
-  buttons.forEach(button => button.addEventListener('click', () => {
+  yearButtons.forEach(button => button.addEventListener('click', () => {
     year = button.dataset.filter;
-    buttons.forEach(b => b.setAttribute('aria-pressed', String(b === button)));
+    filter();
+  }));
+  topicButtons.forEach(button => button.addEventListener('click', () => {
+    topic = button.dataset.topic;
+    const url = new URL(location.href);
+    if (topic === 'all') url.searchParams.delete('topic'); else url.searchParams.set('topic', topic);
+    history.replaceState(history.state, '', url);
     filter();
   }));
   input.addEventListener('input', filter);
   filter();
+  // On phones the topic row scrolls sideways; bring a topic chosen by link into view without moving the page.
+  const chosen = topicButtons.find(b => b.dataset.topic === topic);
+  if (topic !== 'all') chosen.parentElement.scrollLeft += chosen.getBoundingClientRect().left - chosen.parentElement.getBoundingClientRect().left - 20;
+}
+// Copy a paper's BibTeX. Without clipboard access, show the entry selected so it can be copied by hand.
+const citeStatus = document.querySelector('.pub-cite-status');
+for (const button of document.querySelectorAll('.pub-cite')) {
+  const entry = document.getElementById(button.getAttribute('aria-controls'));
+  const label = button.querySelector('span');
+  let timer;
+  button.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(entry.textContent);
+      label.textContent = 'Copied';
+      button.classList.add('is-copied');
+      citeStatus.textContent = 'BibTeX copied to the clipboard.';
+    } catch {
+      entry.hidden = false;
+      getSelection().selectAllChildren(entry);
+      label.textContent = 'Copy the selected text';
+      citeStatus.textContent = 'BibTeX shown below the paper and selected.';
+    }
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      label.textContent = 'Copy BibTeX';
+      button.classList.remove('is-copied');
+    }, 2200);
+  });
 }
 // Field-site map: markers and cards highlight each other. A marker selects its card without jumping the page.
 const fieldMap = document.querySelector('.field-map');
