@@ -45,6 +45,13 @@ AVIF_VARIANTS = ("assets/athens-downtown.jpg", "assets/rural-georgia-road.jpg", 
 # Detail crops: (source, output stem, crop box in source pixels, widths).
 # The DriveDegrade detail keeps the surround-view input and the degradation injector.
 CROPS = [("assets/drivedegrade-overview.png", "drivedegrade-detail", (0, 0, 2275, 1062), (480, 960))]
+# Team portraits: head-and-shoulders crops (4:5) with the head at about 40% of the frame height,
+# so snapshots taken in very different settings line up as a set. Boxes are in source pixels.
+PORTRAITS = [
+    ("Tianle.jpg", "Tianle-portrait", (366, 1187, 1876, 3074), (480, 960)),
+    ("assets/haohua-iros-2026-wide.jpg", "haohua-iros-2026-wide-portrait", (868, 230, 1352, 835), (480,)),
+    ("qianyi.jpg", "qianyi-portrait", (206, 133, 938, 1048), (480,)),
+]
 # The GA-72 experiment route, redrawn in UGA red on a grey basemap. Map data © OpenStreetMap contributors.
 ROUTE_MAP = ("assets/ev-car-following-route.png", "ev-car-following-route-red", (500, 478), (640, 960, 1280))
 UGA_RED = (186, 12, 47)
@@ -97,6 +104,12 @@ def detail_crops():
         save_widths(image.crop(box), stem, widths, icc_profile)
 
 
+def portraits():
+    for source, stem, box, widths in PORTRAITS:
+        image, icc_profile = open_original(source)
+        save_widths(image.crop(box), stem, widths, icc_profile)
+
+
 def route_map():
     name, stem, seed, widths = ROUTE_MAP
     image, _ = open_original(name)
@@ -128,5 +141,6 @@ if __name__ == "__main__":
     responsive_copies()
     avif_copies()
     detail_crops()
+    portraits()
     route_map()
     icons()
