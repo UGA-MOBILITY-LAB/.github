@@ -573,10 +573,6 @@ h3,.field-site h3,.alumni-list h3,.news-preview h3,.scan-panel h3{font-size:var(
   .pub-bibtex{background:var(--card)}
   .lost-scene svg{filter:brightness(.9)}
 }
-/* Portraits share one treatment: black and white, with colour on hover or focus. */
-.person-photo,.pi-photo img{filter:grayscale(1) contrast(1.04);transition:filter .35s ease}
-.person:hover .person-photo,.person:focus-within .person-photo,.pi-section:hover .pi-photo img,.pi-section:focus-within .pi-photo img{filter:none}
-@media(prefers-reduced-motion:reduce){.person-photo,.pi-photo img{transition:none}}
 /* A shorter home page: one row of visit photos, wide lab photos, and the fleet strip beside its caption.
    On phones, the resource cards and lab photos swipe sideways like the research threads. */
 .home-visit-photos>div>a:nth-child(-n+2){grid-column:auto}
