@@ -121,6 +121,8 @@ for (const item of news) {
 const feed = await readFile(path.join(root, 'news.xml'), 'utf8').catch(() => '');
 const feedItems = [...feed.matchAll(/<item>(.*?)<\/item>/gs)].map(match => match[1]);
 check(feedItems.length === news.length, 'News feed item count differs from data');
+check(feed.startsWith('<?xml version="1.0" encoding="UTF-8"?>\n<?xml-stylesheet type="text/css" href="assets/feed.css"?>\n'), 'News feed must start with its browser stylesheet');
+check(await stat(path.join(root, 'assets', 'feed.css')).then(info => info.isFile(), () => false), 'News feed stylesheet missing');
 check(feedItems.filter(item => item.includes('<pubDate>')).length === news.filter(item => item.dateLabel).length, 'Every dated story needs a feed date');
 for (const item of feedItems) {
   const id = /<link>https:\/\/uga-mobility-lab\.github\.io\/\.github\/news\.html#([^<]+)<\/link>/.exec(item)?.[1];
