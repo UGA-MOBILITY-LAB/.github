@@ -14,6 +14,63 @@ document.addEventListener('keydown', event => {
     toggle.focus();
   }
 });
+// On phones the sticky header tucks its subtitle away once the page scrolls, leaving the content more room. The
+// height it gives up is added back below it as margin, so nothing on the page moves.
+const header = document.querySelector('.site-header');
+const phone = matchMedia('(max-width: 650px)');
+let compact = false;
+const fitHeader = () => {
+  const want = phone.matches && scrollY > (compact ? 24 : 72);
+  if (want === compact) return;
+  compact = want;
+  const full = header.getBoundingClientRect().height;
+  header.classList.toggle('is-compact', want);
+  header.style.marginBottom = want ? `${full - header.getBoundingClientRect().height}px` : '';
+};
+addEventListener('scroll', fitHeader, { passive: true });
+phone.addEventListener('change', fitHeader);
+fitHeader();
+// Research page: on wide screens the thread bar stays under the header, and it marks the thread being read.
+const jumps = document.querySelector('.section-jumps');
+if (jumps) {
+  const links = [...jumps.querySelectorAll('a[href^="#"]')];
+  const threads = links.map(link => document.getElementById(link.hash.slice(1)));
+  let queued = false;
+  const update = () => {
+    queued = false;
+    const headerBottom = header.getBoundingClientRect().bottom;
+    document.documentElement.style.setProperty('--header-h', `${headerBottom}px`);
+    jumps.classList.toggle('is-stuck', Math.abs(jumps.getBoundingClientRect().top - headerBottom) < 1.5);
+    const line = innerHeight * 0.35;
+    const current = threads.findIndex(thread => { const box = thread.getBoundingClientRect(); return box.top <= line && box.bottom > line; });
+    links.forEach((link, i) => i === current ? link.setAttribute('aria-current', 'true') : link.removeAttribute('aria-current'));
+  };
+  const queue = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+  addEventListener('scroll', queue, { passive: true });
+  addEventListener('resize', queue);
+  update();
+}
+// Footer theme switch: Auto follows the device; Light and Dark are remembered in this browser. The page head
+// applies a remembered choice before first paint.
+const darkTheme = document.getElementById('dark-theme');
+const themeButtons = [...document.querySelectorAll('[data-theme-choice]')];
+if (darkTheme && themeButtons.length) {
+  let stored = null;
+  try { stored = localStorage.getItem('theme'); } catch {}
+  const apply = choice => {
+    darkTheme.media = choice === 'dark' ? 'all' : choice === 'light' ? 'not all' : '(prefers-color-scheme: dark)';
+    document.documentElement.style.colorScheme = choice === 'auto' ? '' : choice;
+    themeButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.themeChoice === choice)));
+  };
+  apply(stored === 'light' || stored === 'dark' ? stored : 'auto');
+  themeButtons.forEach(button => button.addEventListener('click', () => {
+    const choice = button.dataset.themeChoice;
+    try { choice === 'auto' ? localStorage.removeItem('theme') : localStorage.setItem('theme', choice); } catch {}
+    apply(choice);
+    // Canvas drawings (the traffic-wave simulation) repaint in the new colours.
+    document.dispatchEvent(new Event('themechange'));
+  }));
+}
 // Manual scene selection keeps the photographs still while people read.
 const sceneControls = document.querySelector('.scene-controls');
 if (sceneControls) {
@@ -99,7 +156,11 @@ if (sceneControls) {
       image.setAttribute('aria-hidden', String(!active));
     });
     buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
-    caption.textContent = button.dataset.caption;
+    const [place, ...detail] = button.dataset.caption.split(' · ');
+    const more = document.createElement('span');
+    more.className = 'scene-detail';
+    more.textContent = detail.length ? ` · ${detail.join(' · ')}` : '';
+    caption.replaceChildren(place, more);
     credit.href = `credits.html#${button.dataset.credit}`;
     sceneControls.removeAttribute('aria-busy');
     if (status) status.textContent = `${button.textContent.trim()} photograph displayed.`;
@@ -162,6 +223,17 @@ if (controls) {
   const chosen = topicButtons.find(b => b.dataset.topic === topic);
   if (topic !== 'all') chosen.parentElement.scrollLeft += chosen.getBoundingClientRect().left - chosen.parentElement.getBoundingClientRect().left - 20;
 }
+// A filter row that scrolls sideways (on phones) fades at the edge that has more buttons beyond it.
+for (const row of document.querySelectorAll('.topic-filter')) {
+  const fade = () => {
+    const end = row.scrollWidth - row.clientWidth;
+    row.classList.toggle('fade-start', row.scrollLeft > 2);
+    row.classList.toggle('fade-end', end > 2 && row.scrollLeft < end - 2);
+  };
+  row.addEventListener('scroll', fade, { passive: true });
+  addEventListener('resize', fade);
+  fade();
+}
 // Copy a paper's BibTeX. Without clipboard access, show the entry selected so it can be copied by hand.
 const citeStatus = document.querySelector('.pub-cite-status');
 for (const button of document.querySelectorAll('.pub-cite')) {
@@ -186,6 +258,13 @@ for (const button of document.querySelectorAll('.pub-cite')) {
       button.classList.remove('is-copied');
     }, 2200);
   });
+}
+// Links to #follow (the footer's News feed link) open the News page's feed panel.
+const follow = document.getElementById('follow');
+if (follow) {
+  const openFollow = () => { if (location.hash === '#follow') follow.open = true; };
+  openFollow();
+  addEventListener('hashchange', openFollow);
 }
 // Copy the news feed address. Without clipboard access, select it so it can be copied by hand.
 for (const button of document.querySelectorAll('.feed-copy')) {
@@ -271,4 +350,85 @@ for (const launch of document.querySelectorAll('[data-map-src]')) {
     launch.replaceWith(frame);
     frame.focus();
   });
+}
+// News photographs open in an in-page viewer: previous and next, arrow keys, swipe, and Esc. Without JavaScript,
+// each photograph is a link to the full-size file.
+const photoGroups = [...document.querySelectorAll('.news-media-grid, .home-visit-photos')];
+if (photoGroups.length && window.HTMLDialogElement) {
+  const viewer = document.createElement('dialog');
+  viewer.className = 'lightbox';
+  viewer.setAttribute('aria-label', 'Photograph viewer');
+  viewer.innerHTML = '<button type="button" class="lightbox-close" aria-label="Close the photograph viewer"><span aria-hidden="true">×</span></button><button type="button" class="lightbox-prev" aria-label="Previous photograph"><span aria-hidden="true">‹</span></button><button type="button" class="lightbox-next" aria-label="Next photograph"><span aria-hidden="true">›</span></button><figure class="lightbox-figure"><img class="lightbox-image" alt=""><figcaption class="lightbox-caption" aria-hidden="true"></figcaption></figure><p class="lightbox-count" aria-hidden="true"></p><p class="sr-only" role="status" aria-live="polite"></p>';
+  document.body.append(viewer);
+  const image = viewer.querySelector('.lightbox-image');
+  const caption = viewer.querySelector('.lightbox-caption');
+  const count = viewer.querySelector('.lightbox-count');
+  const status = viewer.querySelector('[role=status]');
+  const previous = viewer.querySelector('.lightbox-prev');
+  const next = viewer.querySelector('.lightbox-next');
+  let photos = [];
+  let index = 0;
+  let opener = null;
+  const show = i => {
+    index = (i + photos.length) % photos.length;
+    const link = photos[index];
+    const thumb = link.querySelector('img');
+    image.classList.remove('is-loaded');
+    image.removeAttribute('srcset');
+    if (thumb.srcset) {
+      image.sizes = '(max-width: 1400px) 100vw, 1400px';
+      image.srcset = thumb.srcset;
+    }
+    image.src = link.href;
+    image.alt = thumb.alt;
+    caption.textContent = thumb.alt;
+    count.textContent = `${index + 1} / ${photos.length}`;
+    status.textContent = `Photograph ${index + 1} of ${photos.length}: ${thumb.alt}`;
+    // Fetch the neighbours too, so the next step is instant.
+    for (const step of [1, -1]) {
+      const near = photos[(index + step + photos.length) % photos.length].querySelector('img');
+      const ahead = new Image();
+      if (near.srcset) { ahead.sizes = image.sizes; ahead.srcset = near.srcset; }
+      ahead.src = near.closest('a').href;
+    }
+  };
+  image.addEventListener('load', () => image.classList.add('is-loaded'));
+  previous.addEventListener('click', () => show(index - 1));
+  next.addEventListener('click', () => show(index + 1));
+  viewer.querySelector('.lightbox-close').addEventListener('click', () => viewer.close());
+  let swipeX = null;
+  let swiped = false;
+  // A click outside the photograph and the buttons closes the viewer.
+  viewer.addEventListener('click', event => {
+    if (swiped) { swiped = false; return; }
+    if (event.target === viewer || event.target.classList.contains('lightbox-figure')) viewer.close();
+  });
+  viewer.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft' && photos.length > 1) show(index - 1);
+    if (event.key === 'ArrowRight' && photos.length > 1) show(index + 1);
+  });
+  viewer.addEventListener('pointerdown', event => { swipeX = event.clientX; swiped = false; });
+  viewer.addEventListener('pointerup', event => {
+    if (swipeX === null || photos.length < 2) return;
+    const moved = event.clientX - swipeX;
+    swipeX = null;
+    if (Math.abs(moved) > 50) { swiped = true; show(index + (moved < 0 ? 1 : -1)); }
+  });
+  viewer.addEventListener('close', () => {
+    image.removeAttribute('src');
+    image.removeAttribute('srcset');
+    opener?.focus();
+  });
+  for (const group of photoGroups) {
+    const links = [...group.querySelectorAll('a[href]')].filter(link => /\.(?:jpe?g|png|webp)$/i.test(link.getAttribute('href')) && link.querySelector('img'));
+    links.forEach((link, i) => link.addEventListener('click', event => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+      event.preventDefault();
+      photos = links;
+      opener = link;
+      viewer.classList.toggle('is-single', links.length < 2);
+      show(i);
+      viewer.showModal();
+    }));
+  }
 }
