@@ -278,7 +278,6 @@ html:not(.js) .scene-controls,html:not(.js) .publication-controls,html:not(.js) 
 .thread-work a{display:inline-flex;align-items:baseline;gap:6px;font-size:15px;font-weight:600;line-height:1.45;border-bottom:1px solid var(--line);padding-bottom:2px;transition:border-color .2s,color .2s}
 .thread-work a span{font-weight:400;color:var(--muted)}
 .thread-work a:hover{border-color:var(--accent)}
-.thread-people{margin:auto 0 0;padding-top:13px;border-top:1px solid var(--line);font:600 15px/1.5 var(--display);letter-spacing:-.01em}
 @media(hover:hover){.thread:hover{transform:translateY(-3px);box-shadow:0 22px 38px -30px rgba(0,0,0,.5)}.thread:hover .thread-figure img{transform:scale(1.04)}}
 @media(max-width:1000px){.research-mosaic{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.research-intro{grid-template-columns:1fr;gap:20px;margin-bottom:30px}.research-intro h2{font-size:40px}.research-intro-copy{max-width:680px}}
 @media(max-width:650px){
@@ -573,4 +572,25 @@ h3,.field-site h3,.alumni-list h3,.news-preview h3,.scan-panel h3{font-size:var(
   .traffic-wave{--wave-road:#252a31;--wave-edge:#39404a;--wave-text:#a3aab3;--wave-chart:#16191d;--wave-av:#e9ebee;--wave-av-dot:#0f1114}
   .pub-bibtex{background:var(--card)}
   .lost-scene svg{filter:brightness(.9)}
+}
+/* Portraits share one treatment: black and white, with colour on hover or focus. */
+.person-photo,.pi-photo img{filter:grayscale(1) contrast(1.04);transition:filter .35s ease}
+.person:hover .person-photo,.person:focus-within .person-photo,.pi-section:hover .pi-photo img,.pi-section:focus-within .pi-photo img{filter:none}
+@media(prefers-reduced-motion:reduce){.person-photo,.pi-photo img{transition:none}}
+/* A shorter home page: one row of visit photos, wide lab photos, and the fleet strip beside its caption.
+   On phones, the resource cards and lab photos swipe sideways like the research threads. */
+.home-visit-photos>div>a:nth-child(-n+2){grid-column:auto}
+.lab-photo img{aspect-ratio:16/9;object-fit:cover}
+.lab-photo img[src*="capstone"]{object-position:50% 38%}
+@media(min-width:651px){.contact-band{padding-block:48px}}
+@media(min-width:851px){
+  .lab-photo-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .lab-fleet{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:36px;align-items:center}
+  .lab-fleet figcaption{display:flex;flex-direction:column;align-items:flex-start;gap:16px;padding-top:0}
+  .lab-fleet-links{text-align:left}
+  .lab-fleet-links .photo-credit{margin-left:0}
+}
+@media(max-width:650px){
+  .resources-home .resource-grid,.lab-photo-grid{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:84%;align-items:start;gap:14px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:20px;margin-inline:-20px;padding:2px 20px 16px}
+  .resources-home .resource-card,.lab-photo{scroll-snap-align:start}
 }
