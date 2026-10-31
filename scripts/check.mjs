@@ -118,6 +118,15 @@ for (const item of news) {
     check(item.links?.some(link => /^https:\/\//.test(link.url)), `Dated news needs an external source: ${item.id}`);
   }
 }
+const feed = await readFile(path.join(root, 'news.xml'), 'utf8').catch(() => '');
+const feedItems = [...feed.matchAll(/<item>(.*?)<\/item>/gs)].map(match => match[1]);
+check(feedItems.length === news.length, 'News feed item count differs from data');
+check(feedItems.filter(item => item.includes('<pubDate>')).length === news.filter(item => item.dateLabel).length, 'Every dated story needs a feed date');
+for (const item of feedItems) {
+  const id = /<link>https:\/\/uga-mobility-lab\.github\.io\/\.github\/news\.html#([^<]+)<\/link>/.exec(item)?.[1];
+  check(pages.get('news.html')?.ids.has(id), `News feed links to a missing story: ${id}`);
+}
+for (const [name, { html }] of pages) check(html.includes('<link rel="alternate" type="application/rss+xml"'), `${name}: news feed link missing`);
 const research = pages.get('research.html')?.html || '';
 for (const project of projects) check(research.includes(escape(project.title)), `Project missing: ${project.id}`);
 check((research.match(/class="research-detail"/g) || []).length === 6, 'Research page must show the six research threads');

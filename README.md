@@ -4,7 +4,7 @@ The public site is served by GitHub Pages from `main:/docs`, at https://uga-mobi
 
 ## Update content
 
-- `scripts/content.mjs`: publications, news, projects, open resources, the TRAVELS case study, and alumni.
+- `scripts/content.mjs`: publications, news, projects, open resources, open-source repositories (`openCode`, shown on the Data & Demos page; public repositories only), the TRAVELS case study, and alumni.
 - `scripts/build.mjs`: static page templates, current team, and the six research threads (`threads`). The threads drive the home-page research cards, the research page, and the publication topic filter; every publication must belong to at least one thread's `papers`, or the build stops with an error. The build also writes BibTeX for each publication and `docs/assets/mobility-lab-publications.bib`, the contact page's Join section, and `docs/404.html`, which GitHub Pages serves at any missing path, so its links start from `/.github/`.
 - `docs/assets/site.css`: responsive visual design. Colours are custom properties on `:root` (`--ink`, `--paper`, `--surface`, `--card`, `--line`, `--accent`, …), redefined under `prefers-color-scheme: dark`, so the site follows the device's light or dark setting. Headings use one type scale (`--h2`, `--h2-item`, `--h3`, `--h4`).
 - `docs/assets/site.js`: mobile navigation, the Travels page's route viewer (it loads about 70 MB of LiDAR data, so it opens only when a visitor asks), publication filters (research thread, year, and search; `publications.html?topic=<thread id>` opens one thread), Copy BibTeX buttons, and on-demand hero scene loading.
@@ -19,7 +19,7 @@ The public site is served by GitHub Pages from `main:/docs`, at https://uga-mobi
 
 Run `node scripts/build.mjs` and `node scripts/check.mjs`, then commit the updated source and generated HTML. The Site check workflow (`.github/workflows/site-check.yml`) runs both on every pull request and push to `main`, and fails if the committed `docs/` differs from a fresh build.
 
-Search engines: the build writes `docs/sitemap.xml` and schema.org structured data (the lab as a research organization, its people, and its publications). Because the site lives under `/.github/`, a `robots.txt` here would be ignored, so submit the sitemap in Google Search Console instead. No package installation or build-time services are required for the site build. All substantive content is rendered as static HTML and readable without JavaScript. The ten pages include the Data & Demos directory (`resources.html`), the Georgia fieldwork case study (`travels.html`), and the 404 page.
+Search engines: the build writes `docs/sitemap.xml` and schema.org structured data (the lab as a research organization, its people, and its publications). Because the site lives under `/.github/`, a `robots.txt` here would be ignored, so submit the sitemap in Google Search Console instead. The build also writes `docs/news.xml`, an RSS feed of the News page that every page links to for feed readers. No package installation or build-time services are required for the site build. All substantive content is rendered as static HTML and readable without JavaScript. The ten pages include the Data & Demos directory (`resources.html`), the Georgia fieldwork case study (`travels.html`), and the 404 page.
 
 To preview: `python -m http.server 8765 --bind 127.0.0.1 --directory docs`.
 

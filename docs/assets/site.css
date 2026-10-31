@@ -610,3 +610,19 @@ h3,.field-site h3,.alumni-list h3,.news-preview h3,.scan-panel h3{font-size:var(
 .pi-info p.pi-focus{max-width:none}
 .pi-history+.link-group{margin-top:24px}
 @media(max-width:650px){.pi-history{grid-template-columns:minmax(0,1fr);gap:20px}}
+/* Open-source repositories on the Data & demos page, grouped by kind. */
+.open-code{border-top:1px solid var(--line)}
+.code-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.code-card{display:flex;flex-direction:column;border:1px solid var(--line);background:var(--card);padding:20px 22px 18px;min-width:0}
+.code-kind{margin:0 0 10px;font-size:12px;font-weight:700;line-height:1.4;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.code-card h3{display:flex;align-items:center;gap:10px;margin:0 0 4px;font:600 20px/1.3 var(--display);letter-spacing:-.02em}
+.code-card h3 .icon{width:20px;height:20px;color:var(--accent);stroke-width:1.8;flex:none}
+.code-repo{margin:0 0 12px;font:13px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--muted);overflow-wrap:anywhere}
+.code-text{font-size:15px;line-height:1.55;color:var(--muted);margin:0 0 14px}
+.code-tags{list-style:none;margin:0 0 6px;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.code-tags li{font-size:13px;line-height:1.4;background:var(--surface);border:1px solid var(--line);padding:3px 8px}
+.code-card .link-group{margin-top:auto;padding-top:8px;gap:4px 18px}
+@media(max-width:1000px){.code-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.code-grid{grid-template-columns:minmax(0,1fr)}}
+.intro-feed{margin-top:18px}
+.intro-feed .icon{width:17px;height:17px;color:var(--accent);stroke-width:2.2}
