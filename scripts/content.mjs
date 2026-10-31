@@ -249,6 +249,7 @@ export const news = [
   },
   {
     id: 'nhtsa-visit-2026',
+    homePhotos: [0, 1, 2, 4], // the four shown on the home page when this story is featured
     year: 2026,
     dateLabel: 'Oct 27, 2026',
     sortDate: '2026-10-27',

@@ -105,7 +105,8 @@ if (sceneControls) {
     if (status) status.textContent = `${button.textContent.trim()} photograph displayed.`;
   }));
 }
-// Publications: filter by research thread (also from ?topic= links on the research page), year, and search.
+// Publications: filter by research thread (?topic=, from the research page), author (?author=, from the
+// team page), year, and search.
 const controls = document.querySelector('.publication-controls');
 if (controls) {
   const input = controls.querySelector('input');
@@ -114,29 +115,45 @@ if (controls) {
   const entries = [...document.querySelectorAll('.publication')];
   const counter = document.querySelector('.result-count');
   let year = 'all';
-  let topic = new URLSearchParams(location.search).get('topic');
+  const params = new URLSearchParams(location.search);
+  let topic = params.get('topic');
   if (!topicButtons.some(b => b.dataset.topic === topic)) topic = 'all';
+  const people = JSON.parse(controls.dataset.people || '{}');
+  const authorFilter = document.querySelector('.author-filter');
+  const wrote = (entry, key) => entry.dataset.authors.split(' ').includes(key);
+  let author = params.get('author');
+  if (!entries.some(entry => wrote(entry, author))) author = null;
+  const setParam = (name, value) => {
+    const url = new URL(location.href);
+    if (value) url.searchParams.set(name, value); else url.searchParams.delete(name);
+    history.replaceState(history.state, '', url);
+  };
   function filter() {
     const query = input.value.toLowerCase().trim();
     let shown = 0;
     entries.forEach(entry => {
-      entry.hidden = !((year === 'all' || entry.dataset.year === year) && (topic === 'all' || entry.dataset.topics.split(' ').includes(topic)) && entry.dataset.search.includes(query));
+      entry.hidden = !((year === 'all' || entry.dataset.year === year) && (topic === 'all' || entry.dataset.topics.split(' ').includes(topic)) && (!author || wrote(entry, author)) && entry.dataset.search.includes(query));
       if (!entry.hidden) shown++;
     });
     counter.textContent = `${shown} ${shown === 1 ? 'publication' : 'publications'}`;
     document.querySelector('.empty-state').hidden = shown !== 0;
     yearButtons.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.filter === year)));
     topicButtons.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.topic === topic)));
+    authorFilter.hidden = !author;
+    if (author) authorFilter.querySelector('strong').textContent = people[author] || author;
   }
+  authorFilter.querySelector('button').addEventListener('click', () => {
+    author = null;
+    setParam('author', null);
+    filter();
+  });
   yearButtons.forEach(button => button.addEventListener('click', () => {
     year = button.dataset.filter;
     filter();
   }));
   topicButtons.forEach(button => button.addEventListener('click', () => {
     topic = button.dataset.topic;
-    const url = new URL(location.href);
-    if (topic === 'all') url.searchParams.delete('topic'); else url.searchParams.set('topic', topic);
-    history.replaceState(history.state, '', url);
+    setParam('topic', topic === 'all' ? null : topic);
     filter();
   }));
   input.addEventListener('input', filter);

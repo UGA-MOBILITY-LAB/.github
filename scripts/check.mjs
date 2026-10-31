@@ -130,9 +130,11 @@ for (const name of ['Handong Yao', 'Tianle Zhu', 'Haohua Que', 'Qianyi Wu', 'Ric
 check(![...pages.values()].some(p => /via\.placeholder\.com|TODO|Lorem ipsum/.test(p.html)), 'Placeholder content detected');
 
 const home = pages.get('index.html')?.html || '';
-for (const [name, html] of [['index.html', home], ['news.html', updates]]) {
-  check(html.includes('<em>$15M</em>'), `${name}: TRAVELS funding highlight missing`);
-}
+check(updates.includes('<em>$15M</em>'), 'news.html: TRAVELS funding highlight missing');
+// The home page leads with the newest dated story.
+const newest = news.filter(n => n.dateLabel).sort((a, b) => Date.parse(b.sortDate || b.dateLabel) - Date.parse(a.sortDate || a.dateLabel))[0];
+const lead = home.indexOf(`href="news.html#${newest.id}"`);
+check(lead > -1 && lead < home.indexOf('class="research-mosaic"'), `Home page should lead with the newest story: ${newest.id}`);
 for (const scene of ['athens', 'rural', 'atlanta']) {
   check(home.includes(`data-scene="${scene}"`), `Homepage scene missing: ${scene}`);
   check(home.includes(`data-show-scene="${scene}"`), `Homepage scene control missing: ${scene}`);
