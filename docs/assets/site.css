@@ -624,5 +624,19 @@ h3,.field-site h3,.alumni-list h3,.news-preview h3,.scan-panel h3{font-size:var(
 .code-card .link-group{margin-top:auto;padding-top:8px;gap:4px 18px}
 @media(max-width:1000px){.code-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.code-grid{grid-template-columns:minmax(0,1fr)}}
-.intro-feed{margin-top:18px}
-.intro-feed .icon{width:17px;height:17px;color:var(--accent);stroke-width:2.2}
+.feed-follow{margin-top:18px;max-width:620px}
+.feed-follow summary{display:inline-flex;align-items:center;gap:10px;padding-block:7px;border-bottom:1px solid var(--line);font-size:15px;font-weight:600;line-height:1.65;cursor:pointer;list-style:none}
+.feed-follow summary::-webkit-details-marker{display:none}
+.feed-follow summary::after{content:'+';font-size:17px;font-weight:400;line-height:1;color:var(--muted)}
+.feed-follow[open] summary::after{content:'−'}
+.feed-follow summary:hover,.feed-follow[open] summary{border-color:var(--accent)}
+.feed-follow summary:focus-visible{outline:3px solid var(--accent);outline-offset:5px}
+.feed-follow summary .icon{width:17px;height:17px;color:var(--accent);stroke-width:2.2;flex:none}
+.feed-panel{margin-top:14px;padding:20px 22px 16px;background:var(--surface);border:1px solid var(--line)}
+.feed-panel>p{font-size:15px;line-height:1.55;color:var(--muted);margin:0 0 14px}
+.feed-address{display:flex;align-items:center;gap:18px;margin-bottom:6px}
+.feed-address input{flex:1;min-width:0;font:14px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--ink);background:var(--card);border:1px solid var(--line-strong);border-radius:0;padding:9px 10px}
+.feed-copy{flex:none}
+.feed-copy .icon{width:15px;height:15px;stroke-width:2;flex:none}
+.feed-copy.is-copied{color:var(--accent);border-color:var(--accent)}
+html:not(.js) .feed-copy{display:none}

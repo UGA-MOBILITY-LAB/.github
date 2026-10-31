@@ -187,6 +187,31 @@ for (const button of document.querySelectorAll('.pub-cite')) {
     }, 2200);
   });
 }
+// Copy the news feed address. Without clipboard access, select it so it can be copied by hand.
+for (const button of document.querySelectorAll('.feed-copy')) {
+  const field = document.getElementById(button.dataset.copyFrom);
+  const label = button.querySelector('span');
+  const status = button.closest('.feed-panel').querySelector('.feed-status');
+  let timer;
+  field.addEventListener('focus', () => field.select());
+  button.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(field.value);
+      label.textContent = 'Copied';
+      button.classList.add('is-copied');
+      status.textContent = 'Feed address copied to the clipboard.';
+    } catch {
+      field.focus();
+      label.textContent = 'Copy the selected text';
+      status.textContent = 'Feed address selected.';
+    }
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      label.textContent = 'Copy';
+      button.classList.remove('is-copied');
+    }, 2200);
+  });
+}
 // Field-site map: markers and cards highlight each other. A marker selects its card without jumping the page.
 const fieldMap = document.querySelector('.field-map');
 if (fieldMap) {
