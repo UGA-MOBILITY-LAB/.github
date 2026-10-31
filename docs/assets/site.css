@@ -596,3 +596,16 @@ h3,.field-site h3,.alumni-list h3,.news-preview h3,.scan-panel h3{font-size:var(
 .author-filter strong{color:var(--ink)}
 .author-clear{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:5px 11px;font-size:14px;font-weight:600;cursor:pointer}
 .author-clear:hover{border-color:var(--accent)}
+/* Education and appointments: degree or role, institution, and years on one compact line each. */
+.pi-history{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 40px;margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+.pi-history h3,.person-history h4{font:600 13px/1.4 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 12px}
+.history{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.history li{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:14px;font-size:15px;line-height:1.45}
+.history-what{font-weight:600;color:var(--ink)}
+.history-where{grid-column:1;color:var(--muted)}
+.history-when{grid-column:2;grid-row:1;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.person-history{margin:4px 0 16px;padding-top:14px;border-top:1px solid var(--line)}
+.person-history .history li{font-size:14px}
+.pi-info p.pi-focus{max-width:none}
+.pi-history+.link-group{margin-top:24px}
+@media(max-width:650px){.pi-history{grid-template-columns:minmax(0,1fr);gap:20px}}
