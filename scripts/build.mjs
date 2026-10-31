@@ -203,7 +203,7 @@ ${homeResources}
 ${driveGame}`;
 
 const people = [
- {name:'Tianle Zhu', role:'Ph.D. Student · Mechanical Engineering', img:'assets/Tianle-portrait.webp', focus:'Cooperative perception, artificial intelligence, and safety.', email:'tianle.zhu@uga.edu'},
+ {name:'Tianle Zhu', role:'Ph.D. Student · Mechanical Engineering', img:'assets/Tianle-portrait.webp', focus:'Cooperative perception, artificial intelligence, and safety.', education:[['Master’s', 'University of Florida', ''], ['Bachelor’s', 'Nanjing Forestry University', '']], email:'tianle.zhu@uga.edu'},
  {name:'Haohua Que', role:'Ph.D. Student · Mechanical Engineering', img:'assets/haohua-iros-2026-wide-portrait.webp', focus:'End-to-end autonomous driving, robotics, and computer vision.', education:[['Ph.D., Mechanical Engineering', 'University of Georgia', '2025–'], ['Bachelor’s, Electronic Information and Technology', 'Beijing Forestry University', '2020–2024']], email:'hq10606@uga.edu', scholar:'https://scholar.google.com/citations?user=EWgqpTgAAAAJ&hl=en', website:'https://que121.github.io/'},
  {name:'Qianyi Wu', role:'Ph.D. Student · Civil Engineering', img:'assets/qianyi-portrait.webp', focus:'Connected and automated vehicle modeling and simulation, AI, and cyber-physical systems.', education:[['Master’s', 'Central South University', ''], ['Bachelor’s', 'Central South University', '']], email:'qianyi.wu@uga.edu'},
  {name:'Richard Alexander Booth Fritz', role:"Master's Student · IAI", focus:'Connected and automated vehicle network optimization and simulation, and AI.', email:'Richard.Fritz@uga.edu'},
