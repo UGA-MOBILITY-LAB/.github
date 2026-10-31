@@ -1,0 +1,13 @@
+/* Dark theme. Each page links this file with media="(prefers-color-scheme: dark)", so it follows the device;
+   the footer's theme switch (site.js) changes that media to "all" (dark) or "not all" (light). */
+:root{color-scheme:dark}
+:root{--ink:#e9ebee;--muted:#a3aab3;--paper:#0f1114;--surface:#16191d;--card:#1b1e23;--line:#2a2f36;--line-strong:#3b414a;--placeholder:#23272d;--highlight:#1c2026;--accent:#ff6680;--accent-soft:#3c1a23;--header-bg:rgba(15,17,20,.92)}
+::selection{background:#6d1f31;color:#fff}
+.foil-wordmark{color:#ff6680;background:linear-gradient(165deg,#ff8d9d 4%,#ff6680 31%,#ffb3aa 45%,#ff7486 49%,#f2516c 65%,#ff9b8c 80%,#e9465f 98%);-webkit-background-clip:text;background-clip:text;filter:none}
+.brand-foil:hover .foil-wordmark{filter:none}
+.ga-site:hover circle,.ga-site.is-active circle{fill:#f2f3f5}
+.ga-site:hover .ga-number,.ga-site.is-active .ga-number{fill:#111}
+.ga-reference circle{fill:#6f7782}
+.traffic-wave{--wave-road:#252a31;--wave-edge:#39404a;--wave-text:#a3aab3;--wave-chart:#16191d;--wave-av:#e9ebee;--wave-av-dot:#0f1114}
+.pub-bibtex{background:var(--card)}
+.lost-scene svg{filter:brightness(.9)}

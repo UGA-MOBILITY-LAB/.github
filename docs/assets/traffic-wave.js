@@ -231,6 +231,7 @@
   new ResizeObserver(() => { size(ring, ringCtx); size(chart, chartCtx); draw(); }).observe(section.querySelector('.wave-stage'));
 
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { readPalette(); draw(); });
+  document.addEventListener('themechange', () => { readPalette(); draw(); });
   readPalette();
   reset();
   setAutomated(0);
