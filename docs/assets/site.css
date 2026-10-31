@@ -606,6 +606,7 @@ h3,.field-site h3,.alumni-list h3,.news-preview h3,.scan-panel h3{font-size:var(
 .history-when{grid-column:2;grid-row:1;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
 .person-history{margin:4px 0 16px;padding-top:14px;border-top:1px solid var(--line)}
 .person-history .history li{font-size:14px}
+.person-history+.person-history{border-top:0;padding-top:0}
 .pi-info p.pi-focus{max-width:none}
 .pi-history+.link-group{margin-top:24px}
 @media(max-width:650px){.pi-history{grid-template-columns:minmax(0,1fr);gap:20px}}
