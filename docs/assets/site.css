@@ -529,7 +529,7 @@ h3,.field-site h3,.alumni-list h3,.news-preview h3,.scan-panel h3{font-size:var(
 .pub-content h2{font-size:22px}
 @media(max-width:650px){.pub-content h2{font-size:21px}}
 /* Labels: smaller and lighter than body text, so headings lead. */
-.eyebrow{font-size:13px;font-weight:600;letter-spacing:.12em}
+.eyebrow{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.12em}
 /* The recruiting bar is neutral, leaving red to the header button and the contact band. */
 .recruitment-banner{background:var(--surface);color:var(--ink);border-bottom:1px solid var(--line)}
 .recruitment-banner .icon{color:var(--accent)}
@@ -590,3 +590,9 @@ h3,.field-site h3,.alumni-list h3,.news-preview h3,.scan-panel h3{font-size:var(
   .resources-home .resource-grid,.lab-photo-grid{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:84%;align-items:start;gap:14px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:20px;margin-inline:-20px;padding:2px 20px 16px}
   .resources-home .resource-card,.lab-photo{scroll-snap-align:start}
 }
+/* Publications filtered to one person (from the team page), with a way back to everyone. */
+.author-filter{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:20px 0 0;font-size:15px;color:var(--muted)}
+.author-filter[hidden]{display:none}
+.author-filter strong{color:var(--ink)}
+.author-clear{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:5px 11px;font-size:14px;font-weight:600;cursor:pointer}
+.author-clear:hover{border-color:var(--accent)}
