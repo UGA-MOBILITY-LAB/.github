@@ -29,14 +29,14 @@ VARIANTS = {
     "assets/dinolink-overview.webp": (640, 960, 1280),
     "assets/hawkinsville-lidar-hdmap.webp": (640, 960, 1280),
     # NHTSA visit gallery. The 800px originals stay as the large candidate; only small copies help.
-    "assets/lab-team-2026.jpg": (400,),
-    "assets/nhtsa-visit-2026-group.jpg": (400,),
-    "assets/nhtsa-visit-2026-vehicle.jpg": (400,),
-    "assets/nhtsa-visit-2026-briefing.jpg": (400,),
-    "assets/nhtsa-visit-2026-demonstration.jpg": (400,),
-    "assets/nhtsa-visit-2026-equipment.jpg": (400,),
+    "assets/lab-team-2026.jpg": (400, 640, 800),
+    "assets/nhtsa-visit-2026-group.jpg": (400, 640, 800),
+    "assets/nhtsa-visit-2026-vehicle.jpg": (400, 640, 800),
+    "assets/nhtsa-visit-2026-briefing.jpg": (400, 640, 800),
+    "assets/nhtsa-visit-2026-demonstration.jpg": (400, 640, 800),
+    "assets/nhtsa-visit-2026-equipment.jpg": (400, 640, 800),
     # Portraits. qianyi.jpg is already smaller than a re-encoded copy would be.
-    "HYao.jpg": (480, 960),
+    "HYao.jpg": (480, 640, 960),
     "Tianle.jpg": (480, 960),
     "assets/haohua-iros-2026-wide.jpg": (480, 960),
 }

@@ -29,7 +29,7 @@ const fitHeader = () => {
 };
 addEventListener('scroll', fitHeader, { passive: true });
 phone.addEventListener('change', fitHeader);
-fitHeader();
+requestAnimationFrame(fitHeader);
 // Research page: on wide screens the thread bar stays under the header, and it marks the thread being read.
 const jumps = document.querySelector('.section-jumps');
 if (jumps) {
@@ -48,7 +48,7 @@ if (jumps) {
   const queue = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
   addEventListener('scroll', queue, { passive: true });
   addEventListener('resize', queue);
-  update();
+  queue();
 }
 // Footer theme switch: Auto follows the device; Light and Dark are remembered in this browser. The page head
 // applies a remembered choice before first paint.
@@ -224,7 +224,7 @@ if (controls) {
   if (topic !== 'all') chosen.parentElement.scrollLeft += chosen.getBoundingClientRect().left - chosen.parentElement.getBoundingClientRect().left - 20;
 }
 // A filter row that scrolls sideways (on phones) fades at the edge that has more buttons beyond it.
-for (const row of document.querySelectorAll('.topic-filter')) {
+for (const row of document.querySelectorAll('.topic-filter, .news-filter')) {
   const fade = () => {
     const end = row.scrollWidth - row.clientWidth;
     row.classList.toggle('fade-start', row.scrollLeft > 2);
@@ -232,7 +232,7 @@ for (const row of document.querySelectorAll('.topic-filter')) {
   };
   row.addEventListener('scroll', fade, { passive: true });
   addEventListener('resize', fade);
-  fade();
+  requestAnimationFrame(fade);
 }
 // Copy a paper's BibTeX. Without clipboard access, show the entry selected so it can be copied by hand.
 const citeStatus = document.querySelector('.pub-cite-status');
@@ -258,6 +258,30 @@ for (const button of document.querySelectorAll('.pub-cite')) {
       button.classList.remove('is-copied');
     }, 2200);
   });
+}
+// News page: filter stories by type, and ?type= opens one type. The announcements heading hides with its stories.
+const newsFilter = document.querySelector('.news-filter');
+if (newsFilter) {
+  const buttons = [...newsFilter.querySelectorAll('[data-news-type]')];
+  const entries = [...document.querySelectorAll('.news-entry')];
+  const announcements = document.querySelector('.news-announcements');
+  const count = document.querySelector('.news-count');
+  const choose = type => {
+    if (!buttons.some(button => button.dataset.newsType === type)) type = 'all';
+    buttons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.newsType === type)));
+    for (const entry of entries) entry.hidden = type !== 'all' && entry.dataset.type !== type;
+    announcements.hidden = !announcements.querySelector('.news-entry:not([hidden])');
+    const shown = entries.filter(entry => !entry.hidden).length;
+    count.textContent = `${shown} ${shown === 1 ? 'story' : 'stories'}`;
+  };
+  buttons.forEach(button => button.addEventListener('click', () => {
+    choose(button.dataset.newsType);
+    const url = new URL(location.href);
+    if (button.dataset.newsType === 'all') url.searchParams.delete('type'); else url.searchParams.set('type', button.dataset.newsType);
+    history.replaceState(history.state, '', url);
+  }));
+  const requested = new URLSearchParams(location.search).get('type');
+  if (requested) choose(requested);
 }
 // Links to #follow (the footer's News feed link) open the News page's feed panel.
 const follow = document.getElementById('follow');
@@ -353,7 +377,7 @@ for (const launch of document.querySelectorAll('[data-map-src]')) {
 }
 // News photographs open in an in-page viewer: previous and next, arrow keys, swipe, and Esc. Without JavaScript,
 // each photograph is a link to the full-size file.
-const photoGroups = [...document.querySelectorAll('.news-media-grid, .home-visit-photos')];
+const photoGroups = [...document.querySelectorAll('.news-media-grid, .home-visit-photos, .paper-figure')];
 if (photoGroups.length && window.HTMLDialogElement) {
   const viewer = document.createElement('dialog');
   viewer.className = 'lightbox';

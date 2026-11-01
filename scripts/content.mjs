@@ -231,9 +231,12 @@ export const publications = [
   },
 ];
 
+// papers lists the publications a story announces; threads names research threads for stories without papers.
+// Both link the story to the research page (and to the papers' own pages).
 export const news = [
   {
     id: 'uga-today-travels-2026',
+    threads: ['rural-roads'],
     year: 2026,
     dateLabel: 'Oct 29, 2026',
     sortDate: '2026-10-29',
@@ -249,6 +252,7 @@ export const news = [
   },
   {
     id: 'nhtsa-visit-2026',
+    threads: ['rural-roads'],
     homePhotos: [0, 1, 2, 4], // the four shown on the home page when this story is featured
     year: 2026,
     dateLabel: 'Oct 27, 2026',
@@ -278,6 +282,7 @@ export const news = [
   },
   {
     id: 'wacv-2027-urbanstate',
+    papers: ['lowp', 'sample-and-verify'],
     year: 2027,
     title: 'Two papers accepted at the WACV 2027 UrbanState Workshop',
     text: 'LOWP (Look Only Where You Plan for Real-Time End-to-End Urban Driving) and Sample-and-Verify (Greedy Decoding Hides Good Plans: Sample-and-Verify Planning for Vision-Language Driving Models) have been accepted at the UrbanState Workshop at WACV 2027.',
@@ -288,6 +293,7 @@ export const news = [
   },
   {
     id: 'wacv-2027',
+    papers: ['drivedegrade', 'falcon'],
     year: 2027,
     title: 'Two papers accepted at WACV 2027',
     text: 'DriveDegrade and FALCON have been accepted at the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV 2027).',
@@ -299,6 +305,7 @@ export const news = [
   },
   {
     id: 'trb-2027-signs',
+    papers: ['adas-traffic-signs'],
     year: 2027,
     title: 'ADAS and traffic signs at TRB 2027',
     text: "Behavioral Analysis and Impact Assessment of Advanced Driver Assistance Systems' Interaction with Traffic Signs has been recommended for presentation at the TRB 2027 Annual Meeting.",
@@ -306,6 +313,7 @@ export const news = [
   },
   {
     id: 'trb-2027-degradation',
+    papers: ['camera-degradation-closed-loop'],
     year: 2027,
     title: 'Camera degradation research selected for a TRB 2027 poster',
     text: 'End-to-End Automated Driving Under Camera Degradation: Planning Tolerance Thresholds and Closed-Loop Evidence has been selected for a poster presentation at the TRB 2027 Annual Meeting.',
@@ -313,6 +321,7 @@ export const news = [
   },
   {
     id: 'rav-map-data',
+    threads: ['rural-roads'],
     year: 2026,
     dateLabel: 'Aug 2026',
     sortDate: '2026-08-26',
@@ -326,6 +335,7 @@ export const news = [
   },
   {
     id: 'rav-evidence-hub',
+    threads: ['rural-roads'],
     year: 2026,
     dateLabel: 'Aug 8, 2026',
     dateKind: 'Resource update',
@@ -338,6 +348,7 @@ export const news = [
   },
   {
     id: 'pulaski-field-visit',
+    threads: ['rural-roads'],
     year: 2026,
     dateLabel: 'Jul 13, 2026',
     dateKind: 'Field visit',
@@ -350,6 +361,7 @@ export const news = [
   },
   {
     id: 'ev-platoon-dataset',
+    papers: ['one-pedal-ctr'],
     year: 2026,
     dateLabel: 'Apr 24, 2026',
     dateKind: 'Data release',
@@ -362,6 +374,7 @@ export const news = [
   },
   {
     id: 'rural-readiness-conferences-2026',
+    papers: ['road-readiness-ictd'],
     year: 2026,
     dateLabel: 'Apr 15, 2026',
     dateKind: 'Research presentation',
@@ -374,6 +387,7 @@ export const news = [
   },
   {
     id: 'ictd-posters-2025',
+    threads: ['vehicle-behavior'],
     year: 2025,
     dateLabel: 'Jun 10, 2025',
     dateKind: 'Conference programme',
@@ -404,6 +418,7 @@ export const news = [
   },
   {
     id: 'smc-2026-cable',
+    papers: ['cable'],
     year: 2026,
     title: 'CABLE accepted at IEEE SMC 2026',
     text: 'CABLE has been accepted by the IEEE International Conference on Systems, Man, and Cybernetics (SMC 2026).',
@@ -411,6 +426,7 @@ export const news = [
   },
   {
     id: 'iros-2026',
+    papers: ['senseexpo', 'acesplat', 'dinolink'],
     year: 2026,
     title: 'Three papers accepted at IROS 2026',
     text: 'SenseExpo, ACESplat, and DinoLink have been accepted by the IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS 2026).',
@@ -418,6 +434,7 @@ export const news = [
   },
   {
     id: 'ctr-one-pedal',
+    papers: ['one-pedal-ctr'],
     year: 2026,
     dateLabel: 'Jun 30, 2026',
     dateKind: 'Publication',
@@ -427,6 +444,7 @@ export const news = [
   },
   {
     id: 'capstone-2026',
+    threads: ['rural-roads'],
     year: 2026,
     title: 'Capstone team earns a design award',
     text: 'Our supported Capstone team, Infrastructure Evaluation Tool for Production Autonomous Vehicles with Cameras and GPS Devices, received the 2026 Manufactured System or Process Design Award.',
@@ -434,6 +452,7 @@ export const news = [
   },
   {
     id: 'ijcnn-2026-motimem',
+    papers: ['motimem'],
     year: 2026,
     title: 'MotiMem accepted at WCCI / IJCNN 2026',
     text: 'MotiMem has been accepted by IEEE WCCI / IJCNN 2026.',
@@ -441,6 +460,7 @@ export const news = [
   },
   {
     id: 'icra-2026-mace',
+    papers: ['mace'],
     year: 2026,
     title: 'MACE accepted at ICRA 2026',
     text: 'MACE has been accepted by the IEEE International Conference on Robotics and Automation (ICRA 2026).',

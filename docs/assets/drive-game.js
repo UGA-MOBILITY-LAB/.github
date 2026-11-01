@@ -1247,24 +1247,37 @@
     for (const entry of entries) if (!entry.isIntersecting) pause();
   }, { threshold: 0.25 }).observe(screen);
   document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); });
-  new ResizeObserver(layout).observe(canvas);
-
-  // A still first frame: a town intersection on red, people crossing, a cyclist, and waiting traffic.
-  layout();
-  reset();
-  intersections = [{ s: 150, offset: YELLOW + 2, clock: { east: 9, west: 9, walk: 9 } }];
-  decor = [];
-  nextDecor = { L: -height, R: -height };
-  extendWorld();
-  speed = 0;
-  traffic = [
-    Object.assign(makeVehicle('car', zones[0], 140, 0), { v: 0 }),
-    Object.assign(makeVehicle('cyclist', zones[0], 120, 2), { v: 0 }),
-    Object.assign(makeVehicle('SUV', zones[0], 380, 2), { v: 0 }),
-    Object.assign(makeVehicle('van', zones[0], -150, 1), { v: 0 }),
-  ];
-  walkers = [makeWalker(150 + 20, roadX + lane * 0.8, 1, 64), makeWalker(150 + 16, roadX + lane * 2.2, -1, 60)];
-  crossing = [{ ix: intersections[0], dir: 1, s: 150 + CROSS.near + 28, x: roadX - lane * 0.9, v: 0, kindName: 'car', kind: KINDS.car, color: '#3b5b8c', jitter: 0.5 }];
-  draw();
+  // A still first frame: a town intersection on red, people crossing, a cyclist, and waiting traffic. The game sits
+  // at the foot of the page, so this frame is drawn (and resizes followed) only once the game comes near the screen
+  // or takes focus, which keeps the work out of the page load.
+  let drawn = false;
+  const firstFrame = () => {
+    if (drawn) return;
+    drawn = true;
+    new ResizeObserver(layout).observe(canvas);
+    layout();
+    reset();
+    intersections = [{ s: 150, offset: YELLOW + 2, clock: { east: 9, west: 9, walk: 9 } }];
+    decor = [];
+    nextDecor = { L: -height, R: -height };
+    extendWorld();
+    speed = 0;
+    traffic = [
+      Object.assign(makeVehicle('car', zones[0], 140, 0), { v: 0 }),
+      Object.assign(makeVehicle('cyclist', zones[0], 120, 2), { v: 0 }),
+      Object.assign(makeVehicle('SUV', zones[0], 380, 2), { v: 0 }),
+      Object.assign(makeVehicle('van', zones[0], -150, 1), { v: 0 }),
+    ];
+    walkers = [makeWalker(150 + 20, roadX + lane * 0.8, 1, 64), makeWalker(150 + 16, roadX + lane * 2.2, -1, 60)];
+    crossing = [{ ix: intersections[0], dir: 1, s: 150 + CROSS.near + 28, x: roadX - lane * 0.9, v: 0, kindName: 'car', kind: KINDS.car, color: '#3b5b8c', jitter: 0.5 }];
+    draw();
+  };
+  const near = new IntersectionObserver(entries => {
+    if (!entries.some(entry => entry.isIntersecting)) return;
+    near.disconnect();
+    firstFrame();
+  }, { rootMargin: '100% 0px' });
+  near.observe(game);
+  game.addEventListener('focusin', firstFrame);
   if (best) detail.textContent = `Your best: ${best.toFixed(2)} mi.`;
 })();

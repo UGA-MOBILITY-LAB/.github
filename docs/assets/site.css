@@ -498,14 +498,14 @@ html:not(.js) .pub-cite{display:none}
 @media(max-width:650px){
   .map-launch-cta{padding:48px 18px 18px}
   .publication-controls{display:block}
-  .topic-filter{flex-wrap:nowrap;overflow-x:auto;margin:0 -20px 14px;padding:0 20px 2px;scrollbar-width:none}
-  .topic-filter::-webkit-scrollbar{display:none}
-  .topic-filter button{flex:none;white-space:nowrap}
-  .filter-buttons:not(.topic-filter){flex-wrap:wrap}
+  :is(.topic-filter,.news-filter){flex-wrap:nowrap;overflow-x:auto;margin:0 -20px 14px;padding:0 20px 2px;scrollbar-width:none}
+  :is(.topic-filter,.news-filter)::-webkit-scrollbar{display:none}
+  :is(.topic-filter,.news-filter) button{flex:none;white-space:nowrap}
+  .filter-buttons:not(.topic-filter):not(.news-filter){flex-wrap:wrap}
   .filter-buttons button{padding-inline:11px;white-space:nowrap}
-  .topic-filter.fade-end{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent)}
-  .topic-filter.fade-start{-webkit-mask-image:linear-gradient(90deg,transparent,#000 56px);mask-image:linear-gradient(90deg,transparent,#000 56px)}
-  .topic-filter.fade-start.fade-end{-webkit-mask-image:linear-gradient(90deg,transparent,#000 56px,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(90deg,transparent,#000 56px,#000 calc(100% - 56px),transparent)}
+  :is(.topic-filter,.news-filter).fade-end{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent)}
+  :is(.topic-filter,.news-filter).fade-start{-webkit-mask-image:linear-gradient(90deg,transparent,#000 56px);mask-image:linear-gradient(90deg,transparent,#000 56px)}
+  :is(.topic-filter,.news-filter).fade-start.fade-end{-webkit-mask-image:linear-gradient(90deg,transparent,#000 56px,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(90deg,transparent,#000 56px,#000 calc(100% - 56px),transparent)}
   .pub-meta{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px}
   .pub-meta .pub-year{margin:0}
   .pub-topic{margin-top:0}
@@ -703,4 +703,48 @@ html:has(.lightbox[open]){overflow:hidden}
 .theme-switch button:hover{color:#fff}
 .theme-switch button[aria-pressed=true]{background:#ffffff1f;color:#fff}
 html:not(.js) .theme-switch{display:none}
+/* News page: type filter, and the research threads each story belongs to. */
+.news-filter{flex-wrap:wrap}
+.news-count{margin:14px 0 6px}
+.news-threads{display:flex;flex-wrap:wrap;gap:4px 12px;margin:12px 0 0}
+.news-threads .pub-topic{margin:0}
+/* Research page: the latest stories on each thread. */
+.thread-news{margin:24px 0 6px}
+.thread-news h3{margin:0 0 8px;font:700 13px/1.4 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.thread-news ul{list-style:none;margin:0;padding:0}
+.thread-news li{display:flex;justify-content:space-between;align-items:baseline;gap:18px;padding:7px 0;border-top:1px solid var(--line);font-size:15px;line-height:1.45}
+.thread-news li:last-child{border-bottom:1px solid var(--line)}
+.thread-news a{font-weight:600}
+.thread-news li span{flex:none;font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+@media(max-width:650px){.news-threads{margin-top:8px}.thread-news li{flex-direction:column;gap:0}}
 
+/* Publication list thumbnails (papers with a figure). */
+.publication.has-figure{grid-template-columns:135px minmax(0,1fr) 220px}
+.pub-thumb{display:block;align-self:start;margin-top:6px;background:#fff;border:1px solid var(--line);padding:8px;transition:border-color .2s}
+.pub-thumb img{width:100%;height:auto;aspect-ratio:16/9;object-fit:contain}
+.pub-thumb:hover{border-color:var(--line-strong)}
+.pub-content h2 a:hover{color:var(--accent)}
+@media(max-width:1000px){.publication.has-figure{grid-template-columns:120px minmax(0,1fr) 170px}}
+@media(max-width:650px){.publication.has-figure{grid-template-columns:1fr}.pub-thumb{max-width:320px;margin-top:4px}}
+/* Paper pages (papers/<id>.html). */
+.paper-intro{padding-block:44px 30px}
+.paper-crumbs{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:15px;color:var(--muted);margin-bottom:28px}
+.paper-crumbs a{border-bottom:1px solid var(--line)}
+.paper-crumbs a:hover{border-color:var(--accent)}
+.paper-intro h1{font-size:clamp(32px,3.6vw,48px);line-height:1.16;max-width:1040px;margin-bottom:20px}
+.paper-authors{font-size:17px;line-height:1.6;margin-bottom:6px;max-width:900px}
+.paper-venue{font-size:16px;color:var(--muted);margin-bottom:18px}
+.paper-intro .link-group{margin-top:4px}
+.paper-figure{margin-block:6px 44px}
+.paper-figure>a,.paper-figure>img{display:block;background:#fff;border:1px solid var(--line);padding:clamp(10px,2vw,22px)}
+.paper-figure img{width:100%;height:auto}
+.paper-figure>a:hover{border-color:var(--line-strong)}
+.paper-figure figcaption{margin-top:10px;font-size:15px;line-height:1.5;color:var(--muted);max-width:90ch}
+.paper-details{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:56px;border-top:1px solid var(--line);padding-block:40px 72px}
+.paper-details h2{margin:0 0 12px;font:700 13px/1.4 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.paper-cite .pub-bibtex{margin:0 0 12px}
+.paper-context>.news-threads{margin:0 0 26px}
+.paper-context .thread-news{margin:0 0 26px}
+.paper-context>.text-link{margin-top:2px}
+@media(max-width:850px){.paper-details{grid-template-columns:1fr;gap:34px}}
+@media(max-width:650px){.paper-intro{padding-block:32px 22px}.paper-figure{margin-bottom:32px}}
