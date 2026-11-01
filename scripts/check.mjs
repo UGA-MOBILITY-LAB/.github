@@ -11,8 +11,9 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
 const decode = value => value.replaceAll('&amp;', '&').replaceAll('&quot;', '"').replaceAll('&lt;', '<').replaceAll('&gt;', '>');
 const escape = value => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 const pages = new Map();
-// Site pages, plus one page per publication in papers/.
-const pageNames = [...await readdir(root), ...(await readdir(path.join(root, 'papers')).catch(() => [])).map(file => `papers/${file}`)];
+// Site pages, plus the paper pages (papers/) and year-in-review pages (review/).
+const pageNames = [...await readdir(root)];
+for (const folder of ['papers', 'review']) pageNames.push(...(await readdir(path.join(root, folder)).catch(() => [])).map(file => `${folder}/${file}`));
 for (const name of pageNames) {
   if (!name.endsWith('.html')) continue;
   const html = await readFile(path.join(root, name), 'utf8');
@@ -138,6 +139,15 @@ for (const item of feedItems) {
 for (const [name, { html }] of pages) check(html.includes('<link rel="alternate" type="application/rss+xml"'), `${name}: news feed link missing`);
 const types = [...updates.matchAll(/<article class="news-entry" id="[^"]+" data-type="([^"]+)"/g)].map(match => match[1]);
 check(types.length === news.length && types.every(type => updates.includes(`data-news-type="${type}"`)), 'Every news entry needs a type the News filter offers');
+// Year in review: every year with four or more stories has a page listing each of them.
+const storyYear = item => item.dateLabel ? new Date(Date.parse(item.sortDate ? `${item.sortDate}T12:00:00Z` : `${item.dateLabel} 12:00 UTC`)).getUTCFullYear() : (item.announced ?? item.year);
+for (const year of new Set(news.map(storyYear))) {
+  const stories = news.filter(item => storyYear(item) === year);
+  if (stories.length < 4) continue;
+  const review = pages.get(`review/${year}.html`)?.html || '';
+  check(review, `Year in review missing: ${year}`);
+  for (const item of stories) check(review.includes(`href="../news.html#${item.id}"`), `${year} in review is missing ${item.id}`);
+}
 const research = pages.get('research.html')?.html || '';
 for (const project of projects) check(research.includes(escape(project.title)), `Project missing: ${project.id}`);
 check((research.match(/class="research-detail"/g) || []).length === 6, 'Research page must show the six research threads');

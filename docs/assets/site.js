@@ -377,7 +377,7 @@ for (const launch of document.querySelectorAll('[data-map-src]')) {
 }
 // News photographs open in an in-page viewer: previous and next, arrow keys, swipe, and Esc. Without JavaScript,
 // each photograph is a link to the full-size file.
-const photoGroups = [...document.querySelectorAll('.news-media-grid, .home-visit-photos, .paper-figure')];
+const photoGroups = [...document.querySelectorAll('.news-media-grid, .home-visit-photos, .paper-figure, .review-photos')];
 if (photoGroups.length && window.HTMLDialogElement) {
   const viewer = document.createElement('dialog');
   viewer.className = 'lightbox';

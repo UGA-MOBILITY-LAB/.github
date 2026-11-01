@@ -232,6 +232,8 @@ export const publications = [
 ];
 
 // papers lists the publications a story announces; threads names research threads for stories without papers.
+// Undated announcements carry their conference or award year; announced is the year the news itself happened,
+// when that differs (a paper accepted in 2026 for a 2027 conference), so it lands in the right year in review.
 // Both link the story to the research page (and to the papers' own pages).
 export const news = [
   {
@@ -282,6 +284,7 @@ export const news = [
   },
   {
     id: 'wacv-2027-urbanstate',
+    announced: 2026,
     papers: ['lowp', 'sample-and-verify'],
     year: 2027,
     title: 'Two papers accepted at the WACV 2027 UrbanState Workshop',
@@ -293,6 +296,7 @@ export const news = [
   },
   {
     id: 'wacv-2027',
+    announced: 2026,
     papers: ['drivedegrade', 'falcon'],
     year: 2027,
     title: 'Two papers accepted at WACV 2027',
@@ -305,6 +309,7 @@ export const news = [
   },
   {
     id: 'trb-2027-signs',
+    announced: 2026,
     papers: ['adas-traffic-signs'],
     year: 2027,
     title: 'ADAS and traffic signs at TRB 2027',
@@ -313,6 +318,7 @@ export const news = [
   },
   {
     id: 'trb-2027-degradation',
+    announced: 2026,
     papers: ['camera-degradation-closed-loop'],
     year: 2027,
     title: 'Camera degradation research selected for a TRB 2027 poster',
@@ -474,6 +480,8 @@ export const projects = [
     title: 'Tribal & Rural Autonomous Vehicles for Efficiency, Livability and Safety (TRAVELS)',
     funder: 'USDOT',
     period: '2026–2032',
+    // Award in millions of US dollars: the whole center, and UGA's share (UGA Today, Oct 29, 2026).
+    funding: { total: 15, uga: 3.6 },
     summary: 'Connect rural mobility needs with autonomous passenger-service concepts, route assessment, and demonstration planning.',
     role: 'UGA contributes the Georgia site work within the UW–Madison-led TRAVELS program, including local engagement and high-definition mapping.',
     outputs: [
