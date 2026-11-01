@@ -11,7 +11,9 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
 const decode = value => value.replaceAll('&amp;', '&').replaceAll('&quot;', '"').replaceAll('&lt;', '<').replaceAll('&gt;', '>');
 const escape = value => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 const pages = new Map();
-for (const name of await readdir(root)) {
+// Site pages, plus one page per publication in papers/.
+const pageNames = [...await readdir(root), ...(await readdir(path.join(root, 'papers')).catch(() => [])).map(file => `papers/${file}`)];
+for (const name of pageNames) {
   if (!name.endsWith('.html')) continue;
   const html = await readFile(path.join(root, name), 'utf8');
   const ids = [...html.matchAll(/\bid="([^"]*)"/g)].map(match => match[1]);
@@ -76,7 +78,7 @@ for (const [name, { html }] of pages) {
 }
 
 const pubs = pages.get('publications.html')?.html || '';
-check((pubs.match(/class="publication"/g) || []).length === publications.length, 'Publication entry count differs from data');
+check((pubs.match(/class="publication(?: has-figure)?"/g) || []).length === publications.length, 'Publication entry count differs from data');
 for (const publication of publications) {
   check(pubs.includes(`id="${publication.id}"`), `Publication missing: ${publication.id}`);
   check(pubs.includes(escape(publication.title)), `Publication title missing: ${publication.id}`);
@@ -85,7 +87,7 @@ for (const publication of publications) {
 }
 const bib = await readFile(path.join(root, 'assets', 'mobility-lab-publications.bib'), 'utf8').catch(() => '');
 check((bib.match(/^@\w+\{/gm) || []).length === publications.length, 'BibTeX file entry count differs from data');
-for (const entry of pubs.matchAll(/<article class="publication"[^>]*>/g)) {
+for (const entry of pubs.matchAll(/<article class="publication(?: has-figure)?"[^>]*>/g)) {
   check(/data-topics="[^"]+"/.test(entry[0]), `Publication has no research thread: ${/id="([^"]*)"/.exec(entry[0])?.[1]}`);
 }
 check((pubs.match(/class="pub-bibtex"/g) || []).length === publications.length, 'Every publication needs a BibTeX entry');
@@ -99,6 +101,11 @@ for (const [name, { html }] of pages) {
   }
 }
 const scholarly = (pubs.match(/"@type":"ScholarlyArticle"/g) || []).length;
+for (const publication of publications) {
+  const paper = pages.get(`papers/${publication.id}.html`)?.html || '';
+  check(paper.includes('<meta name="citation_title"') && paper.includes('"@type":"ScholarlyArticle"'), `Paper page missing or without Scholar tags: ${publication.id}`);
+  check(pubs.includes(`href="papers/${publication.id}.html"`), `Publications list must link to the paper page: ${publication.id}`);
+}
 check(scholarly === publications.length, 'Every publication needs a ScholarlyArticle in the structured data');
 check((pages.get('index.html')?.html || '').includes('"@type":"ResearchOrganization"'), 'Home page organization structured data missing');
 const sitemap = await readFile(path.join(root, 'sitemap.xml'), 'utf8').catch(() => '');
@@ -129,6 +136,8 @@ for (const item of feedItems) {
   check(pages.get('news.html')?.ids.has(id), `News feed links to a missing story: ${id}`);
 }
 for (const [name, { html }] of pages) check(html.includes('<link rel="alternate" type="application/rss+xml"'), `${name}: news feed link missing`);
+const types = [...updates.matchAll(/<article class="news-entry" id="[^"]+" data-type="([^"]+)"/g)].map(match => match[1]);
+check(types.length === news.length && types.every(type => updates.includes(`data-news-type="${type}"`)), 'Every news entry needs a type the News filter offers');
 const research = pages.get('research.html')?.html || '';
 for (const project of projects) check(research.includes(escape(project.title)), `Project missing: ${project.id}`);
 check((research.match(/class="research-detail"/g) || []).length === 6, 'Research page must show the six research threads');
