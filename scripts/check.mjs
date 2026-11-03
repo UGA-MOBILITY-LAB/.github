@@ -1,7 +1,7 @@
 import { readFile, readdir, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { publications, news, projects, alumni } from './content.mjs';
+import { publications, news, projects, alumni, openCode, openResources } from './content.mjs';
 
 // Dependency-free checks for the generated static site. This is not a substitute
 // for browser layout, keyboard-navigation, and contrast testing.
@@ -148,6 +148,13 @@ for (const year of new Set(news.map(storyYear))) {
   check(review, `Year in review missing: ${year}`);
   for (const item of stories) check(review.includes(`href="../news.html#${item.id}"`), `${year} in review is missing ${item.id}`);
 }
+// Rural AV page: every item tagged with the rural-roads thread, and every story that names it.
+const rav = pages.get('rav.html')?.html || '';
+for (const item of [...openCode, ...openResources, ...projects].filter(item => item.thread === 'rural-roads')) {
+  const url = item.repo ? `https://github.com/${item.repo}` : item.links?.[0]?.url;
+  check(rav.includes(`href="${escape(url)}"`), `Rural AV page is missing ${item.repo || item.id}`);
+}
+for (const item of news.filter(item => item.threads?.includes('rural-roads'))) check(rav.includes(`href="news.html#${item.id}"`), `Rural AV page is missing story ${item.id}`);
 const research = pages.get('research.html')?.html || '';
 for (const project of projects) check(research.includes(escape(project.title)), `Project missing: ${project.id}`);
 check((research.match(/class="research-detail"/g) || []).length === 6, 'Research page must show the six research threads');

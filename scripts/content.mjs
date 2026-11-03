@@ -477,6 +477,7 @@ export const news = [
 export const projects = [
   {
     id: 'travels',
+    thread: 'rural-roads',
     title: 'Tribal & Rural Autonomous Vehicles for Efficiency, Livability and Safety (TRAVELS)',
     funder: 'USDOT',
     period: '2026–2032',
@@ -503,6 +504,7 @@ export const projects = [
   },
   {
     id: 'rural-infrastructure',
+    thread: 'rural-roads',
     title: 'Rural Road Infrastructure Assessment and Enhancement for Autonomous Vehicle Deployment',
     funder: 'USDOT CR2C2',
     period: '2025–2026',
@@ -542,7 +544,8 @@ export const projects = [
 ];
 
 // Public repositories from the lab and its members, described from their READMEs. Private repositories are
-// never listed. kind labels the card; paper is a publication id; site is a live page for the repository.
+// never listed. kind labels the card; paper is a publication id; site is a live page for the repository; thread
+// (here and on projects and open resources) is a research thread id, and 'rural-roads' items make up the Rural AV page.
 export const openCode = [
   { kind: 'Paper code', name: 'FALCON', repo: 'Que121/falcon-kr260-release', paper: 'falcon',
     text: 'Code and measurements for a camera-based 3D occupancy network on the AMD Kria KR260 FPGA, with latency guaranteed on every frame.', tags: ['FPGA', 'Occupancy', 'Latency'] },
@@ -550,15 +553,15 @@ export const openCode = [
     text: 'Token compression for collaborative V2X perception: DINOv2 features, top-k token selection, and residual vector quantization.', tags: ['PyTorch', 'V2X', 'nuScenes'] },
   { kind: 'Datasets', name: 'EV car-following data', repo: 'UGA-MOBILITY-LAB/ev-car-following-opd', paper: 'one-pedal-ctr',
     text: 'Field platoon experiments on GA-72: 10 Hz GPS trajectories of three electric vehicles following a lead car, with one-pedal and two-pedal driving under manual control and adaptive cruise control.', tags: ['Field data', 'Car following', 'EV'] },
-  { kind: 'Datasets', name: 'ADAS infrastructure readiness', repo: 'UGA-MOBILITY-LAB/adas-infrastructure-readiness-dataset',
+  { kind: 'Datasets', name: 'ADAS infrastructure readiness', repo: 'UGA-MOBILITY-LAB/adas-infrastructure-readiness-dataset', thread: 'rural-roads',
     text: 'Paired interior and exterior video from two commercial driver-assistance vehicles between Athens-Clarke and Oconee counties, for comparing when roadside assets appear and when the vehicle responds.', tags: ['Video', 'ADAS', 'Infrastructure'] },
-  { kind: 'Tools & sites', name: 'Hawkinsville route viewer', repo: 'UGA-MOBILITY-LAB/rav-demo', site: 'https://uga-mobility-lab.github.io/rav-demo/',
+  { kind: 'Tools & sites', name: 'Hawkinsville route viewer', repo: 'UGA-MOBILITY-LAB/rav-demo', thread: 'rural-roads', site: 'https://uga-mobility-lab.github.io/rav-demo/',
     text: 'Browser viewer for the Hawkinsville LiDAR point cloud and Lanelet2 HD map, with the route’s infrastructure challenges marked.', tags: ['three.js', 'LiDAR', 'HD map'] },
   { kind: 'Tools & sites', name: 'LIO-VIO-GPS fusion', repo: 'UGA-MOBILITY-LAB/lio_vio_gps_ws',
     text: 'ROS 2 localization workspace that fuses FAST-LIO2, VINS-Fusion, and GPS, for CARLA simulation or a real vehicle.', tags: ['ROS 2', 'SLAM', 'CARLA'] },
   { kind: 'Tools & sites', name: 'Waymo motion extraction', repo: 'UGA-MOBILITY-LAB/waymo_motion_extraction',
     text: 'Python tool that extracts trajectories and road features from the Waymo Open Motion Dataset, computes lane offset and stop distance, and plots scenes.', tags: ['Python', 'Waymo', 'Trajectories'] },
-  { kind: 'Tools & sites', name: 'Rural AV evidence hub', repo: 'UGA-MOBILITY-LAB/rav-literature-review', site: 'https://uga-mobility-lab.github.io/rav-literature-review/',
+  { kind: 'Tools & sites', name: 'Rural AV evidence hub', repo: 'UGA-MOBILITY-LAB/rav-literature-review', thread: 'rural-roads', site: 'https://uga-mobility-lab.github.io/rav-literature-review/',
     text: 'Interactive TRAVELS literature review: 118 verified references across six rural AV categories, with stakeholder recommendations and exports.', tags: ['Literature review', 'TRAVELS'] },
   { kind: 'Tools & sites', name: 'Long-tail driving survey hub', repo: 'UGA-MOBILITY-LAB/longtail-ad-survey', site: 'https://uga-mobility-lab.github.io/longtail-ad-survey/',
     text: 'Companion site for a survey of world models, vision-language-action models, and safety verification for long-tail autonomous driving, covering 302 works.', tags: ['Survey', 'World models', 'VLA'] },
@@ -567,6 +570,7 @@ export const openCode = [
 export const openResources = [
   {
     id: 'hawkinsville-map',
+    thread: 'rural-roads',
     kicker: 'Map & interactive demo',
     title: 'Explore the Hawkinsville route',
     description: 'Inspect the rural route in 3D and see where road geometry, markings, and roadside conditions challenge automated driving.',
@@ -591,6 +595,7 @@ export const openResources = [
   },
   {
     id: 'rav-evidence',
+    thread: 'rural-roads',
     kicker: 'Interactive evidence hub',
     title: 'Navigate rural AV research',
     description: 'Explore research findings, field pilots, and deployment implications through a searchable evidence map and linked stakeholder recommendations.',

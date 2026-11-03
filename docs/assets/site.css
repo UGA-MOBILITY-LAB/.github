@@ -806,3 +806,21 @@ html:not(.js) .theme-switch{display:none}
   .review-thread-list{grid-template-columns:1fr}
 }
 @media(max-width:650px){.home-news-top h2.eyebrow{flex-basis:100%}.home-news-top{row-gap:2px}}
+/* Rural AV page (rav.html): the two explore cards, then a directory of link groups. */
+.rav-explore .resource-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.rav-explore .resource-card h2{font-size:var(--h3);margin-bottom:12px}
+.rav-directory{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:44px 56px;align-items:start}
+.rav-group.is-wide{grid-column:1/-1}
+.rav-group h2{margin:0 0 10px;font:700 13px/1.4 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.rav-group ul{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.rav-group li{display:flex;justify-content:space-between;align-items:baseline;gap:6px 20px;flex-wrap:wrap;padding:11px 0;border-bottom:1px solid var(--line);font-size:16px;line-height:1.45}
+.rav-group li>a{font-weight:600}
+.rav-group li>span{font-size:14px;color:var(--muted)}
+.rav-group.is-wide li>span{white-space:nowrap}
+.rav-project{display:grid!important;grid-template-columns:minmax(0,1fr) auto;gap:4px 24px!important}
+.rav-project-links{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:2px 22px}
+.rav-project-links .text-link{font-size:14px;padding-block:4px;border-bottom-color:transparent}
+.rav-project-links .text-link:hover{border-bottom-color:var(--accent)}
+@media(max-width:850px){.rav-explore .resource-grid,.rav-directory{grid-template-columns:1fr}.rav-directory{gap:36px}}
+@media(max-width:650px){.rav-project{grid-template-columns:1fr}.rav-group.is-wide li>span{white-space:normal}}
+.rav-stack{display:grid;gap:44px}
