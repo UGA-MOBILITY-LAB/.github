@@ -168,8 +168,8 @@ check(![...pages.values()].some(p => /via\.placeholder\.com|TODO|Lorem ipsum/.te
 
 const home = pages.get('index.html')?.html || '';
 check(updates.includes('<em>$15M</em>'), 'news.html: TRAVELS funding highlight missing');
-// The home page leads with the newest dated story.
-const newest = news.filter(n => n.dateLabel).sort((a, b) => Date.parse(b.sortDate || b.dateLabel) - Date.parse(a.sortDate || a.dateLabel))[0];
+// The home page leads with the newest dated story (stories marked home: false have their own home section).
+const newest = news.filter(n => n.dateLabel && n.home !== false).sort((a, b) => Date.parse(b.sortDate || b.dateLabel) - Date.parse(a.sortDate || a.dateLabel))[0];
 const lead = home.indexOf(`href="news.html#${newest.id}"`);
 check(lead > -1 && lead < home.indexOf('class="research-mosaic"'), `Home page should lead with the newest story: ${newest.id}`);
 for (const scene of ['athens', 'rural', 'atlanta']) {
