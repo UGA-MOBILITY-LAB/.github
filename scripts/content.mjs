@@ -237,6 +237,24 @@ export const publications = [
 // Both link the story to the research page (and to the papers' own pages).
 export const news = [
   {
+    id: 'hawkinsville-loop-2026',
+    threads: ['rural-roads'],
+    year: 2026,
+    dateLabel: 'Nov 4, 2026',
+    sortDate: '2026-11-04',
+    dateKind: 'Field test',
+    title: 'The Hawkinsville Loop: 5.3 km of autonomous driving on public roads',
+    titleHighlight: '5.3 km',
+    summary: "The lab's research vehicle drove the 5.3 km Hawkinsville demonstration loop on public roads in an autonomous driving test, running Autoware on the lab's HD map of the route.",
+    text: "The lab's research vehicle drove the 5.3 km Hawkinsville demonstration loop on public roads in an autonomous driving test, running the Autoware software stack on the lab's HD map of the route. The video shows Autoware's live LiDAR perception and planned path with the roof camera, at 3× speed.",
+    links: [
+      { label: 'Watch full screen', url: 'https://uga-mobility-lab.github.io/.github/assets/hawkinsville-loop-3x.mp4' },
+      { label: 'Explore the mapped route', url: 'https://uga-mobility-lab.github.io/rav-demo/' },
+      { label: 'Georgia case study', url: 'travels.html#hawkinsville-drive' },
+    ],
+    video: { local: 'hawkinsvilleLoop' },
+  },
+  {
     id: 'uga-today-travels-2026',
     threads: ['rural-roads'],
     year: 2026,
@@ -643,3 +661,17 @@ export const alumni = [
   { name: 'Luke Greenfield', role: 'Undergraduate Student (ECAM)', period: 'Fall 2025' },
   { name: 'James Volfson', role: 'Young Dawgs Intern · North Oconee High School', period: 'Spring 2025' },
 ];
+
+// Field-test videos hosted with the site in docs/assets (H.264 1080p, under GitHub's 100 MB file limit).
+// Shown on the TRAVELS page and in their news stories.
+export const fieldVideos = {
+  hawkinsvilleLoop: {
+    src: 'assets/hawkinsville-loop-3x.mp4',
+    poster: 'assets/hawkinsville-loop-poster.jpg',
+    width: 1920,
+    height: 1080,
+    duration: '3:53',
+    title: 'The Hawkinsville Loop: 5.3 km of autonomous driving on public roads, shown at 3× speed',
+    caption: 'Autoware’s live view of LiDAR perception and the planned path, with the roof camera, speed and route progress on a satellite map. Shown at 3× speed: the 11 min 22 s drive in 3 min 53 s. Satellite imagery: USGS.',
+  },
+};

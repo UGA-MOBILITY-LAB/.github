@@ -824,3 +824,4 @@ html:not(.js) .theme-switch{display:none}
 @media(max-width:850px){.rav-explore .resource-grid,.rav-directory{grid-template-columns:1fr}.rav-directory{gap:36px}}
 @media(max-width:650px){.rav-project{grid-template-columns:1fr}.rav-group.is-wide li>span{white-space:normal}}
 .rav-stack{display:grid;gap:44px}
+.field-video{margin:28px 0 20px}.field-video video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#0b0e12;border:1px solid var(--line)}.field-video figcaption{margin-top:12px;font-size:15px;line-height:1.6;color:var(--muted);max-width:86ch}.field-video figcaption span{margin-left:10px;white-space:nowrap;font-weight:600;color:var(--ink)}.news-field-video{margin-top:24px}.case-drive{padding-top:8px}
