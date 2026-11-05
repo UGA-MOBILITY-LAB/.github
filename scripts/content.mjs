@@ -253,7 +253,7 @@ export const news = [
       { label: 'Georgia case study', url: 'travels.html#hawkinsville-drive' },
     ],
     video: { local: 'hawkinsvilleLoop' },
-    home: false, // the home page shows this video in its own section and keeps its news as it was
+    home: false, // kept off the home page news (operator, 2026-11-05)
   },
   {
     id: 'uga-today-travels-2026',

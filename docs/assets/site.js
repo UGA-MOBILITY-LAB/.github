@@ -456,16 +456,3 @@ if (photoGroups.length && window.HTMLDialogElement) {
     }));
   }
 }
-// Field videos marked data-autoplay play muted while on screen; not after the visitor pauses one, not with reduced motion.
-(() => {
-  const videos = document.querySelectorAll('video[data-autoplay]');
-  if (!videos.length || !('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const seen = new WeakMap();
-  videos.forEach(v => v.addEventListener('pause', () => { if (seen.get(v)) v.dataset.userPaused = '1'; }));
-  const io = new IntersectionObserver(entries => entries.forEach(({ target: v, isIntersecting }) => {
-    seen.set(v, isIntersecting);
-    if (isIntersecting && !v.dataset.userPaused) { v.preload = 'auto'; v.play().catch(() => {}); }
-    else if (!isIntersecting && !v.paused) v.pause();
-  }), { threshold: 0.4 });
-  videos.forEach(v => io.observe(v));
-})();
