@@ -456,12 +456,25 @@ if (photoGroups.length && window.HTMLDialogElement) {
     }));
   }
 }
-// Field videos marked data-autoplay play muted while on screen; not after the visitor pauses one, not with reduced motion.
+// Field videos marked data-autoplay play muted while on screen (browsers only autoplay muted video), with a
+// "Turn on sound" button; not after the visitor pauses one. Without autoplay they start unmuted.
 (() => {
   const videos = document.querySelectorAll('video[data-autoplay]');
-  if (!videos.length || !('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!videos.length) return;
+  if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    videos.forEach(v => { v.muted = false; });
+    return;
+  }
   const seen = new WeakMap();
-  videos.forEach(v => v.addEventListener('pause', () => { if (seen.get(v)) v.dataset.userPaused = '1'; }));
+  videos.forEach(v => {
+    const sound = v.parentElement.querySelector('.video-sound');
+    if (sound) {
+      sound.hidden = !v.muted;
+      sound.addEventListener('click', () => { v.muted = false; v.volume = 1; v.play().catch(() => {}); });
+      v.addEventListener('volumechange', () => { sound.hidden = !v.muted; });
+    }
+    v.addEventListener('pause', () => { if (seen.get(v)) v.dataset.userPaused = '1'; });
+  });
   const io = new IntersectionObserver(entries => entries.forEach(({ target: v, isIntersecting }) => {
     seen.set(v, isIntersecting);
     if (isIntersecting && !v.dataset.userPaused) { v.preload = 'auto'; v.play().catch(() => {}); }
