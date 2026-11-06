@@ -38,7 +38,7 @@ VARIANTS = {
     # Portraits. qianyi.jpg is already smaller than a re-encoded copy would be.
     "HYao.jpg": (480, 640, 960),
     "Tianle.jpg": (480, 960),
-    "assets/haohua-iros-2026-wide.jpg": (480, 960),
+    "assets/haohua-autumn-2026.jpg": (480, 960),
 }
 # Hero scenes also get AVIF copies, about half the size of the WebP ones at the same visual quality.
 AVIF_VARIANTS = ("assets/athens-downtown.jpg", "assets/rural-georgia-road.jpg", "assets/atlanta-mobility.jpg")
@@ -49,7 +49,6 @@ CROPS = [("assets/drivedegrade-overview.png", "drivedegrade-detail", (0, 0, 2275
 # so snapshots taken in very different settings line up as a set. Boxes are in source pixels.
 PORTRAITS = [
     ("Tianle.jpg", "Tianle-portrait", (366, 1187, 1876, 3074), (480, 960)),
-    ("assets/haohua-iros-2026-wide.jpg", "haohua-iros-2026-wide-portrait", (868, 230, 1352, 835), (480,)),
     ("qianyi.jpg", "qianyi-portrait", (206, 133, 938, 1048), (480,)),
 ]
 # The GA-72 experiment route, redrawn in UGA red on a grey basemap. Map data © OpenStreetMap contributors.
