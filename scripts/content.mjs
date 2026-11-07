@@ -302,6 +302,23 @@ export const news = [
     },
   },
   {
+    id: 'e23-v2x-traffic-lights-2026',
+    threads: ['vehicle-behavior'],
+    year: 2026,
+    dateLabel: 'Sep 24, 2026',
+    sortDate: '2026-09-24',
+    dateKind: 'Field test',
+    title: 'Talking to traffic lights: a V2X field test at the E23 test site',
+    titleHighlight: 'traffic lights',
+    summary: "At UGA's E23 test site, the lab's research vehicle drove a test route with Autoware while receiving the traffic signal's state and countdown over V2X.",
+    text: "At UGA's E23 test site, the lab's research vehicle drove a test route with the Autoware software stack while receiving the traffic signal's state and countdown over V2X. The video shows the cabin, the roof camera and Autoware's live view, with the signal state, speed and route progress, at 2× speed.",
+    links: [
+      { label: 'Watch full screen', url: 'https://uga-mobility-lab.github.io/.github/assets/e23-v2x-traffic-lights-2x.mp4' },
+    ],
+    video: { local: 'e23TrafficLights' },
+    home: false, // kept off the home page news, like the Hawkinsville video (operator, 2026-11-05)
+  },
+  {
     id: 'wacv-2027-urbanstate',
     announced: 2026,
     papers: ['lowp', 'sample-and-verify'],
@@ -664,7 +681,7 @@ export const alumni = [
 ];
 
 // Field-test videos hosted with the site in docs/assets (H.264 1080p, under GitHub's 100 MB file limit).
-// Shown on the TRAVELS page and in their news stories.
+// Shown on the Data & Demos page (newest first) and in their news stories; Hawkinsville also on the TRAVELS page.
 export const fieldVideos = {
   hawkinsvilleLoop: {
     src: 'assets/hawkinsville-loop-3x.mp4',
@@ -674,5 +691,14 @@ export const fieldVideos = {
     duration: '3:53',
     title: 'The Hawkinsville Loop: 5.3 km of autonomous driving on public roads, shown at 3× speed',
     caption: 'Autoware’s live view of LiDAR perception and the planned path, with the roof camera, speed and route progress on a satellite map. Shown at 3× speed: the 11 min 22 s drive in 3 min 53 s. Satellite imagery: USGS.',
+  },
+  e23TrafficLights: {
+    src: 'assets/e23-v2x-traffic-lights-2x.mp4',
+    poster: 'assets/e23-v2x-traffic-lights-poster.jpg',
+    width: 1920,
+    height: 1080,
+    duration: '0:41',
+    title: 'Talking to traffic lights: a V2X field test at the E23 test site, shown at 2× speed',
+    caption: 'The cabin, the roof camera and Autoware’s live view, with the traffic signal’s state and countdown received over V2X, speed, distance to the goal and route progress. Shown at 2× speed: the 70 s drive in 35 s. Map data © OpenStreetMap contributors.',
   },
 };
