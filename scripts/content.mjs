@@ -245,12 +245,12 @@ export const news = [
     dateKind: 'Field test',
     title: 'The Hawkinsville Loop: 5.3 km of autonomous driving on public roads',
     titleHighlight: '5.3 km',
-    summary: "The lab's research vehicle drove the 5.3 km Hawkinsville demonstration loop on public roads in an autonomous driving test, running Autoware on the lab's HD map of the route.",
-    text: "The lab's research vehicle drove the 5.3 km Hawkinsville demonstration loop on public roads in an autonomous driving test, running the Autoware software stack on the lab's HD map of the route. The video shows Autoware's live LiDAR perception and planned path with the roof camera, at 3× speed.",
+    summary: "The lab AV drove the 5.3 km Hawkinsville demonstration loop on public roads for rural testing.",
+    text: "The lab AV drove the 5.3 km Hawkinsville demonstration loop on public roads for testing in rural areas. The video shows Autoware's live LiDAR perception and planned path with the roof camera, at 3× speed.",
     links: [
       { label: 'Watch full screen', url: 'https://uga-mobility-lab.github.io/.github/assets/hawkinsville-loop-3x.mp4' },
-      { label: 'Explore the mapped route', url: 'https://uga-mobility-lab.github.io/rav-demo/' },
-      { label: 'Georgia case study', url: 'travels.html#hawkinsville-drive' },
+      //{ label: 'Explore the mapped route', url: 'https://uga-mobility-lab.github.io/rav-demo/' },
+      //{ label: 'Georgia case study', url: 'travels.html#hawkinsville-drive' },
     ],
     video: { local: 'hawkinsvilleLoop' },
     home: false, // kept off the home page news (operator, 2026-11-05)
