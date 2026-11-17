@@ -102,8 +102,9 @@
 @media(max-width:650px){.vehicle-showcase{padding-top:65px}.vehicle-showcase-inner{padding-top:230px;padding-bottom:42px}.vehicle-cutout{width:135%;right:-25%;transform:translateY(-38%)}.vehicle-cutout figcaption{right:23%;bottom:6%}.vehicle-scene-copy h2{font-size:43px}}
 /* Real lab activity lives below the vehicle showcase, leaving the hero untouched. */
 .lab-life{background:var(--paper);scroll-margin-top:100px}
-.lab-life-intro{max-width:460px}
-.lab-life-intro p{font-size:16px;color:var(--muted);margin-bottom:12px}
+.lab-life .section-heading{margin-bottom:18px}
+.lab-life .section-heading .eyebrow{margin-bottom:6px}
+.lab-life .photo-credit{margin-top:4px}
 .news-announcements-heading{margin-top:70px}
 
 .home-visit-feature{background:var(--surface);padding-block:52px;scroll-margin-top:100px}
@@ -147,13 +148,13 @@
 .lab-photo,.lab-fleet{margin:0;min-width:0}
 .lab-photo>a{display:block;background:var(--placeholder)}
 .lab-photo img{width:100%;height:auto}
-.lab-photo figcaption{padding-top:25px}
-.lab-photo .eyebrow{margin-bottom:13px}
-.lab-photo h3{font:600 30px/1.2 var(--display);letter-spacing:-.025em;margin-bottom:14px}
-.lab-photo figcaption>p:not(.eyebrow){font-size:16px;max-width:520px;color:var(--muted);margin-bottom:15px}
+.lab-photo figcaption{padding-top:12px}
+.lab-photo .eyebrow{margin-bottom:4px}
+.lab-photo h3{font:600 30px/1.2 var(--display);letter-spacing:-.025em;margin-bottom:6px}
+.lab-photo figcaption>p:not(.eyebrow){font-size:16px;max-width:520px;color:var(--muted);margin-bottom:5px}
 .photo-credit{display:block;width:fit-content;font-size:15px;color:var(--muted);margin-top:12px}
 .photo-credit:hover{text-decoration:underline}
-.lab-fleet{margin-top:40px;padding-top:30px;border-top:1px solid var(--line-strong)}
+.lab-fleet{margin-top:22px;padding-top:16px;border-top:1px solid var(--line-strong)}
 .lab-fleet>a{display:block}
 .lab-fleet img{width:100%;height:auto}
 .lab-fleet figcaption{display:flex;justify-content:space-between;align-items:center;gap:30px;padding-top:25px}
@@ -161,10 +162,11 @@
 .lab-fleet p{font:500 22px/1.4 var(--display);letter-spacing:-.02em;margin:0}
 .lab-fleet-links{text-align:right}
 .lab-fleet-links .photo-credit{margin-left:auto}
-@media(max-width:850px){.lab-photo-grid{gap:26px}.lab-life .section-heading{align-items:start}.lab-life-intro{max-width:310px}.lab-photo h3{font-size:26px}.lab-fleet p{font-size:21px}}
-@media(max-width:650px){.lab-photo-grid{grid-template-columns:1fr;gap:30px}.lab-life-intro{margin-top:24px;max-width:none}.lab-photo figcaption{padding-top:20px}.lab-photo h3{font-size:29px}.lab-fleet{margin-top:35px;padding-top:28px}.lab-fleet figcaption{display:block;padding-top:20px}.lab-fleet-links{text-align:left;margin-top:17px}.lab-fleet-links .photo-credit{margin-left:0}}
+@media(max-width:850px){.lab-photo-grid{gap:26px}.lab-life .section-heading{align-items:start}.lab-photo h3{font-size:26px}.lab-fleet p{font-size:21px}}
+@media(max-width:650px){.lab-photo-grid{grid-template-columns:1fr;gap:30px}.lab-life .section-heading>.text-link{margin-top:6px}.lab-photo h3{font-size:29px}.lab-fleet{margin-top:16px;padding-top:12px}.lab-fleet figcaption{display:block;padding-top:12px}.lab-fleet-links{text-align:left;margin-top:6px}.lab-fleet-links .photo-credit{margin-left:0}}
 /* Resource discovery and evidence-led project pages. */
-.resources-home,.research-home,.lab-life{padding-block:60px}
+.resources-home,.research-home{padding-block:60px}
+.lab-life{padding-block:36px}
 /* Neighbouring home sections that share a background are divided by a rule, like the resources band. */
 .research-home{border-top:1px solid var(--line)}
 /* The home page has one news area: its label row links to all news. */
@@ -235,7 +237,8 @@
 }
 @media(max-width:850px){.resource-grid{grid-template-columns:1fr}.resource-card{padding:26px}.resource-card-top{margin-bottom:20px}.resource-card h3{font-size:30px}.resource-card .link-group{padding-top:5px}.case-overview,.resource-context-inner{grid-template-columns:1fr;gap:35px}.resource-context figure{max-width:680px}.route-grid{gap:20px}.route-grid h3{font-size:24px}}
 @media(max-width:650px){
-  .resources-home,.research-home,.lab-life{padding-block:44px}
+  .resources-home,.research-home{padding-block:44px}
+  .lab-life{padding-block:26px}
   .header-inner{min-height:79px}
   .resource-card{padding:24px}.resource-card h3{font-size:29px}.resource-catalog{padding-bottom:40px}
   .case-overview{padding-bottom:40px}.case-overview h2{font-size:35px}
