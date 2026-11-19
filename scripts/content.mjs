@@ -683,6 +683,15 @@ export const alumni = [
 // Field-test videos hosted with the site in docs/assets (H.264 1080p, under GitHub's 100 MB file limit).
 // Shown on the Data & Demos page (newest first) and in their news stories; Hawkinsville also on the TRAVELS page.
 export const fieldVideos = {
+  hawkinsvilleSunny: {
+    src: 'assets/hawkinsville-sunny-3x.mp4',
+    poster: 'assets/hawkinsville-sunny-poster.jpg',
+    width: 1920,
+    height: 1080,
+    duration: '3:50',
+    title: 'Hawkinsville, from the hospital and back: an autonomous drive on public roads, shown at 3× speed',
+    caption: 'A top-down Autoware view of the drive, played back from the run’s own LiDAR, localization and perception data, with the onboard camera, speed and route progress on a satellite map. Shown at 3× speed: the 10 min drive in 3 min 20 s, between departure and return shots filmed separately. Satellite imagery: USGS.',
+  },
   hawkinsvilleLoop: {
     src: 'assets/hawkinsville-loop-3x.mp4',
     poster: 'assets/hawkinsville-loop-poster.jpg',
