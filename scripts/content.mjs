@@ -690,7 +690,6 @@ export const fieldVideos = {
     height: 1080,
     duration: '3:50',
     title: 'Hawkinsville, from the hospital and back: an autonomous drive on public roads, shown at 3× speed',
-    caption: 'A top-down Autoware view of the drive, played back from the run’s own LiDAR, localization and perception data, with the onboard camera, speed and route progress on a satellite map. Shown at 3× speed: the 10 min drive in 3 min 20 s, between departure and return shots filmed separately. Satellite imagery: USGS.',
   },
   hawkinsvilleLoop: {
     src: 'assets/hawkinsville-loop-3x.mp4',
