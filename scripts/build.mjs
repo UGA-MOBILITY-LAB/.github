@@ -116,6 +116,14 @@ const threads = [
     methods: ['Bird’s-eye-view mapping', 'Cross-site generalization', 'Multi-camera trajectory fusion'],
     papers: [],
     work: [{ href: 'https://github.com/Franceswww/curbsight', label: 'CurbSight', venue: 'Code, data & demo' }],
+    demo: {
+      label: 'CurbSight demo',
+      src: 'https://raw.githubusercontent.com/Franceswww/curbsight/main/figures/demo.gif',
+      still: 'https://raw.githubusercontent.com/Franceswww/curbsight/main/figures/fused_frame.jpg',
+      alt: 'Three roadside camera views above a shared overhead map, with colored trajectories tracking vehicles, pedestrians, and cyclists through the intersection.',
+      width: 560,
+      height: 835,
+    },
   },
 ];
 // Every publication sits in at least one thread: the home cards, research page, and publication filters share them.
@@ -288,7 +296,14 @@ const threadNews = t => {
   const stories = newsOrder.filter(n => newsThreads(n).includes(t)).slice(0, 3);
   return stories.length ? `<div class="thread-news"><h3>In the news</h3><ul>${stories.map(n => `<li><a href="news.html#${n.id}">${e(n.title)}</a><span>${e(n.dateLabel || String(n.year))}</span></li>`).join('')}</ul></div>` : '';
 };
-const researchThreads = threads.map((t, i) => `<article class="research-detail" id="${t.id}"><div class="research-number"${t.legacy ? ` id="${t.legacy}"` : ''}>0${i + 1}${icon(t.icon)}</div><div>${t.headline ? `<p class="eyebrow">${e(t.title)}</p>` : ''}<h2>${e(t.headline || t.title)}</h2>${t.people?.length ? `<p class="research-people">${t.people.map(id => researchers[id]).join(' · ')}</p>` : ''}${t.figure ? threadFigure(t.figure, slots.researchFigure) : ''}</div><div><p>${e(t.text)}</p>${t.detail ? `<p>${e(t.detail)}</p>` : ''}<ul class="topic-tags">${t.methods.map(m => `<li>${e(m)}</li>`).join('')}</ul><ul class="thread-work">${threadWork(t).map(w => `<li><a href="${w.href}">${e(w.label)} <span>${e(w.venue)}</span></a></li>`).join('')}</ul>${threadNews(t)}${t.papers.length || t.more?.length ? `<div class="link-group">${t.papers.length ? `<a class="text-link" href="publications.html?topic=${t.id}">${t.papers.length} ${t.papers.length === 1 ? 'paper' : 'papers'} in this thread ${arrow}</a>` : ''}${(t.more || []).map(([href, label]) => `<a class="text-link" href="${href}">${e(label)} ${arrow}</a>`).join('')}</div>` : ''}</div></article>`).join('');
+const researchDemo = demo => `<details class="visit-video" open>
+  <summary>${e(demo.label)}</summary>
+  <picture>
+    <source media="(prefers-reduced-motion: reduce)" srcset="${e(demo.still)}">
+    <img src="${e(demo.src)}" alt="${e(demo.alt)}" width="${demo.width}" height="${demo.height}" loading="lazy" style="height:auto;margin-bottom:18px">
+  </picture>
+</details>`;
+const researchThreads = threads.map((t, i) => `<article class="research-detail" id="${t.id}"><div class="research-number"${t.legacy ? ` id="${t.legacy}"` : ''}>0${i + 1}${icon(t.icon)}</div><div>${t.headline ? `<p class="eyebrow">${e(t.title)}</p>` : ''}<h2>${e(t.headline || t.title)}</h2>${t.people?.length ? `<p class="research-people">${t.people.map(id => researchers[id]).join(' · ')}</p>` : ''}${t.figure ? threadFigure(t.figure, slots.researchFigure) : ''}${t.demo ? researchDemo(t.demo) : ''}</div><div><p>${e(t.text)}</p>${t.detail ? `<p>${e(t.detail)}</p>` : ''}<ul class="topic-tags">${t.methods.map(m => `<li>${e(m)}</li>`).join('')}</ul><ul class="thread-work">${threadWork(t).map(w => `<li><a href="${w.href}">${e(w.label)} <span>${e(w.venue)}</span></a></li>`).join('')}</ul>${threadNews(t)}${t.papers.length || t.more?.length ? `<div class="link-group">${t.papers.length ? `<a class="text-link" href="publications.html?topic=${t.id}">${t.papers.length} ${t.papers.length === 1 ? 'paper' : 'papers'} in this thread ${arrow}</a>` : ''}${(t.more || []).map(([href, label]) => `<a class="text-link" href="${href}">${e(label)} ${arrow}</a>`).join('')}</div>` : ''}</div></article>`).join('');
 const research = `${intro('Research & projects','Autonomy in context.<br><em>Impact in the world.</em>','Seven research threads follow mobility end to end, from how vehicles see to how communities move.')}
 <div class="thread-index"><nav class="wrap section-jumps" aria-label="Research threads">${threads.map(t => `<a href="#${t.id}">${e(t.short)} ↓</a>`).join('')}</nav>
 <section class="wrap research-details" aria-label="Research threads">${researchThreads}</section></div>

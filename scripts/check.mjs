@@ -168,6 +168,7 @@ check((research.match(/class="research-detail"/g) || []).length === 7, 'Research
 const digitalTwin = /<article class="research-detail" id="digital-twin">(.*?)<\/article>/s.exec(research)?.[1] || '';
 check(digitalTwin.includes('<h2>Digital Twin of Road and Traffic</h2>'), 'Research page must show the Digital Twin thread');
 check(digitalTwin.includes('href="https://github.com/Franceswww/curbsight"'), 'Digital Twin thread must link to CurbSight');
+check(digitalTwin.includes('src="https://raw.githubusercontent.com/Franceswww/curbsight/main/figures/demo.gif"'), 'Digital Twin thread must embed the CurbSight demo GIF');
 check(!research.includes('<article id="project-curbsight">'), 'CurbSight must appear under the Digital Twin research thread');
 for (const legacy of ['autonomy', 'cooperation', 'robotics', 'infrastructure']) check(pages.get('research.html')?.ids.has(legacy), `Old research anchor missing: #${legacy}`);
 const team = pages.get('team.html')?.html || '';
