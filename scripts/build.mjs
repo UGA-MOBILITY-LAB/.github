@@ -116,12 +116,6 @@ const threads = [
     methods: ['Bird’s-eye-view mapping', 'Cross-site generalization', 'Multi-camera trajectory fusion'],
     papers: [],
     work: [{ href: 'https://github.com/Franceswww/curbsight', label: 'CurbSight', venue: 'Code, data & demo' }],
-    homeFigure: {
-      src: 'https://raw.githubusercontent.com/Franceswww/curbsight/main/figures/conflicts_ttc_heatmap.jpg',
-      width: 1400, height: 1400, photo: true,
-      alt: 'Overhead heat map of vehicle conflicts at the Sanford Drive and Cedar Street intersection',
-      tag: 'CurbSight · conflict heat map',
-    },
     demo: {
       label: 'CurbSight demo',
       src: 'https://raw.githubusercontent.com/Franceswww/curbsight/main/figures/demo.gif',
@@ -154,7 +148,13 @@ const venueTag = p => {
   const name = /\(([A-Za-z][^)/]*?)\s*(?:\/[^)]*)?\)/.exec(p.venue)?.[1] || (/\bTRB\b/.test(p.venue) ? 'TRB' : /^Communications in Transportation Research/.test(p.venue) ? 'CTR' : /^IET Intelligent Transport Systems/.test(p.venue) ? 'IET ITS' : p.venue);
   return `${name} ${p.year}`;
 };
-const threadFigure = (f, sizes, scan = false) => `<div class="thread-figure${f.photo ? ' is-photo' : ''}${f.dark ? ' is-dark' : ''}"><a href="${f.href}" aria-label="${e(f.tag)}: ${e(f.alt)}"><img ${responsive(f.src, sizes, /\.webp$/.test(f.src) ? f.width : 0)} alt="" width="${f.width}" height="${f.height}" loading="lazy"><span class="thread-tag" aria-hidden="true">${e(f.tag)}</span></a>${f.attribution ? `<a class="map-attribution" href="${f.attributionUrl}">${e(f.attribution)}</a>` : ''}${scan && f.scan ? `<button class="thread-3d" type="button" data-scan-open hidden>${icon('rotate-3d')}Explore in 3D</button>` : ''}</div>`;
+const threadFigure = (f, sizes, scan = false) => {
+  const image = `<img ${responsive(f.src, sizes, /\.webp$/.test(f.src) ? f.width : 0)} alt="" width="${f.width}" height="${f.height}" loading="lazy"${f.still ? ' style="object-fit:contain"' : ''}>`;
+  const media = f.still
+    ? `<picture style="display:block;height:100%"><source media="(prefers-reduced-motion: reduce)" srcset="${e(f.still)}">${image}</picture>`
+    : image;
+  return `<div class="thread-figure${f.photo ? ' is-photo' : ''}${f.dark ? ' is-dark' : ''}"><a href="${f.href}" aria-label="${e(f.tag)}: ${e(f.alt)}">${media}<span class="thread-tag" aria-hidden="true">${e(f.tag)}</span></a>${f.attribution ? `<a class="map-attribution" href="${f.attributionUrl}">${e(f.attribution)}</a>` : ''}${scan && f.scan ? `<button class="thread-3d" type="button" data-scan-open hidden>${icon('rotate-3d')}Explore in 3D</button>` : ''}</div>`;
+};
 
 // BibTeX for each publication. Venues written "Journal, volume(issue), article" are journal articles and
 // the rest are conference papers; capitalized terms are braced so bibliography styles keep them.
@@ -207,7 +207,7 @@ function bibtex(p) {
 }
 
 const threadCards = threads.map(t => {
-  const figure = t.homeFigure ? { ...t.homeFigure, href: t.href } : t.figure;
+  const figure = t.figure || (t.demo && { ...t.demo, href: t.href, tag: t.demo.label, photo: true, dark: true });
   const work = t.work.map(w => `<li><a href="${w.href}">${e(w.label)} <span>${e(w.venue)}</span></a></li>`).join('');
   return `<article class="thread" id="research-${t.id}">${figure ? threadFigure(figure, slots.tile, true) : ''}<div class="thread-copy"><h3><a href="${t.href}">${icon(t.icon)}${e(t.title)}</a></h3><p class="thread-methods">${t.methods.map(e).join(' · ')}</p><ul class="thread-work">${work}</ul></div></article>`;
 }).join('');
