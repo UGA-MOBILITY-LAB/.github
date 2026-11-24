@@ -164,7 +164,11 @@ for (const item of [...openCode, ...openResources, ...projects].filter(item => i
 for (const item of news.filter(item => item.threads?.includes('rural-roads'))) check(rav.includes(`href="news.html#${item.id}"`), `Rural AV page is missing story ${item.id}`);
 const research = pages.get('research.html')?.html || '';
 for (const project of projects) check(research.includes(escape(project.title)), `Project missing: ${project.id}`);
-check((research.match(/class="research-detail"/g) || []).length === 6, 'Research page must show the six research threads');
+check((research.match(/class="research-detail"/g) || []).length === 7, 'Research page must show seven research threads');
+const digitalTwin = /<article class="research-detail" id="digital-twin">(.*?)<\/article>/s.exec(research)?.[1] || '';
+check(digitalTwin.includes('<h2>Digital Twin of Road and Traffic</h2>'), 'Research page must show the Digital Twin thread');
+check(digitalTwin.includes('href="https://github.com/Franceswww/curbsight"'), 'Digital Twin thread must link to CurbSight');
+check(!research.includes('<article id="project-curbsight">'), 'CurbSight must appear under the Digital Twin research thread');
 for (const legacy of ['autonomy', 'cooperation', 'robotics', 'infrastructure']) check(pages.get('research.html')?.ids.has(legacy), `Old research anchor missing: #${legacy}`);
 const team = pages.get('team.html')?.html || '';
 for (const member of alumni) check(team.includes(escape(member.name)), `Former member missing: ${member.name}`);

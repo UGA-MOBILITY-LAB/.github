@@ -577,13 +577,6 @@ export const projects = [
     period: '2024–2025',
     links: [],
   },
-  {
-    id: 'curbsight',
-    title: 'CurbSight',
-    summary: 'Combine views from three roadside cameras at Sanford Drive and Cedar Street to map the paths of vehicles, pedestrians, and cyclists on a single aerial map.',
-    role: 'The project uses these trajectories to study traffic conflicts through time to collision and post-encroachment time. The public repository includes code, a two-minute trajectory sample, and a demo with people and vehicles pixelated.',
-    links: [{ label: 'Project code, data & demo', url: 'https://github.com/Franceswww/curbsight' }],
-  },
 ];
 
 // Public repositories from the lab and its members, described from their READMEs. Private repositories are

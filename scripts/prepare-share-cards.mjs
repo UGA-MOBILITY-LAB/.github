@@ -16,7 +16,7 @@ const asset = file => pathToFileURL(path.join(docs, 'assets', file)).href;
 // A list of images is stacked as figure cards (the publications page).
 const cards = {
   index: { kicker: 'University of Georgia · Mobility Lab', title: 'Intelligent mobility.<br><em>Built for the real world.</em>', text: 'Autonomous vehicles, intelligent infrastructure, and the people who depend on them.', image: 'athens-downtown-1280.webp', fit: 'cover' },
-  research: { kicker: 'Research & projects', title: 'Autonomy in context.<br><em>Impact in the world.</em>', text: 'Six research threads, from how vehicles see to how communities move.', image: 'hawkinsville-lidar-hdmap-1280.webp', fit: 'cover' },
+  research: { kicker: 'Research & projects', title: 'Autonomy in context.<br><em>Impact in the world.</em>', text: 'Seven research threads, from how vehicles see to how communities move.', image: 'hawkinsville-lidar-hdmap-1280.webp', fit: 'cover' },
   publications: { kicker: 'Publications', title: 'Ideas, experiments,<br><em>and evidence.</em>', text: 'Papers on autonomous driving, robotics, V2X perception, and transportation systems.', image: ['drivedegrade-detail-960.webp', 'falcon-overview-960.webp', 'dinolink-overview-960.webp'], fit: 'contain' },
   team: { kicker: 'Our people', title: 'Different perspectives.<br><em>Shared direction.</em>', text: 'The researchers of the UGA Mobility Lab.', image: 'lab-team-2026.jpg', fit: 'cover' },
   resources: { kicker: 'Data & demos', title: 'Explore the evidence.<br><em>Build what comes next.</em>', text: 'Maps, experiment data, and research synthesis you can reuse.', image: 'ev-car-following-route-red-1280.webp', fit: 'cover' },
