@@ -674,7 +674,34 @@ export const travelsCaseStudy = {
   ],
 };
 
+export const undergraduateTeams = [
+  {
+    id: 'ai-at-uga',
+    name: 'AI@UGA team',
+    period: 'Fall 2026',
+    members: [
+      { name: 'Jack Vaught', email: 'jlv33696@uga.edu' },
+      { name: 'Joseph Hattan', email: 'Joseph.Hattan@uga.edu' },
+      { name: 'Srikanksh Thammisetty', email: 'Srikanksh.Thammisetty@uga.edu' },
+      { name: 'Bornini Chandra', email: 'Bornini.Chandra@uga.edu' },
+      { name: 'William Azevedo Homan', email: 'William.AzevedoHoman@uga.edu' },
+      { name: 'Dang Hoang', email: 'danghoang2605@uga.edu' },
+      { name: 'Travis Burton', email: 'Travis.Burton@uga.edu' },
+    ],
+  },
+  {
+    id: 'vipr',
+    name: 'VIPR team',
+    period: 'Fall 2026',
+    members: [
+      { name: 'Disha Rachur', program: 'Computer Science Engineering' },
+      { name: 'Sainagapraneel Surath', program: 'Computer Science Engineering' },
+    ],
+  },
+];
+
 export const alumni = [
+  { name: 'Richard Alexander Booth Fritz', role: "Master's Student · IAI" },
   { name: 'Abhinav Yedla', role: 'Undergraduate Student (CS)', period: 'Summer 2026' },
   { name: 'Luke Greenfield', role: 'Undergraduate Student (ECAM)', period: 'Fall 2025' },
   { name: 'James Volfson', role: 'Young Dawgs Intern · North Oconee High School', period: 'Spring 2025' },

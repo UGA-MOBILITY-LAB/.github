@@ -1,7 +1,7 @@
 import { readFile, readdir, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { publications, news, projects, alumni, openCode, openResources, fieldVideos } from './content.mjs';
+import { publications, news, projects, alumni, undergraduateTeams, openCode, openResources, fieldVideos } from './content.mjs';
 
 // Dependency-free checks for the generated static site. This is not a substitute
 // for browser layout, keyboard-navigation, and contrast testing.
@@ -172,10 +172,22 @@ check(digitalTwin.includes('src="https://raw.githubusercontent.com/Franceswww/cu
 check(!research.includes('<article id="project-curbsight">'), 'CurbSight must appear under the Digital Twin research thread');
 for (const legacy of ['autonomy', 'cooperation', 'robotics', 'infrastructure']) check(pages.get('research.html')?.ids.has(legacy), `Old research anchor missing: #${legacy}`);
 const team = pages.get('team.html')?.html || '';
-for (const member of alumni) check(team.includes(escape(member.name)), `Former member missing: ${member.name}`);
-for (const name of ['Handong Yao', 'Tianle Zhu', 'Haohua Que', 'Qianyi Wu', 'Richard Alexander Booth Fritz']) {
-  check(team.includes(name), `Current team member missing: ${name}`);
+const formerMembers = /<section class="alumni-section" id="former-members">(.*?)<\/section>/s.exec(team)?.[1] || '';
+for (const member of alumni) check(formerMembers.includes(`<h3>${escape(member.name)}</h3>`), `Former member missing: ${member.name}`);
+const currentTeam = /<div class="people-grid">(.*?)<\/section>/s.exec(team)?.[1] || '';
+check(team.includes('<h2>Handong Yao'), 'Principal investigator missing');
+for (const name of ['Tianle Zhu', 'Haohua Que', 'Qianyi Wu']) {
+  check(currentTeam.includes(`<h3>${name}</h3>`), `Research assistant missing: ${name}`);
 }
+for (const group of undergraduateTeams) {
+  const roster = team.match(new RegExp(`<div id="undergraduates-${group.id}">([\\s\\S]*?)</div>`))?.[1] || '';
+  check(roster.includes(`<h3>${escape(group.name)} · ${escape(group.period)}</h3>`), `Undergraduate team missing: ${group.name}`);
+  for (const member of group.members) {
+    const detail = member.email ? `href="mailto:${escape(member.email)}">${escape(member.email)}</a>` : escape(member.program);
+    check(roster.includes(`<strong>${escape(member.name)}</strong>`) && roster.includes(detail), `Undergraduate member or details missing: ${member.name}`);
+  }
+}
+check(!currentTeam.includes('Richard Alexander Booth Fritz'), 'Richard Fritz must be listed under Former members');
 check(![...pages.values()].some(p => /via\.placeholder\.com|TODO|Lorem ipsum/.test(p.html)), 'Placeholder content detected');
 
 const home = pages.get('index.html')?.html || '';
@@ -219,5 +231,5 @@ if (failures.length) {
   process.exitCode = 1;
 } else {
   console.log(`PASS: ${pages.size} pages, ${internalReferences} internal links/assets, unique IDs, local fragments, metadata, alt attributes, and retained content.`);
-  console.log(`Retained: ${publications.length} publications, ${news.length} news items, ${projects.length} projects, ${alumni.length} former members, and all 5 current team members.`);
+  console.log(`Retained: ${publications.length} publications, ${news.length} news items, ${projects.length} projects, ${alumni.length} former members, and ${undergraduateTeams.reduce((total, group) => total + group.members.length, 0)} undergraduates.`);
 }

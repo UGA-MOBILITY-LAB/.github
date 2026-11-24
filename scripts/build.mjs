@@ -1,6 +1,6 @@
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import { publications, news, projects, alumni, openResources, openCode, travelsCaseStudy, fieldVideos } from './content.mjs';
+import { publications, news, projects, alumni, undergraduateTeams, openResources, openCode, travelsCaseStudy, fieldVideos } from './content.mjs';
 import { icons } from './icons.mjs';
 
 // A dependency-free static build. GitHub Pages serves the committed docs/ output.
@@ -89,7 +89,7 @@ const prefixLinks = (html, prefix) => html
 const rooted = html => prefixLinks(html, siteRoot);
 const intro = (kicker, title, text, extra = '') => `<section class="page-intro wrap"><p class="eyebrow">${kicker}</p><h1>${title}</h1><p class="intro-copy">${text}</p>${extra}</section>`;
 // Homepage research mosaic: one figure-led card per thread, ordered from vehicle perception to rural communities.
-// People are the current lab members on each thread's work; Richard Fritz is listed by his research focus.
+// People credited on each research thread.
 const researchers = { tianle: 'Tianle Zhu', haohua: 'Haohua Que', qianyi: 'Qianyi Wu', richard: 'Richard Fritz' };
 const paper = (id, label, venue) => {
   if (!publications.some(p => p.id === id)) throw new Error(`Unknown publication: ${id}`);
@@ -262,15 +262,26 @@ const people = [
  {name:'Tianle Zhu', role:'Ph.D. Student · Mechanical Engineering', img:'assets/Tianle-portrait.webp', focus:'Cooperative perception, artificial intelligence, and safety.', education:[['Ph.D., Mechanical Engineering', 'University of Georgia', '2024–'], ['Master’s', 'University of Florida', '2022–2024'], ['Bachelor’s', 'Nanjing Forestry University', '2018–2022']], email:'tianle.zhu@uga.edu'},
  {name:'Haohua Que', role:'Ph.D. Student · Mechanical Engineering', img:'assets/haohua-autumn-2026.jpg', focus:'End-to-end autonomous driving, robotics, and computer vision.', education:[['Ph.D., Mechanical Engineering', 'University of Georgia', '2025–'], ['Bachelor’s, Electronic Information and Technology', 'Beijing Forestry University', '2020–2024']], experience:[['Research Assistant', 'Tsinghua University · Sense Lab', '2023–2025']], email:'hq10606@uga.edu', scholar:'https://scholar.google.com/citations?user=EWgqpTgAAAAJ&hl=en', website:'https://que121.github.io/'},
  {name:'Qianyi Wu', role:'Ph.D. Student · Civil Engineering', img:'assets/qianyi-portrait.webp', focus:'Connected and automated vehicle modeling and simulation, AI, and cyber-physical systems.', education:[['Ph.D., Civil Engineering', 'University of Georgia', '2025–'], ['Master’s, Civil Engineering', 'Central South University', '2022–2025'], ['Bachelor’s, Civil Engineering', 'Central South University', '2018–2022']], email:'qianyi.wu@uga.edu'},
- {name:'Richard Alexander Booth Fritz', role:"Master's Student · IAI", focus:'Connected and automated vehicle network optimization and simulation, and AI.', email:'Richard.Fritz@uga.edu'},
 ];
 const piEducation = [['Ph.D., Transportation Engineering', 'Harbin Institute of Technology', '2020'], ['M.S.', 'Harbin Institute of Technology', '2015'], ['B.S.', 'Hefei University of Technology', '2013']];
 const piExperience = [['Assistant Professor', 'University of Georgia', '2023–'], ['Associate Professor', 'Harbin Institute of Technology at Weihai', '2022–2023'], ['Postdoctoral Researcher', 'University of South Florida', '2020–2022']];
 const history = rows => `<ul class="history">${rows.map(([what, where, when]) => `<li><span class="history-what">${e(what)}</span><span class="history-where">${e(where)}</span><span class="history-when">${e(when)}</span></li>`).join('')}</ul>`;
+const undergraduateRoster = `<section class="wrap" id="undergraduates" aria-labelledby="undergraduates-title">
+  <h2 id="undergraduates-title">Undergraduates</h2>
+  <div class="contact-grid">
+    ${undergraduateTeams.map(group => `<div id="undergraduates-${group.id}">
+      <h3>${e(group.name)} · ${e(group.period)}</h3>
+      <ul>${group.members.map(member => `<li><strong>${e(member.name)}</strong><br>${member.email
+        ? `<a style="text-decoration:underline;overflow-wrap:anywhere" href="mailto:${e(member.email)}">${e(member.email)}</a>`
+        : e(member.program)}</li>`).join('')}</ul>
+    </div>`).join('')}
+  </div>
+</section>`;
 const team = `${intro('Our people','Different perspectives.<br><em>Shared direction.</em>','Meet the researchers connecting autonomous systems, infrastructure, and transportation at the University of Georgia.')}
 <section class="wrap pi-section"><div class="pi-photo"><img ${responsive('HYao.jpg', slots.pi)} width="2068" height="3181" alt="Dr. Handong Yao" fetchpriority="high"></div><div class="pi-info"><p class="eyebrow">Principal investigator</p><h2>Handong Yao<span>, Ph.D.</span></h2><p class="lead">Assistant Professor</p><p>School of Environmental, Civil, Agricultural and Mechanical Engineering (ECAM)<br>University of Georgia</p><p>Faculty Fellow, Institute of Artificial Intelligence</p><p class="pi-focus">Connected and automated vehicles · Cyber-physical systems · Smart transportation and infrastructure · AI · Safety</p><div class="pi-history"><div><h3>Education</h3>${history(piEducation)}</div><div><h3>Experience</h3>${history(piExperience)}</div></div><div class="link-group"><a class="text-link" href="https://engineering.uga.edu/team_member/handong-yao/">Faculty profile ${arrow}</a>${papersLink('Handong Yao', 'Publications')}<a class="text-link" href="mailto:handong.yao@uga.edu">Email ${arrow}</a></div></div></section>
-<section class="wrap section"><div class="section-heading"><div><p class="eyebrow">Research assistants</p><h2>The <em>team.</em></h2></div><a class="text-link" href="contact.html#phd-opportunities">Join the lab ${arrow}</a></div><div class="people-grid">${people.map(p=>`<article class="person"><div class="person-frame">${p.img?`<img class="person-photo" ${responsive(p.img, slots.quarter)} width="600" height="750" alt="${p.name}" loading="lazy">`:'<div class="person-monogram" role="img" aria-label="Richard Alexander Booth Fritz, portrait not available"><span>RF</span><small>Mobility Lab</small></div>'}</div><h3>${p.name}</h3><p class="person-role">${p.role}</p><p>${p.focus}</p>${p.education ? `<div class="person-history"><h4>Education</h4>${history(p.education)}</div>` : ''}${p.experience ? `<div class="person-history"><h4>Experience</h4>${history(p.experience)}</div>` : ''}<div class="link-group">${papersLink(p.name)}<a class="text-link" href="mailto:${p.email}">Email ${arrow}</a>${p.scholar?`<a class="text-link" href="${p.scholar}">Scholar ${arrow}</a>`:''}${p.website?`<a class="text-link" href="${e(p.website)}">Website ${arrow}</a>`:''}</div></article>`).join('')}</div></section>
-<section class="alumni-section"><div class="wrap section"><p class="eyebrow">Our community</p><h2>Former <em>members.</em></h2><div class="alumni-list">${alumni.map(a=>`<div><h3>${e(a.name)}</h3><p>${e(a.role)}</p><span>${e(a.period)}</span></div>`).join('')}</div></div></section>`;
+<section class="wrap section"><div class="section-heading"><div><p class="eyebrow">Research assistants</p><h2>The <em>team.</em></h2></div><a class="text-link" href="contact.html#phd-opportunities">Join the lab ${arrow}</a></div><div class="people-grid">${people.map(p=>`<article class="person"><div class="person-frame"><img class="person-photo" ${responsive(p.img, slots.quarter)} width="600" height="750" alt="${p.name}" loading="lazy"></div><h3>${p.name}</h3><p class="person-role">${p.role}</p><p>${p.focus}</p>${p.education ? `<div class="person-history"><h4>Education</h4>${history(p.education)}</div>` : ''}${p.experience ? `<div class="person-history"><h4>Experience</h4>${history(p.experience)}</div>` : ''}<div class="link-group">${papersLink(p.name)}<a class="text-link" href="mailto:${p.email}">Email ${arrow}</a>${p.scholar?`<a class="text-link" href="${p.scholar}">Scholar ${arrow}</a>`:''}${p.website?`<a class="text-link" href="${e(p.website)}">Website ${arrow}</a>`:''}</div></article>`).join('')}</div></section>
+${undergraduateRoster}
+<section class="alumni-section" id="former-members"><div class="wrap section"><p class="eyebrow">Our community</p><h2>Former <em>members.</em></h2><div class="alumni-list">${alumni.map(a=>`<div><h3>${e(a.name)}</h3><p>${e(a.role)}</p>${a.period ? `<span>${e(a.period)}</span>` : ''}</div>`).join('')}</div></div></section>`;
 
 // Field sites on a Georgia outline (scripts/prepare-map.py, Natural Earth, public domain).
 // Markers link to their cards, so the map works without JavaScript; site.js only adds highlighting.
