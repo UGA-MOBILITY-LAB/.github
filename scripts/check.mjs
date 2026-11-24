@@ -1,7 +1,7 @@
 import { readFile, readdir, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { publications, news, projects, alumni, openCode, openResources } from './content.mjs';
+import { publications, news, projects, alumni, openCode, openResources, fieldVideos } from './content.mjs';
 
 // Dependency-free checks for the generated static site. This is not a substitute
 // for browser layout, keyboard-navigation, and contrast testing.
@@ -118,18 +118,25 @@ const lost = pages.get('404.html')?.html || '';
 check(lost.includes('<meta name="robots" content="noindex">') && !lost.includes('rel="canonical"'), '404.html must be noindex without a canonical URL');
 const updates = pages.get('news.html')?.html || '';
 check((updates.match(/class="news-entry"/g) || []).length === news.length, 'News entry count differs from data');
+const newsEntries = new Map([...updates.matchAll(/<article class="news-entry" id="([^"]+)"[^>]*>(.*?)<\/article>/gs)]
+  .map(([, id, html]) => [id, html]));
 for (const item of news) {
-  check(updates.includes(escape(item.text)), `News missing: ${item.id}`);
+  const entry = newsEntries.get(item.id) || '';
+  check(entry.replace(/<\/?em>/g, '').includes(`<h2>${escape(item.title)}</h2>`), `News headline missing: ${item.id}`);
+  if (item.text) check(entry.includes(`<p>${escape(item.text)}</p>`), `News text missing: ${item.id}`);
   if (item.dateLabel) {
     check(Number.isFinite(Date.parse(item.sortDate || item.dateLabel)), `Invalid news date: ${item.id}`);
-    check(updates.includes(escape(item.dateLabel)), `News date missing: ${item.id}`);
-    check(item.links?.some(link => /^https:\/\//.test(link.url)), `Dated news needs an external source: ${item.id}`);
+    check(entry.includes(escape(item.dateLabel)), `News date missing: ${item.id}`);
+    const hasExternalSource = item.links?.some(link => /^https:\/\//.test(link.url));
+    const localVideo = fieldVideos[item.video?.local];
+    const hasLocalSource = localVideo && entry.includes(`<source src="${escape(localVideo.src)}"`);
+    check(hasExternalSource || hasLocalSource, `Dated news needs an external source or a local field-test video: ${item.id}`);
   }
 }
 const feed = await readFile(path.join(root, 'news.xml'), 'utf8').catch(() => '');
 const feedItems = [...feed.matchAll(/<item>(.*?)<\/item>/gs)].map(match => match[1]);
 check(feedItems.length === news.length, 'News feed item count differs from data');
-check(feed.startsWith('<?xml version="1.0" encoding="UTF-8"?>\n<?xml-stylesheet type="text/css" href="assets/feed.css"?>\n'), 'News feed must start with its browser stylesheet');
+check(feed.replaceAll('\r\n', '\n').startsWith('<?xml version="1.0" encoding="UTF-8"?>\n<?xml-stylesheet type="text/css" href="assets/feed.css"?>\n'), 'News feed must start with its browser stylesheet');
 check(await stat(path.join(root, 'assets', 'feed.css')).then(info => info.isFile(), () => false), 'News feed stylesheet missing');
 check(feedItems.filter(item => item.includes('<pubDate>')).length === news.filter(item => item.dateLabel).length, 'Every dated story needs a feed date');
 for (const item of feedItems) {

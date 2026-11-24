@@ -7,7 +7,8 @@ import { icons } from './icons.mjs';
 const base = new URL('../docs/', import.meta.url);
 const assetVersions = {};
 for (const [key, file] of [['css', 'site.css'], ['dark', 'dark.css'], ['js', 'site.js'], ['game', 'drive-game.js'], ['scan', 'scan-viewer.js'], ['wave', 'traffic-wave.js']]) {
-  assetVersions[key] = createHash('sha256').update(await readFile(new URL(`assets/${file}`, base))).digest('hex').slice(0, 10);
+  const asset = await readFile(new URL(`assets/${file}`, base), 'utf8');
+  assetVersions[key] = createHash('sha256').update(asset.replaceAll('\r\n', '\n')).digest('hex').slice(0, 10);
 }
 const e = (s = '') => String(s).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 // Display-sized WebP copies from scripts/prepare-images.py; full-size originals stay linked.
@@ -192,7 +193,7 @@ const newsDate = n => `<span class="news-category">${e(n.dateLabel || n.year)}${
 const newsTitle = n => n.titleHighlight ? e(n.title).split(e(n.titleHighlight)).join(`<em>${e(n.titleHighlight)}</em>`) : e(n.title);
 // Field-test videos hosted with the site: the browser's own player, nothing downloads before play.
 const fieldVideo = (v, cls = '', autoplay = false) => `<figure class="field-video${cls ? ` ${cls}` : ''}"><div class="field-video-frame"><video controls playsinline preload="none"${autoplay ? ' muted data-autoplay' : ''} poster="${e(v.poster)}" width="${v.width}" height="${v.height}" title="${e(v.title)}"><source src="${e(v.src)}" type="video/mp4"><a href="${e(v.src)}">Download the video</a></video>${autoplay ? `<button type="button" class="video-sound" hidden>${icon('volume-2')}Turn on sound</button>` : ''}</div>${v.caption ? `<figcaption>${e(v.caption)}<span>${e(v.duration)}</span></figcaption>` : ''}</figure>`;
-const newsVideo = n => n.video?.local ? fieldVideo(fieldVideos[n.video.local], 'news-field-video') : n.video ? `<details class="visit-video"><summary>Watch the visit video<span class="visit-video-hint">40 seconds · LinkedIn</span></summary><div class="visit-video-content"><iframe src="${e(n.video.embedUrl)}" title="${e(n.video.title)}" width="360" height="640" loading="lazy" allow="fullscreen" allowfullscreen></iframe><div><p>Video highlights from the autonomous vehicle demonstration, shared by the Georgia Network for Electric Mobility.</p><a class="text-link" href="${e(n.video.postUrl)}">Watch on LinkedIn ${arrow}</a></div></div></details>` : '';
+const newsVideo = n => n.video?.local ? fieldVideo(fieldVideos[n.video.local], 'news-field-video') : n.video?.embedUrl ? `<details class="visit-video"><summary>Watch the visit video<span class="visit-video-hint">40 seconds · LinkedIn</span></summary><div class="visit-video-content"><iframe src="${e(n.video.embedUrl)}" title="${e(n.video.title)}" width="360" height="640" loading="lazy" allow="fullscreen" allowfullscreen></iframe><div><p>Video highlights from the autonomous vehicle demonstration, shared by the Georgia Network for Electric Mobility.</p><a class="text-link" href="${e(n.video.postUrl)}">Watch on LinkedIn ${arrow}</a></div></div></details>` : '';
 // Show the two newest eligible dated stories as matching text-only rows.
 const homeNews = datedNews.filter(n => n.home !== false);
 const homeNewsRows = homeNews.slice(0, 2).map(n => `<article class="news-preview home-lead">${newsDate(n)}<div><h3><a href="news.html#${n.id}">${newsTitle(n)}</a></h3>${n.summary || n.text ? `<p>${e(n.summary || n.text)}</p>` : ''}<div class="link-group">${links(n.links)}</div></div></article>`).join('');
@@ -284,7 +285,7 @@ const research = `${intro('Research & projects','Autonomy in context.<br><em>Imp
 <section class="wrap research-details" aria-label="Research threads">${researchThreads}</section></div>
 ${waveSection}
 ${fieldSection}
-<section class="projects-section" id="projects"><div class="wrap section"><div class="section-heading"><div><p class="eyebrow">Applied research</p><h2>Projects &amp; <em>initiatives.</em></h2></div><p>Research across vehicles,<br>roads, campuses, and communities.</p></div><div class="project-list">${projects.map((p,i)=>`<article id="project-${p.id}"><span class="index">0${i+1}</span><div><h3>${e(p.title)}</h3><div class="project-meta"><span>${e(p.funder)}</span><span>${e(p.period)}</span></div>${p.summary ? `<p class="project-summary">${e(p.summary)}</p>` : ''}${p.role ? `<p class="project-role">${e(p.role)}</p>` : ''}${p.outputs ? `<ul class="project-outputs">${p.outputs.map(output=>`<li>${e(output)}</li>`).join('')}</ul>` : ''}<div class="link-group">${p.id === 'travels' ? `<a class="text-link" href="travels.html">Georgia case study ${arrow}</a>` : ''}${links(p.links)}</div></div></article>`).join('')}</div></div></section>
+<section class="projects-section" id="projects"><div class="wrap section"><div class="section-heading"><div><p class="eyebrow">Applied research</p><h2>Projects &amp; <em>initiatives.</em></h2></div><p>Research across vehicles,<br>roads, campuses, and communities.</p></div><div class="project-list">${projects.map((p,i)=>`<article id="project-${p.id}"><span class="index">0${i+1}</span><div><h3>${e(p.title)}</h3>${p.funder || p.period ? `<div class="project-meta">${[p.funder, p.period].filter(Boolean).map(value => `<span>${e(value)}</span>`).join('')}</div>` : ''}${p.summary ? `<p class="project-summary">${e(p.summary)}</p>` : ''}${p.role ? `<p class="project-role">${e(p.role)}</p>` : ''}${p.outputs ? `<ul class="project-outputs">${p.outputs.map(output=>`<li>${e(output)}</li>`).join('')}</ul>` : ''}<div class="link-group">${p.id === 'travels' ? `<a class="text-link" href="travels.html">Georgia case study ${arrow}</a>` : ''}${links(p.links)}</div></div></article>`).join('')}</div></div></section>
 <section class="wrap section resource-section"><p class="eyebrow">Data &amp; demos</p><h2>Research you can<br><em>explore and reuse.</em></h2><p>Browse rural-route maps, EV experiment data, and our rural AV evidence hub.</p><a class="button" href="resources.html">Explore data &amp; demos ${arrow}</a></section>`;
 
 const codeCards = openCode.map(c => {
@@ -390,7 +391,11 @@ function reviewBody(year) {
   const papers = publications.filter(p => p.year === year);
   const upcoming = publications.filter(p => p.year === year + 1);
   const venues = [...new Set([...upcoming, ...papers].map(p => venueTag(p).replace(/ \d{4}$/, '')))];
-  const active = projects.filter(p => { const { start, end } = projectSpan(p); return start <= year && year <= end; });
+  const active = projects.filter(p => {
+    if (!p.period) return false;
+    const { start, end } = projectSpan(p);
+    return start <= year && year <= end;
+  });
   const funded = projects.filter(p => p.funding?.uga && projectSpan(p).start === year);
   const stats = [
     [String(papers.length), `Papers in ${year}`],
