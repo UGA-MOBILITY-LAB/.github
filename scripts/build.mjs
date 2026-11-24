@@ -291,11 +291,6 @@ const threadWork = t => [
   ...t.papers.map(id => publications.find(p => p.id === id)).map(p => ({ href: `publications.html#${p.id}`, label: paperLabel(p), venue: venueTag(p) })),
   ...t.work.filter(w => !w.href.startsWith('publications.html')),
 ];
-// The latest three stories on a thread, linked to the News page.
-const threadNews = t => {
-  const stories = newsOrder.filter(n => newsThreads(n).includes(t)).slice(0, 3);
-  return stories.length ? `<div class="thread-news"><h3>In the news</h3><ul>${stories.map(n => `<li><a href="news.html#${n.id}">${e(n.title)}</a><span>${e(n.dateLabel || String(n.year))}</span></li>`).join('')}</ul></div>` : '';
-};
 const researchDemo = demo => `<details class="visit-video" open>
   <summary>${e(demo.label)}</summary>
   <picture>
@@ -303,7 +298,7 @@ const researchDemo = demo => `<details class="visit-video" open>
     <img src="${e(demo.src)}" alt="${e(demo.alt)}" width="${demo.width}" height="${demo.height}" loading="lazy" style="height:auto;margin-bottom:18px">
   </picture>
 </details>`;
-const researchThreads = threads.map((t, i) => `<article class="research-detail" id="${t.id}"><div class="research-number"${t.legacy ? ` id="${t.legacy}"` : ''}>0${i + 1}${icon(t.icon)}</div><div>${t.headline ? `<p class="eyebrow">${e(t.title)}</p>` : ''}<h2>${e(t.headline || t.title)}</h2>${t.people?.length ? `<p class="research-people">${t.people.map(id => researchers[id]).join(' · ')}</p>` : ''}${t.figure ? threadFigure(t.figure, slots.researchFigure) : ''}${t.demo ? researchDemo(t.demo) : ''}</div><div><p>${e(t.text)}</p>${t.detail ? `<p>${e(t.detail)}</p>` : ''}<ul class="topic-tags">${t.methods.map(m => `<li>${e(m)}</li>`).join('')}</ul><ul class="thread-work">${threadWork(t).map(w => `<li><a href="${w.href}">${e(w.label)} <span>${e(w.venue)}</span></a></li>`).join('')}</ul>${threadNews(t)}${t.papers.length || t.more?.length ? `<div class="link-group">${t.papers.length ? `<a class="text-link" href="publications.html?topic=${t.id}">${t.papers.length} ${t.papers.length === 1 ? 'paper' : 'papers'} in this thread ${arrow}</a>` : ''}${(t.more || []).map(([href, label]) => `<a class="text-link" href="${href}">${e(label)} ${arrow}</a>`).join('')}</div>` : ''}</div></article>`).join('');
+const researchThreads = threads.map((t, i) => `<article class="research-detail" id="${t.id}"><div class="research-number"${t.legacy ? ` id="${t.legacy}"` : ''}>0${i + 1}${icon(t.icon)}</div><div>${t.headline ? `<p class="eyebrow">${e(t.title)}</p>` : ''}<h2>${e(t.headline || t.title)}</h2>${t.people?.length ? `<p class="research-people">${t.people.map(id => researchers[id]).join(' · ')}</p>` : ''}${t.figure ? threadFigure(t.figure, slots.researchFigure) : ''}${t.demo ? researchDemo(t.demo) : ''}</div><div><p>${e(t.text)}</p>${t.detail ? `<p>${e(t.detail)}</p>` : ''}<ul class="topic-tags">${t.methods.map(m => `<li>${e(m)}</li>`).join('')}</ul><ul class="thread-work">${threadWork(t).map(w => `<li><a href="${w.href}">${e(w.label)} <span>${e(w.venue)}</span></a></li>`).join('')}</ul>${t.papers.length || t.more?.length ? `<div class="link-group">${t.papers.length ? `<a class="text-link" href="publications.html?topic=${t.id}">${t.papers.length} ${t.papers.length === 1 ? 'paper' : 'papers'} in this thread ${arrow}</a>` : ''}${(t.more || []).map(([href, label]) => `<a class="text-link" href="${href}">${e(label)} ${arrow}</a>`).join('')}</div>` : ''}</div></article>`).join('');
 const research = `${intro('Research & projects','Autonomy in context.<br><em>Impact in the world.</em>','Seven research threads follow mobility end to end, from how vehicles see to how communities move.')}
 <div class="thread-index"><nav class="wrap section-jumps" aria-label="Research threads">${threads.map(t => `<a href="#${t.id}">${e(t.short)} ↓</a>`).join('')}</nav>
 <section class="wrap research-details" aria-label="Research threads">${researchThreads}</section></div>
