@@ -179,6 +179,8 @@ for (const name of ['Handong Yao', 'Tianle Zhu', 'Haohua Que', 'Qianyi Wu', 'Ric
 check(![...pages.values()].some(p => /via\.placeholder\.com|TODO|Lorem ipsum/.test(p.html)), 'Placeholder content detected');
 
 const home = pages.get('index.html')?.html || '';
+const homeDigitalTwin = /<article class="thread" id="research-digital-twin">(.*?)<\/article>/s.exec(home)?.[1] || '';
+check(homeDigitalTwin.includes('Digital Twin of Road and Traffic') && homeDigitalTwin.includes('href="research.html#digital-twin"'), 'Homepage must link to the Digital Twin research thread');
 check(updates.includes('<em>$15M</em>'), 'news.html: TRAVELS funding highlight missing');
 // The home page leads with the newest dated story (stories marked home: false have their own home section).
 const newest = news.filter(n => n.dateLabel && n.home !== false).sort((a, b) => Date.parse(b.sortDate || b.dateLabel) - Date.parse(a.sortDate || a.dateLabel))[0];

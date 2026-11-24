@@ -116,6 +116,12 @@ const threads = [
     methods: ['Bird’s-eye-view mapping', 'Cross-site generalization', 'Multi-camera trajectory fusion'],
     papers: [],
     work: [{ href: 'https://github.com/Franceswww/curbsight', label: 'CurbSight', venue: 'Code, data & demo' }],
+    homeFigure: {
+      src: 'https://raw.githubusercontent.com/Franceswww/curbsight/main/figures/conflicts_ttc_heatmap.jpg',
+      width: 1400, height: 1400, photo: true,
+      alt: 'Overhead heat map of vehicle conflicts at the Sanford Drive and Cedar Street intersection',
+      tag: 'CurbSight · conflict heat map',
+    },
     demo: {
       label: 'CurbSight demo',
       src: 'https://raw.githubusercontent.com/Franceswww/curbsight/main/figures/demo.gif',
@@ -200,7 +206,11 @@ function bibtex(p) {
   return `@${journal ? 'article' : 'inproceedings'}{${bibKeys.get(p.id)},\n${fields.map(([name, value]) => `  ${name.padEnd(width)} = {${value}}`).join(',\n')}\n}`;
 }
 
-const threadCards = threads.filter(t => t.figure).map(t => `<article class="thread">${threadFigure(t.figure, slots.tile, true)}<div class="thread-copy"><h3><a href="${t.href}">${icon(t.icon)}${e(t.title)}</a></h3><p class="thread-methods">${t.methods.map(e).join(' · ')}</p><ul class="thread-work">${t.work.map(w => `<li><a href="${w.href}">${e(w.label)} <span>${e(w.venue)}</span></a></li>`).join('')}</ul></div></article>`).join('');
+const threadCards = threads.map(t => {
+  const figure = t.homeFigure ? { ...t.homeFigure, href: t.href } : t.figure;
+  const work = t.work.map(w => `<li><a href="${w.href}">${e(w.label)} <span>${e(w.venue)}</span></a></li>`).join('');
+  return `<article class="thread" id="research-${t.id}">${figure ? threadFigure(figure, slots.tile, true) : ''}<div class="thread-copy"><h3><a href="${t.href}">${icon(t.icon)}${e(t.title)}</a></h3><p class="thread-methods">${t.methods.map(e).join(' · ')}</p><ul class="thread-work">${work}</ul></div></article>`;
+}).join('');
 const researchMosaic = `<section class="research-home section" id="research-overview" aria-labelledby="research-title"><div class="wrap"><div class="research-intro"><div><p class="eyebrow">Our research</p><h2 id="research-title">From how vehicles see<br class="desktop-break"> to how communities <em>move.</em></h2></div><div class="research-intro-copy"><div class="research-intro-links"><a class="research-pi" href="team.html">Led by <strong>Dr. Handong Yao</strong></a><a class="text-link" href="research.html">Research &amp; projects ${arrow}</a><a class="text-link" href="publications.html">All publications ${arrow}</a></div></div></div><div class="research-mosaic">${threadCards}</div></div></section>
 <dialog class="scan-dialog" id="scan-dialog" aria-labelledby="scan-title"><div class="scan-inner"><div class="scan-head"><div><p class="eyebrow">Hawkinsville, Georgia · LiDAR &amp; HD map</p><h2 id="scan-title">Explore the route in 3D</h2></div><div class="scan-modes" role="group" aria-label="View mode"><button type="button" data-scan-mode="explore" aria-pressed="true">Explore</button><button type="button" data-scan-mode="quiz" aria-pressed="false">Quiz</button></div><button type="button" class="scan-close" aria-label="Close the 3D view"><span aria-hidden="true">×</span></button></div><div class="scan-stage"><canvas class="scan-canvas" tabindex="0" role="img" aria-label="3D LiDAR point cloud of the Hawkinsville demonstration route with HD-map lane lines. Drag to orbit, scroll to zoom, or use the arrow keys."></canvas><div class="scan-markers"></div><p class="scan-status" role="status"></p><div class="scan-panel" aria-live="polite"></div><div class="scan-tools"><span>Drag to orbit · scroll or pinch to zoom · shift-drag to pan</span><button type="button" data-scan-reset>Reset view</button></div></div><p class="scan-credit">Thinned from the lab’s public Hawkinsville release, about 95,000 of 4.3 million LiDAR points. Red dots trace the Lanelet2 HD map. Challenges are from the lab’s route survey. <a href="https://github.com/UGA-MOBILITY-LAB/rav-demo/releases/tag/data">Full data ${arrow}</a> <a href="https://uga-mobility-lab.github.io/rav-demo/">Full viewer ${arrow}</a></p></div></dialog>`;
 const resourceIcons = { 'hawkinsville-map': 'map', 'ev-platoon': 'database', 'rav-evidence': 'book-open-text' };
