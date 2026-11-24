@@ -271,9 +271,7 @@ const undergraduateRoster = `<section class="wrap" id="undergraduates" aria-labe
   <div class="contact-grid">
     ${undergraduateTeams.map(group => `<div id="undergraduates-${group.id}">
       <h3>${e(group.name)} · ${e(group.period)}</h3>
-      <ul>${group.members.map(member => `<li><strong>${e(member.name)}</strong><br>${member.email
-        ? `<a style="text-decoration:underline;overflow-wrap:anywhere" href="mailto:${e(member.email)}">${e(member.email)}</a>`
-        : e(member.program)}</li>`).join('')}</ul>
+      <ul>${group.members.map(member => `<li><strong>${e(member.name)}</strong>${member.program ? `<br>${e(member.program)}` : ''}</li>`).join('')}</ul>
     </div>`).join('')}
   </div>
 </section>`;

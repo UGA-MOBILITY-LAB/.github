@@ -183,8 +183,8 @@ for (const group of undergraduateTeams) {
   const roster = team.match(new RegExp(`<div id="undergraduates-${group.id}">([\\s\\S]*?)</div>`))?.[1] || '';
   check(roster.includes(`<h3>${escape(group.name)} · ${escape(group.period)}</h3>`), `Undergraduate team missing: ${group.name}`);
   for (const member of group.members) {
-    const detail = member.email ? `href="mailto:${escape(member.email)}">${escape(member.email)}</a>` : escape(member.program);
-    check(roster.includes(`<strong>${escape(member.name)}</strong>`) && roster.includes(detail), `Undergraduate member or details missing: ${member.name}`);
+    const detail = member.program ? `<br>${escape(member.program)}` : '';
+    check(roster.includes(`<strong>${escape(member.name)}</strong>${detail}</li>`), `Undergraduate member or details missing: ${member.name}`);
   }
 }
 check(!currentTeam.includes('Richard Alexander Booth Fritz'), 'Richard Fritz must be listed under Former members');
